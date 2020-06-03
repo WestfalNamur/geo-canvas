@@ -1,9 +1,10 @@
 import React from "react";
+import ExtentForm from "./ExtentForm";
 
 export default function GeoData() {
   return (
     <div className="GeoData">
-      <header className="App-header">Hello GeoData!</header>
+      <ExtentForm />
     </div>
   );
 }

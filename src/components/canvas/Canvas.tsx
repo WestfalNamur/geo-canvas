@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { updateCanvasSize } from "../../store/canvas/actions";
 
