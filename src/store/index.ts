@@ -8,6 +8,8 @@ import { extentReducer } from "./extent/reducers";
 import { sectionReducer } from "./section/reducers";
 import { seriesReducer } from "./series/reducers";
 import { surfacesReducer } from "./surfaces/reducers";
+import { surfacePointsReducer } from "./SurfacePoints/reducers";
+import { orientationsReducer } from "./Orientations/reducer";
 
 // combine reducers
 const rootReducer = combineReducers({
@@ -16,6 +18,8 @@ const rootReducer = combineReducers({
   section: sectionReducer,
   series: seriesReducer,
   surfaces: surfacesReducer,
+  surfacePoints: surfacePointsReducer,
+  orientations: orientationsReducer,
 });
 
 // export type of RootState

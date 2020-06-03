@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { updateCanvasSize } from "../../store/canvas/actions";
 
 // window size handler; updates local state and store;
+// handler located on window not component;
 function useWindowSize() {
   const dispatch = useDispatch();
   function updateCanvasSizeToStore() {
