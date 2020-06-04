@@ -1,8 +1,8 @@
-import { Extent, UPDATE_EXTENT } from "./types";
+import { ExtentValue, UPDATE_EXTENT } from "./types";
 
-export function updateExtent(newExtent: Extent) {
+export function updateExtent(newExtentValue: ExtentValue) {
   return {
     type: UPDATE_EXTENT,
-    payload: newExtent,
+    payload: newExtentValue,
   };
 }

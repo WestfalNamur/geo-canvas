@@ -3,10 +3,15 @@ export const UPDATE_EXTENT = "UPDATE_EXTENT";
 export interface Extent {
   xmin: number;
   xmax: number;
-  ymix: number;
+  ymin: number;
   ymax: number;
-  zmix: number;
+  zmin: number;
   zmax: number;
+}
+
+export interface ExtentValue {
+  name: string;
+  value: number;
 }
 
 export interface ExtentState {
@@ -15,7 +20,7 @@ export interface ExtentState {
 
 export interface UpdateExtentActionType {
   type: typeof UPDATE_EXTENT;
-  payload: Extent;
+  payload: ExtentValue;
 }
 
 export type ExtentActionTypes = UpdateExtentActionType;
