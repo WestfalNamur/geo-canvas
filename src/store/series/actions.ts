@@ -8,6 +8,7 @@ export function getSeries(newSeries: Serie[]) {
 }
 
 export function putSeries(serie: Serie) {
+  console.log(serie)
   return {
     type: PUT_SERIE,
     payload: serie,

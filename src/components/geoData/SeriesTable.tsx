@@ -1,74 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import MaterialTable, { Column } from "material-table";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { putSeries } from "../../store/series/actions";
 
 interface Row {
   name: string;
   isfault: boolean;
 }
 
-interface TableState {
-  columns: Array<Column<Row>>;
-  data: Row[];
-}
-
-export default function SeriesTable() {
-  const [state, setState] = useState<TableState>({
-    columns: [
-      { title: "Name", field: "name" },
-      { title: "Isfault", field: "isfault" },
-    ],
-    data: [
-      { name: "Series0", isfault: false },
-      { name: "Series1", isfault: false },
-      { name: "Series2", isfault: false },
-      { name: "FaultSeries", isfault: true },
-    ],
-  });
+export default function MaterialTableDemo() {
+  const seriesData = useSelector((state: RootState) => state.series.series);
+  const dispatch = useDispatch();
+  const columns: Array<Column<Row>> = [
+    { title: "Name", field: "name" },
+    {
+      title: "isfault",
+      field: "IsFault",
+      type: "boolean",
+      initialEditValue: false,
+    },
+  ];
 
   return (
     <MaterialTable
-      title="Series Table"
-      columns={state.columns}
-      data={state.data}
-      options={{
-        search: false,
-        sorting: true,
-        paging: false,
-      }}
+      title="Editable Example"
+      columns={columns}
+      data={seriesData}
       editable={{
         onRowAdd: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               resolve();
-              setState((prevState) => {
-                const data = [...prevState.data];
-                data.push(newData);
-                return { ...prevState, data };
-              });
-            }, 600);
-          }),
-        onRowUpdate: (newData, oldData) =>
-          new Promise((resolve) => {
-            setTimeout(() => {
-              resolve();
-              if (oldData) {
-                setState((prevState) => {
-                  const data = [...prevState.data];
-                  data[data.indexOf(oldData)] = newData;
-                  return { ...prevState, data };
-                });
-              }
-            }, 600);
-          }),
-        onRowDelete: (oldData) =>
-          new Promise((resolve) => {
-            setTimeout(() => {
-              resolve();
-              setState((prevState) => {
-                const data = [...prevState.data];
-                data.splice(data.indexOf(oldData), 1);
-                return { ...prevState, data };
-              });
+              dispatch(putSeries(newData));
             }, 600);
           }),
       }}
