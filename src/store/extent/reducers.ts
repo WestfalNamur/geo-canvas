@@ -1,6 +1,5 @@
 import {
   ExtentState,
-  ExtentValue,
   ExtentActionTypes,
   UPDATE_EXTENT,
 } from "./types";
