@@ -13,7 +13,6 @@ export function canvasReducer(
 ): CanvasState {
   switch (action.type) {
     case UPDATE_CANVAS_SIZE:
-      const { width, height } = action.payload;
       return {
         ...state,
         size: action.payload,
