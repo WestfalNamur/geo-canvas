@@ -1,16 +1,17 @@
-import { call, all, put, takeEvery } from "redux-saga/effects";
-import { putSeriesApi } from "../api/geoData";
+import { call, all, takeEvery } from "redux-saga/effects";
+import { putSerieApi } from "../api/geoData";
 import { SeriesActionTypes } from "../store/series/types";
 
-/*************************** Subroutines *************************************/
+// TODO:
+// add functionality for FAILED requests see: https://redux-saga.js.org/
+// fix @ts-ignore
 
-function* putSeriesIterator(action: SeriesActionTypes) {
+/*************************** Subroutines *************************************/
+function* putSerieIterator(action: SeriesActionTypes) {
   try {
-    // TODO: fix type
     // @ts-ignore
-    yield call(putSeriesApi, action.payload);
+    yield call(putSerieApi, action.payload);
   } catch (error) {
-    // TODO: revers newSerie to store
     console.log(error);
   }
 }
@@ -18,7 +19,7 @@ function* putSeriesIterator(action: SeriesActionTypes) {
 /*************************** Watchers ***************************************/
 
 function* watchPutSeries() {
-  yield takeEvery("PUT_SERIE", putSeriesIterator);
+  yield takeEvery("PUT_SERIE", putSerieIterator);
 }
 
 export default function* rootSaga() {
