@@ -2,25 +2,32 @@ import React, { useState } from "react";
 import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { putSeries, deleteSeries } from "../../store/series/actions";
-import { Serie } from "../../store/series/types";
+import { putSurface, deleteSurface } from "../../store/surfaces/actions";
+import { Surface } from "../../store/surfaces/types";
 
 interface TableState {
-  columns: Array<Column<Serie>>;
-  data: Serie[];
+  columns: Array<Column<Surface>>;
+  data: Surface[];
 }
 
-export default function SeriesTable() {
+export default function SurfacesTable() {
+  const surfacesData = useSelector(
+    (state: RootState) => state.surfaces.surfaces
+  );
   const seriesData = useSelector((state: RootState) => state.series.series);
+  const lookups = seriesData.map((serie) => ({ [serie.name]: serie.name }));
+  let lookup: any = {};
+  seriesData.map((serie) => {
+    lookup = { ...lookup, ...{ [serie.name]: serie.name } };
+  });
   const dispatch = useDispatch();
   const [state] = useState<TableState>({
     columns: [
       { title: "Name", field: "name" },
       {
-        title: "Isfault",
-        field: "isfault",
-        type: "boolean",
-        initialEditValue: false,
+        title: "Series",
+        field: "Series",
+        lookup: lookup,
       },
     ],
     data: [],
@@ -28,28 +35,28 @@ export default function SeriesTable() {
 
   return (
     <MaterialTable
-      title="Series"
+      title="Surfaces"
       columns={state.columns}
-      data={seriesData}
+      data={surfacesData}
       editable={{
-        onRowAdd: (newData: Serie) =>
+        onRowAdd: (newData: Surface) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(putSeries(newData));
+              dispatch(putSurface(newData));
               resolve();
             }, 100);
           }),
-        onRowUpdate: (newData: Serie) =>
+        onRowUpdate: (newData: Surface) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(putSeries(newData));
+              dispatch(putSurface(newData));
               resolve();
             }, 100);
           }),
-        onRowDelete: (newData: Serie) =>
+        onRowDelete: (newData: Surface) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(deleteSeries(newData));
+              dispatch(deleteSurface(newData));
               resolve();
             }, 100);
           }),
