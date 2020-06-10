@@ -10,14 +10,17 @@ interface TableState {
   data: Surface[];
 }
 
+interface Lookup {
+  [key: string]: string;
+}
+
 export default function SurfacesTable() {
   const surfacesData = useSelector(
     (state: RootState) => state.surfaces.surfaces
   );
   const seriesData = useSelector((state: RootState) => state.series.series);
-  const lookups = seriesData.map((serie) => ({ [serie.name]: serie.name }));
-  let lookup: any = {};
-  seriesData.map((serie) => {
+  let lookup: Lookup = {};
+  seriesData.forEach((serie) => {
     lookup = { ...lookup, ...{ [serie.name]: serie.name } };
   });
   const dispatch = useDispatch();
@@ -26,7 +29,7 @@ export default function SurfacesTable() {
       { title: "Name", field: "name" },
       {
         title: "Series",
-        field: "Series",
+        field: "serie",
         lookup: lookup,
       },
     ],

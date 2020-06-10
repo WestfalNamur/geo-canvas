@@ -10,10 +10,8 @@ const initialState: SeriesState = {
   series: [
     { name: "Series0", isfault: false },
     { name: "Series1", isfault: false },
-    { name: "Series2", isfault: false },
-    { name: "Series3", isfault: false },
     { name: "FaultSeries", isfault: true },
-  ],
+  ]
 };
 
 export function seriesReducer(
