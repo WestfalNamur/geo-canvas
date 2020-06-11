@@ -3,19 +3,19 @@ import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import {
-  putSurfacePoint,
-  deleteSurfacePoint,
-} from "../../store/SurfacePoints/actions";
-import { SurfacePoint } from "../../store/SurfacePoints/types";
+  putOrientation,
+  deleteOrientation,
+} from "../../store/Orientations/actions";
+import { Orientation } from "../../store/Orientations/types";
 
 interface Lookup {
   [key: string]: string;
 }
 
-export default function SurfacePointsTable() {
+export default function OrientationsTable() {
   // connect to store
-  const surfacePointsData = useSelector(
-    (state: RootState) => state.surfacePoints.surfacePoints
+  const orientaionData = useSelector(
+    (state: RootState) => state.orientations.orientations
   );
   const surfacesData = useSelector(
     (state: RootState) => state.surfaces.surfaces
@@ -26,10 +26,13 @@ export default function SurfacePointsTable() {
   surfacesData.forEach((surface) => {
     lookup = { ...lookup, ...{ [surface.name]: surface.name } };
   });
-  const columns: Array<Column<SurfacePoint>> = [
+  const columns: Array<Column<Orientation>> = [
     { title: "x", field: "x", type: "numeric" },
     { title: "y", field: "y", type: "numeric" },
     { title: "z", field: "z", type: "numeric" },
+    { title: "azimuth", field: "azimuth", type: "numeric" },
+    { title: "dip", field: "dip", type: "numeric" },
+    { title: "polarity", field: "polarity", type: "numeric" },
     { title: "surface", field: "surface", lookup },
     { title: "probdist", field: "probdist", lookup: { 0: "normal" } },
     { title: "param1", field: "param1", type: "numeric" },
@@ -37,12 +40,15 @@ export default function SurfacePointsTable() {
     { title: "active", field: "active", type: "boolean" },
   ];
   // helper functions // convert input String types to Number
-  const reshapeData = (newData: SurfacePoint) => {
-    const reshapedData: SurfacePoint = {
+  const reshapeData = (newData: Orientation) => {
+    const reshapedData: Orientation = {
       id: `${newData.x}${newData.y}${newData.z}`,
       x: Number(newData.x),
       y: Number(newData.y),
       z: Number(newData.z),
+      azimuth: Number(newData.azimuth),
+      polarity: Number(newData.polarity),
+      dip: Number(newData.dip),
       surface: newData.surface,
       probdist: newData.probdist,
       param1: Number(newData.param1),
@@ -53,31 +59,31 @@ export default function SurfacePointsTable() {
   };
   return (
     <MaterialTable
-      title="Series"
+      title="Orientations"
       columns={columns}
-      data={surfacePointsData}
+      data={orientaionData}
       editable={{
-        onRowAdd: (newData: SurfacePoint) =>
+        onRowAdd: (newData: Orientation) =>
           new Promise((resolve) => {
             setTimeout(() => {
               const data = reshapeData(newData);
-              dispatch(putSurfacePoint(data));
+              dispatch(putOrientation(data));
               resolve();
             }, 100);
           }),
-        onRowUpdate: (newData: SurfacePoint) =>
+        onRowUpdate: (newData: Orientation) =>
           new Promise((resolve) => {
             setTimeout(() => {
               const data = reshapeData(newData);
-              dispatch(putSurfacePoint(data));
+              dispatch(putOrientation(data));
               resolve();
             }, 100);
           }),
-        onRowDelete: (newData: SurfacePoint) =>
+        onRowDelete: (newData: Orientation) =>
           new Promise((resolve) => {
             setTimeout(() => {
               const data = reshapeData(newData);
-              dispatch(deleteSurfacePoint(data));
+              dispatch(deleteOrientation(data));
               resolve();
             }, 100);
           }),

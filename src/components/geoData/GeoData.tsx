@@ -3,6 +3,7 @@ import ExtentForm from "./ExtentForm";
 import SeriesTable from "./SeriesTable";
 import SurfacesTable from "./SurfacesTable";
 import SurfacePointsTable from "./SurfacePointsTable";
+import OrientationsTable from "./OrientationsTable";
 
 export default function GeoData() {
   return (
@@ -10,6 +11,7 @@ export default function GeoData() {
       <SeriesTable />
       <SurfacesTable />
       <SurfacePointsTable />
+      <OrientationsTable />
     </div>
   );
 }

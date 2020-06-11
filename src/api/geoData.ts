@@ -1,6 +1,7 @@
 import { Serie } from "../store/series/types";
 import { Surface } from "../store/surfaces/types";
 import { SurfacePoint } from "../store/SurfacePoints/types";
+import { Orientation } from '../store/Orientations/types'
 import axios, { AxiosRequestConfig } from "axios";
 
 // TODO:
