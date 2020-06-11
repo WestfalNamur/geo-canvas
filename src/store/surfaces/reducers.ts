@@ -7,12 +7,7 @@ import {
 } from "./types";
 
 const initialState: SurfacesState = {
-  surfaces: [
-    { name: "Surface0", serie: 'Series0' },
-    { name: "Surface1", serie: 'Series0' },
-    { name: "Surface2", serie: 'Series0' },
-    { name: "Surface4", serie: 'Series1' },
-  ]
+  surfaces: []
 };
 
 export function surfacesReducer(

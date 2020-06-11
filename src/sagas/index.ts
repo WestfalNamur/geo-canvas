@@ -4,9 +4,12 @@ import {
   deleteSerieApi,
   putSurfaceApi,
   deleteSurfaceApi,
+  putSurfacPointeApi,
+  deleteSurfacPointeApi,
 } from "../api/geoData";
 import { SeriesActionTypes } from "../store/series/types";
 import { SufacesActionTypes } from "../store/surfaces/types";
+import { SurfacePointActionTypes } from "../store/SurfacePoints/types";
 
 // TODO:
 // add functionality for FAILED requests see: https://redux-saga.js.org/
@@ -49,6 +52,24 @@ function* deleteSurfaceIterator(action: SufacesActionTypes) {
   }
 }
 
+function* putSurfacePointIterator(action: SurfacePointActionTypes) {
+  try {
+    // @ts-ignore
+    yield call(putSurfacPointeApi, action.payload);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* deleteSurfacePointIterator(action: SurfacePointActionTypes) {
+  try {
+    // @ts-ignore
+    yield call(deleteSurfacPointeApi, action.payload);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 /*************************** Watchers ***************************************/
 
 function* watchPutSeries() {
@@ -67,11 +88,21 @@ function* watchDeleteSurface() {
   yield takeEvery("DELETE_SURFACE", deleteSurfaceIterator);
 }
 
+function* watchPutSurfacePoint() {
+  yield takeEvery("PUT_SURFACEPOINT", putSurfacePointIterator);
+}
+
+function* watchDeleteSurfacePoint() {
+  yield takeEvery("DELETE_SURFACEPOINT", deleteSurfacePointIterator);
+}
+
 export default function* rootSaga() {
   yield all([
     watchPutSeries(),
     watchDeleteSerie(),
     watchPutSurface(),
     watchDeleteSurface(),
+    watchPutSurfacePoint(),
+    watchDeleteSurfacePoint()
   ]);
 }

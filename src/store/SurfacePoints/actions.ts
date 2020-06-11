@@ -12,14 +12,16 @@ export function getSurfacePoints(newSurfacePoints: SurfacePoint[]) {
   };
 }
 
-export function putOrientation(surfacePoint: SurfacePoint) {
+export function putSurfacePoint(surfacePoint: SurfacePoint) {
+  surfacePoint.id = `${surfacePoint.x}${surfacePoint.y}${surfacePoint.z}`;
   return {
     type: PUT_SURFACEPOINT,
     payload: surfacePoint,
   };
 }
 
-export function deleteOrientation(surfacePoint: SurfacePoint) {
+export function deleteSurfacePoint(surfacePoint: SurfacePoint) {
+  surfacePoint.id = `${surfacePoint.x}${surfacePoint.y}${surfacePoint.z}`;
   return {
     type: DELETE_SURFACEPOINT,
     payload: surfacePoint,

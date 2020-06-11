@@ -1,5 +1,6 @@
 import { Serie } from "../store/series/types";
-import { Surface } from '../store/surfaces/types'
+import { Surface } from "../store/surfaces/types";
+import { SurfacePoint } from "../store/SurfacePoints/types";
 import axios, { AxiosRequestConfig } from "axios";
 
 // TODO:
@@ -35,7 +36,7 @@ export async function putSerieApi(serie: Serie) {
 export async function deleteSerieApi(serie: Serie) {
   const data: Serie = {
     name: serie.name,
-    isfault: serie.isfault
+    isfault: serie.isfault,
   };
   const request_config: AxiosRequestConfig = {
     method: "delete",
@@ -63,7 +64,7 @@ export async function putSurfaceApi(surface: Surface) {
   const request_config: AxiosRequestConfig = {
     method: "put",
     baseURL,
-    url: '/geo-model/data/geo-model-surfaces',
+    url: "/geo-model/data/geo-model-surfaces",
     data,
   };
   try {
@@ -86,7 +87,7 @@ export async function deleteSurfaceApi(surface: Surface) {
   const request_config: AxiosRequestConfig = {
     method: "delete",
     baseURL,
-    url: '/geo-model/data/geo-model-surfaces',
+    url: "/geo-model/data/geo-model-surfaces",
     data,
   };
   try {
@@ -94,7 +95,67 @@ export async function deleteSurfaceApi(surface: Surface) {
     return response;
   } catch (error) {
     if (error.response) {
-      console.log("PUT-Series failed with: ", error.response.data.error);
+      console.log("DELETE-Series failed with: ", error.response.data.error);
+    } else {
+      console.log("Unknown error: ", error);
+    }
+  }
+}
+
+export async function putSurfacPointeApi(surfacePoint: SurfacePoint) {
+  const data: SurfacePoint = {
+    id: surfacePoint.id,
+    x: surfacePoint.x,
+    y: surfacePoint.y,
+    z: surfacePoint.z,
+    surface: surfacePoint.surface,
+    probdist: surfacePoint.probdist,
+    param1: surfacePoint.param1,
+    param2: surfacePoint.param2,
+    active: surfacePoint.active,
+  };
+  const request_config: AxiosRequestConfig = {
+    method: "put",
+    baseURL,
+    url: "/geo-model/data/geo-model-surface-points",
+    data,
+  };
+  try {
+    const response = await axios(request_config);
+    return response;
+  } catch (error) {
+    if (error.response) {
+      console.log("PUT-SurfacePoint failed with: ", error.response.data.error);
+    } else {
+      console.log("Unknown error: ", error);
+    }
+  }
+}
+
+export async function deleteSurfacPointeApi(surfacePoint: SurfacePoint) {
+  const data: SurfacePoint = {
+    id: surfacePoint.id,
+    x: surfacePoint.x,
+    y: surfacePoint.y,
+    z: surfacePoint.z,
+    surface: surfacePoint.surface,
+    probdist: surfacePoint.probdist,
+    param1: surfacePoint.param1,
+    param2: surfacePoint.param2,
+    active: surfacePoint.active,
+  };
+  const request_config: AxiosRequestConfig = {
+    method: "delete",
+    baseURL,
+    url: "/geo-model/data/geo-model-surface-points",
+    data,
+  };
+  try {
+    const response = await axios(request_config);
+    return response;
+  } catch (error) {
+    if (error.response) {
+      console.log("Delete-SurfacePoint failed with: ", error.response.data.error);
     } else {
       console.log("Unknown error: ", error);
     }

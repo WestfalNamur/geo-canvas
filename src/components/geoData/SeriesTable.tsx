@@ -1,35 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { putSeries, deleteSeries } from "../../store/series/actions";
 import { Serie } from "../../store/series/types";
 
-interface TableState {
-  columns: Array<Column<Serie>>;
-  data: Serie[];
-}
-
 export default function SeriesTable() {
   const seriesData = useSelector((state: RootState) => state.series.series);
   const dispatch = useDispatch();
-  const [state] = useState<TableState>({
-    columns: [
-      { title: "Name", field: "name" },
-      {
-        title: "Isfault",
-        field: "isfault",
-        type: "boolean",
-        initialEditValue: false,
-      },
-    ],
-    data: [],
-  });
+  const columns: Array<Column<Serie>> = [
+    { title: "Name", field: "name" },
+    {
+      title: "Isfault",
+      field: "isfault",
+      type: "boolean",
+      initialEditValue: false,
+    },
+  ];
 
   return (
     <MaterialTable
       title="Series"
-      columns={state.columns}
+      columns={columns}
       data={seriesData}
       editable={{
         onRowAdd: (newData: Serie) =>
