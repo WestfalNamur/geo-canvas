@@ -13,7 +13,6 @@ export function getSurfacePoints(newSurfacePoints: SurfacePoint[]) {
 }
 
 export function putSurfacePoint(surfacePoint: SurfacePoint) {
-  surfacePoint.id = `${surfacePoint.x}${surfacePoint.y}${surfacePoint.z}`;
   return {
     type: PUT_SURFACEPOINT,
     payload: surfacePoint,
@@ -21,7 +20,6 @@ export function putSurfacePoint(surfacePoint: SurfacePoint) {
 }
 
 export function deleteSurfacePoint(surfacePoint: SurfacePoint) {
-  surfacePoint.id = `${surfacePoint.x}${surfacePoint.y}${surfacePoint.z}`;
   return {
     type: DELETE_SURFACEPOINT,
     payload: surfacePoint,

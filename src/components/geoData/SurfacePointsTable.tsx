@@ -36,6 +36,21 @@ export default function SurfacePointsTable() {
     { title: "param2", field: "param2", type: "numeric" },
     { title: "active", field: "active", type: "boolean" },
   ];
+  // helper functions
+  const reshapeData = (newData: SurfacePoint) => {
+    const reshapedData: SurfacePoint = {
+      id: `${newData.x}${newData.y}${newData.z}`,
+      x: Number(newData.x),
+      y: Number(newData.y),
+      z: Number(newData.z),
+      surface: newData.surface,
+      probdist: newData.probdist,
+      param1: Number(newData.param1),
+      param2: Number(newData.param2),
+      active: newData.active,
+    };
+    return reshapedData;
+  };
   return (
     <MaterialTable
       title="Series"
@@ -45,21 +60,24 @@ export default function SurfacePointsTable() {
         onRowAdd: (newData: SurfacePoint) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(putSurfacePoint(newData));
+              const data = reshapeData(newData);
+              dispatch(putSurfacePoint(data));
               resolve();
             }, 100);
           }),
         onRowUpdate: (newData: SurfacePoint) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(putSurfacePoint(newData));
+              const data = reshapeData(newData);
+              dispatch(putSurfacePoint(data));
               resolve();
             }, 100);
           }),
         onRowDelete: (newData: SurfacePoint) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(deleteSurfacePoint(newData));
+              const data = reshapeData(newData);
+              dispatch(putSurfacePoint(data));
               resolve();
             }, 100);
           }),
