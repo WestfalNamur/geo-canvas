@@ -6,10 +6,13 @@ import {
   deleteSurfaceApi,
   putSurfacPointeApi,
   deleteSurfacPointeApi,
+  putOrientationApi,
+  deleteOrientationApi,
 } from "../api/geoData";
 import { SeriesActionTypes } from "../store/geoData/series/types";
 import { SufacesActionTypes } from "../store/geoData/surfaces/types";
 import { SurfacePointActionTypes } from "../store/geoData/SurfacePoints/types";
+import { OrientationActionTypes } from "../store/geoData/Orientations/types";
 
 // TODO:
 // add functionality for FAILED requests see: https://redux-saga.js.org/
@@ -70,6 +73,24 @@ function* deleteSurfacePointIterator(action: SurfacePointActionTypes) {
   }
 }
 
+function* putOrienationIterator(action: OrientationActionTypes) {
+  try {
+    // @ts-ignore
+    yield call(putOrientationApi, action.payload);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* deleteOrientationIterator(action: OrientationActionTypes) {
+  try {
+    // @ts-ignore
+    yield call(deleteOrientationApi, action.payload);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 /*************************** Watchers ***************************************/
 
 function* watchPutSeries() {
@@ -96,6 +117,14 @@ function* watchDeleteSurfacePoint() {
   yield takeEvery("DELETE_SURFACEPOINT", deleteSurfacePointIterator);
 }
 
+function* watchPutOrientation() {
+  yield takeEvery("PUT_ORIENTATION", putOrienationIterator);
+}
+
+function* watchDelteOrientaion() {
+  yield takeEvery("DELETE_ORIENTATION", deleteOrientationIterator);
+}
+
 export default function* rootSaga() {
   yield all([
     watchPutSeries(),
@@ -103,6 +132,8 @@ export default function* rootSaga() {
     watchPutSurface(),
     watchDeleteSurface(),
     watchPutSurfacePoint(),
-    watchDeleteSurfacePoint()
+    watchDeleteSurfacePoint(),
+    watchPutOrientation(),
+    watchDelteOrientaion(),
   ]);
 }
