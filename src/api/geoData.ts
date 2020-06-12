@@ -1,7 +1,7 @@
 import { Serie } from "../store/geoData/series/types";
 import { Surface } from "../store/geoData/surfaces/types";
 import { SurfacePoint } from "../store/geoData/SurfacePoints/types";
-import { Orientation } from '../store/geoData/Orientations/types'
+import { Orientation } from "../store/geoData/Orientations/types";
 import axios, { AxiosRequestConfig } from "axios";
 
 // TODO:
@@ -11,7 +11,7 @@ import axios, { AxiosRequestConfig } from "axios";
 export const baseURL: string = "http://127.0.0.1:5000";
 
 /*************************** Topoligical data *********************************/
-export async function putSerieApi(serie: Serie) {
+export async function _putSerieApi(serie: Serie) {
   const data: Serie = {
     name: serie.name,
     isfault: serie.isfault,
@@ -156,7 +156,10 @@ export async function deleteSurfacPointeApi(surfacePoint: SurfacePoint) {
     return response;
   } catch (error) {
     if (error.response) {
-      console.log("Delete-SurfacePoint failed with: ", error.response.data.error);
+      console.log(
+        "Delete-SurfacePoint failed with: ",
+        error.response.data.error
+      );
     } else {
       console.log("Unknown error: ", error);
     }
@@ -189,7 +192,10 @@ export async function putOrientationApi(orientation: Orientation) {
     return response;
   } catch (error) {
     if (error.response) {
-      console.log("Delete-Orientation failed with: ", error.response.data.error);
+      console.log(
+        "Delete-Orientation failed with: ",
+        error.response.data.error
+      );
     } else {
       console.log("Unknown error: ", error);
     }
@@ -222,7 +228,10 @@ export async function deleteOrientationApi(orientation: Orientation) {
     return response;
   } catch (error) {
     if (error.response) {
-      console.log("Delete-Orientation failed with: ", error.response.data.error);
+      console.log(
+        "Delete-Orientation failed with: ",
+        error.response.data.error
+      );
     } else {
       console.log("Unknown error: ", error);
     }

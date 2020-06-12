@@ -1,6 +1,5 @@
 import { call, all, takeEvery } from "redux-saga/effects";
 import {
-  putSerieApi,
   deleteSerieApi,
   putSurfaceApi,
   deleteSurfaceApi,
@@ -9,6 +8,7 @@ import {
   putOrientationApi,
   deleteOrientationApi,
 } from "../api/geoData";
+import { putSerieApi } from "../api/geoData/Series";
 import { SeriesActionTypes } from "../store/geoData/series/types";
 import { SufacesActionTypes } from "../store/geoData/surfaces/types";
 import { SurfacePointActionTypes } from "../store/geoData/SurfacePoints/types";

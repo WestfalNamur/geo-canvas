@@ -1,11 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { putSeries, deleteSeries } from "../../store/geoData/series/actions";
 import { Serie } from "../../store/geoData/series/types";
-
-import { getSeriesApi } from "../../api/geoData/Series";
 
 export default function SeriesTable() {
   const seriesData = useSelector((state: RootState) => state.series.series);
@@ -18,8 +16,6 @@ export default function SeriesTable() {
       type: "boolean",
     },
   ];
-
-  const data = getSeriesApi();
 
   return (
     <MaterialTable

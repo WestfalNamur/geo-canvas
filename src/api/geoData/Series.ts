@@ -13,45 +13,29 @@ interface SeriesData {
   isfaul: any;
 }
 
-// export function getSeriesApi() {
-//   console.log("API CALL");
-//   const request_config: AxiosRequestConfig = {
-//     baseURL,
-//     url: "/geo-model/data/geo-model-series",
-//     transformResponse: (response: any) => response.data,
-//   };
-//   axios.request<ServerSeriesData>(request_config).then((response) => {
-//     console.log(response);
-//     const { data } = response;
-//     return data;
-//   });
-// }
-
-export function _getSeriesApi() {
-  console.log("api call");
+export async function putSerieApi(serie: Serie) {
+  const data: Serie = {
+    name: serie.name,
+    isfault: serie.isfault,
+  };
   const request_config: AxiosRequestConfig = {
-    method: "GET",
+    method: "put",
     baseURL,
     url: "/geo-model/data/geo-model-series",
+    data,
   };
-  axios.request(request_config).then((res) => {
-    console.log(res.data.success);
-    console.log(res.data.message);
-    console.log(res.data.data);
-  });
-}
-
-export function getSeriesApi() {
-  const request_config: AxiosRequestConfig = {
-    method: "GET",
-    baseURL,
-    url: "/geo-model/data/geo-model-series",
-  };
-  axios.request<ResponseObject>(request_config).then((res) => {
-    console.log(res.data.success);
-    console.log(res.data.message);
-    console.log(res.data.data.name);
-  });
+  try {
+    const response = await axios.request<ResponseObject>(request_config);
+    const { data, message } = response.data;
+    console.log(message);
+    return data;
+  } catch (error) {
+    if (error.response) {
+      console.log("PUT-Series failed with: ", error.response.data.error);
+    } else {
+      console.log("Unknown error: ", error);
+    }
+  }
 }
 
 /*
