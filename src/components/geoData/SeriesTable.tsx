@@ -5,6 +5,8 @@ import { RootState } from "../../store";
 import { putSeries, deleteSeries } from "../../store/geoData/series/actions";
 import { Serie } from "../../store/geoData/series/types";
 
+import { getSeriesApi } from "../../api/geoData/Series";
+
 export default function SeriesTable() {
   const seriesData = useSelector((state: RootState) => state.series.series);
   const dispatch = useDispatch();
@@ -13,9 +15,11 @@ export default function SeriesTable() {
     {
       title: "Isfault",
       field: "isfault",
-      type: "boolean"
+      type: "boolean",
     },
   ];
+
+  const data = getSeriesApi();
 
   return (
     <MaterialTable

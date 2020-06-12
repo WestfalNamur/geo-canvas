@@ -8,7 +8,7 @@ import axios, { AxiosRequestConfig } from "axios";
 // MaterialTable table data object type  => need for data processing
 // remove boilerplates => DRY
 
-const baseURL: string = "http://127.0.0.1:5000";
+export const baseURL: string = "http://127.0.0.1:5000";
 
 /*************************** Topoligical data *********************************/
 export async function putSerieApi(serie: Serie) {
@@ -228,29 +228,3 @@ export async function deleteOrientationApi(orientation: Orientation) {
     }
   }
 }
-/*
-Use the axios.request<T>(...args) style definition.
-The last Response-interceptor in the array implicitly comply to an interface like (currentResponse: any) => T
-
-So if you have data being something like:
-
-interface ServerResponse {
-  data: ServerData
-}
-
-interface ServerData {
-  foo: string
-  bar: number
-}
-
-Then you can say:
-
-axios.request<ServerData>({
-  url: 'https://example.com/path/to/data',
-  transformResponse: (r: ServerResponse) => r.data
-}).then((response) => {
-  // `response` is of type `AxiosResponse<ServerData>`
-  const { data } = response
-  // `data` is of type ServerData, correctly inferred
-})
-*/
