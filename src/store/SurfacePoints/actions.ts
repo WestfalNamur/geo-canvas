@@ -12,14 +12,14 @@ export function getSurfacePoints(newSurfacePoints: SurfacePoint[]) {
   };
 }
 
-export function putOrientation(surfacePoint: SurfacePoint) {
+export function putSurfacePoint(surfacePoint: SurfacePoint) {
   return {
     type: PUT_SURFACEPOINT,
     payload: surfacePoint,
   };
 }
 
-export function deleteOrientation(surfacePoint: SurfacePoint) {
+export function deleteSurfacePoint(surfacePoint: SurfacePoint) {
   return {
     type: DELETE_SURFACEPOINT,
     payload: surfacePoint,

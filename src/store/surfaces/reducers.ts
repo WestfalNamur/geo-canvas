@@ -7,7 +7,7 @@ import {
 } from "./types";
 
 const initialState: SurfacesState = {
-  surfaces: [],
+  surfaces: []
 };
 
 export function surfacesReducer(

@@ -2,7 +2,7 @@ export const GET_ORIENTATIONS = "GET_ORIENTATIONS";
 export const PUT_ORIENTATION = "PUT_ORIENTATION";
 export const DELETE_ORIENTATION = "DELETE_ORIENTATION";
 
-export interface Orientaion {
+export interface Orientation {
   id: string;
   x: number;
   y: number;
@@ -18,22 +18,22 @@ export interface Orientaion {
 }
 
 export interface OrientationsState {
-  orientaions: Orientaion[];
+  orientations: Orientation[];
 }
 
 export interface GetOrientationsActionType {
   type: typeof GET_ORIENTATIONS;
-  payload: Orientaion[];
+  payload: Orientation[];
 }
 
 export interface PutOrientationActionType {
   type: typeof PUT_ORIENTATION;
-  payload: Orientaion;
+  payload: Orientation;
 }
 
 export interface DeleteOrientationActionType {
   type: typeof DELETE_ORIENTATION;
-  payload: Orientaion;
+  payload: Orientation;
 }
 
 export type OrientationActionTypes =

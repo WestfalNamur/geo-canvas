@@ -7,7 +7,7 @@ import {
 } from "./types";
 
 const initialState: OrientationsState = {
-  orientaions: [],
+  orientations: [],
 };
 
 export function orientationsReducer(
@@ -17,18 +17,18 @@ export function orientationsReducer(
   switch (action.type) {
     case GET_ORIENTATIONS:
       return {
-        orientaions: action.payload,
+        orientations: action.payload,
       };
     case PUT_ORIENTATION:
-      const filteredOrientations = state.orientaions.filter(
+      const filteredOrientations = state.orientations.filter(
         (orientation) => orientation.id !== action.payload.id
       );
       return {
-        orientaions: [...filteredOrientations, action.payload],
+        orientations: [...filteredOrientations, action.payload],
       };
     case DELETE_ORIENTATION:
       return {
-        orientaions: state.orientaions.filter(
+        orientations: state.orientations.filter(
           (orientation) => orientation.id !== action.payload.id
         ),
       };

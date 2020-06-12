@@ -2,21 +2,17 @@ import React from "react";
 import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { putSeries } from "../../store/series/actions";
+import { putSeries, deleteSeries } from "../../store/series/actions";
+import { Serie } from "../../store/series/types";
 
-interface Row {
-  name: string;
-  isfault: boolean;
-}
-
-export default function MaterialTableDemo() {
+export default function SeriesTable() {
   const seriesData = useSelector((state: RootState) => state.series.series);
   const dispatch = useDispatch();
-  const columns: Array<Column<Row>> = [
+  const columns: Array<Column<Serie>> = [
     { title: "Name", field: "name" },
     {
-      title: "isfault",
-      field: "IsFault",
+      title: "Isfault",
+      field: "isfault",
       type: "boolean",
       initialEditValue: false,
     },
@@ -24,16 +20,30 @@ export default function MaterialTableDemo() {
 
   return (
     <MaterialTable
-      title="Editable Example"
+      title="Series"
       columns={columns}
       data={seriesData}
       editable={{
-        onRowAdd: (newData) =>
+        onRowAdd: (newData: Serie) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              resolve();
               dispatch(putSeries(newData));
-            }, 600);
+              resolve();
+            }, 100);
+          }),
+        onRowUpdate: (newData: Serie) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              dispatch(putSeries(newData));
+              resolve();
+            }, 100);
+          }),
+        onRowDelete: (newData: Serie) =>
+          new Promise((resolve) => {
+            setTimeout(() => {
+              dispatch(deleteSeries(newData));
+              resolve();
+            }, 100);
           }),
       }}
     />
