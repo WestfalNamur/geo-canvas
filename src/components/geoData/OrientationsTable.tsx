@@ -5,8 +5,8 @@ import { RootState } from "../../store";
 import {
   putOrientation,
   deleteOrientation,
-} from "../../store/Orientations/actions";
-import { Orientation } from "../../store/Orientations/types";
+} from "../../store/geoData/Orientations/actions";
+import { Orientation } from "../../store/geoData/Orientations/types";
 
 interface Lookup {
   [key: string]: string;

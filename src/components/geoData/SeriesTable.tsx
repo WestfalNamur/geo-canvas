@@ -2,8 +2,8 @@ import React from "react";
 import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { putSeries, deleteSeries } from "../../store/series/actions";
-import { Serie } from "../../store/series/types";
+import { putSeries, deleteSeries } from "../../store/geoData/series/actions";
+import { Serie } from "../../store/geoData/series/types";
 
 export default function SeriesTable() {
   const seriesData = useSelector((state: RootState) => state.series.series);
@@ -13,8 +13,7 @@ export default function SeriesTable() {
     {
       title: "Isfault",
       field: "isfault",
-      type: "boolean",
-      initialEditValue: false,
+      type: "boolean"
     },
   ];
 

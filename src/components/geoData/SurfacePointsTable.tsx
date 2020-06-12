@@ -5,8 +5,8 @@ import { RootState } from "../../store";
 import {
   putSurfacePoint,
   deleteSurfacePoint,
-} from "../../store/SurfacePoints/actions";
-import { SurfacePoint } from "../../store/SurfacePoints/types";
+} from "../../store/geoData/SurfacePoints/actions";
+import { SurfacePoint } from "../../store/geoData/SurfacePoints/types";
 
 interface Lookup {
   [key: string]: string;

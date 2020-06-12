@@ -1,7 +1,7 @@
-import { Serie } from "../store/series/types";
-import { Surface } from "../store/surfaces/types";
-import { SurfacePoint } from "../store/SurfacePoints/types";
-import { Orientation } from '../store/Orientations/types'
+import { Serie } from "../store/geoData/series/types";
+import { Surface } from "../store/geoData/surfaces/types";
+import { SurfacePoint } from "../store/geoData/SurfacePoints/types";
+import { Orientation } from '../store/geoData/Orientations/types'
 import axios, { AxiosRequestConfig } from "axios";
 
 // TODO:

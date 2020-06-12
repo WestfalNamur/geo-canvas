@@ -7,9 +7,9 @@ import {
   putSurfacPointeApi,
   deleteSurfacPointeApi,
 } from "../api/geoData";
-import { SeriesActionTypes } from "../store/series/types";
-import { SufacesActionTypes } from "../store/surfaces/types";
-import { SurfacePointActionTypes } from "../store/SurfacePoints/types";
+import { SeriesActionTypes } from "../store/geoData/series/types";
+import { SufacesActionTypes } from "../store/geoData/surfaces/types";
+import { SurfacePointActionTypes } from "../store/geoData/SurfacePoints/types";
 
 // TODO:
 // add functionality for FAILED requests see: https://redux-saga.js.org/

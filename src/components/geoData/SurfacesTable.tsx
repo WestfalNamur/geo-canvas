@@ -2,8 +2,8 @@ import React from "react";
 import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { putSurface, deleteSurface } from "../../store/surfaces/actions";
-import { Surface } from "../../store/surfaces/types";
+import { putSurface, deleteSurface } from "../../store/geoData/surfaces/actions";
+import { Surface } from "../../store/geoData/surfaces/types";
 
 interface Lookup {
   [key: string]: string;
