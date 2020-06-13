@@ -5,30 +5,46 @@ import { Serie } from "../../store/geoData/series/types";
 interface ResponseObject {
   success: boolean;
   message: string;
-  data: SeriesData;
+  data: SeriesServerData;
 }
 
-interface SeriesData {
-  name: any;
-  isfaul: any;
+interface SeriesServerData {
+  name: {};
+  isfaul: {};
 }
 
 export async function putSerieApi(serie: Serie) {
-  const data: Serie = {
+  const putData: Serie = {
     name: serie.name,
     isfault: serie.isfault,
   };
   const request_config: AxiosRequestConfig = {
     method: "put",
     baseURL,
+    url: "/geo-model/data/geo-modsel-series",
+    data: putData,
+  };
+  const response = await axios.request<ResponseObject>(request_config);
+  const { data, message } = response.data;
+  console.log(message);
+  return data;
+}
+
+export async function deleteSerieApi(serie: Serie) {
+  const data: Serie = {
+    name: serie.name,
+    isfault: serie.isfault,
+  };
+  const request_config: AxiosRequestConfig = {
+    method: "delete",
+    baseURL,
     url: "/geo-model/data/geo-model-series",
     data,
   };
   try {
     const response = await axios.request<ResponseObject>(request_config);
-    const { data, message } = response.data;
+    const { message } = response.data;
     console.log(message);
-    return data;
   } catch (error) {
     if (error.response) {
       console.log("PUT-Series failed with: ", error.response.data.error);

@@ -1,4 +1,5 @@
 export const ADD_SERIE = "ADD_SERIE";
+export const ADD_SERIE_FAILED = "ADD_SERIE_FAILED";
 export const PUT_SERIE = "PUT_SERIE";
 export const DELTE_SERIE = "DELETE_SERIE";
 
@@ -13,9 +14,12 @@ export interface SeriesState {
 
 export interface AddSerieActionType {
   type: typeof ADD_SERIE;
-  payload: {
-    newSerie: Serie;
-  };
+  payload: Serie;
+}
+
+export interface AddSerieFailedActionType {
+  type: typeof ADD_SERIE_FAILED;
+  payload: Serie
 }
 
 export interface PutSerieActionType {
@@ -28,12 +32,11 @@ export interface PutSerieActionType {
 
 export interface DeleteSerieActionType {
   type: typeof DELTE_SERIE;
-  payload: {
-    oldSerie: Serie;
-  };
+  payload: Serie;
 }
 
 export type SeriesActionTypes =
   | AddSerieActionType
+  | AddSerieFailedActionType
   | PutSerieActionType
   | DeleteSerieActionType;

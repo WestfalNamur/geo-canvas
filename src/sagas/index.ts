@@ -13,9 +13,9 @@ import { SeriesActionTypes } from "../store/geoData/series/types";
 import { SufacesActionTypes } from "../store/geoData/surfaces/types";
 import { SurfacePointActionTypes } from "../store/geoData/SurfacePoints/types";
 import { OrientationActionTypes } from "../store/geoData/Orientations/types";
+import { watchAddSerie } from './Series'
 
 // TODO:
-// add functionality for FAILED requests see: https://redux-saga.js.org/
 // fix @ts-ignore
 
 /*************************** Subroutines *************************************/
@@ -127,6 +127,8 @@ function* watchDelteOrientaion() {
 
 export default function* rootSaga() {
   yield all([
+    watchAddSerie(),
+
     watchPutSeries(),
     watchDeleteSerie(),
     watchPutSurface(),
