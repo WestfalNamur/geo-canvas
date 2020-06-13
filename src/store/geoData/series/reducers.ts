@@ -1,7 +1,7 @@
 import {
   SeriesState,
   SeriesActionTypes,
-  GET_SERIES,
+  ADD_SERIE,
   PUT_SERIE,
   DELTE_SERIE,
 } from "./types";
@@ -15,21 +15,21 @@ export function seriesReducer(
   action: SeriesActionTypes
 ): SeriesState {
   switch (action.type) {
-    case GET_SERIES:
+    case ADD_SERIE:
       return {
-        series: action.payload,
+        series: [...state.series, action.payload.newSerie],
       };
     case PUT_SERIE:
       const filteredSeries = state.series.filter(
-        (serie) => serie.name !== action.payload.name
+        (serie) => serie.name !== action.payload.oldSerie.name
       );
       return {
-        series: [...filteredSeries, action.payload],
+        series: [...filteredSeries, action.payload.newSerie],
       };
     case DELTE_SERIE:
       return {
         series: state.series.filter(
-          (serie) => serie.name !== action.payload.name
+          (serie) => serie.name !== action.payload.oldSerie.name
         ),
       };
     default:

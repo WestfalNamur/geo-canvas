@@ -1,4 +1,4 @@
-export const GET_SERIES = "GET_SERIES";
+export const ADD_SERIE = "ADD_SERIE";
 export const PUT_SERIE = "PUT_SERIE";
 export const DELTE_SERIE = "DELETE_SERIE";
 
@@ -11,22 +11,29 @@ export interface SeriesState {
   series: Serie[];
 }
 
-export interface GetSeriesActionType {
-  type: typeof GET_SERIES;
-  payload: Serie[];
+export interface AddSerieActionType {
+  type: typeof ADD_SERIE;
+  payload: {
+    newSerie: Serie;
+  };
 }
 
 export interface PutSerieActionType {
   type: typeof PUT_SERIE;
-  payload: Serie;
+  payload: {
+    oldSerie: Serie;
+    newSerie: Serie;
+  };
 }
 
 export interface DeleteSerieActionType {
   type: typeof DELTE_SERIE;
-  payload: Serie;
+  payload: {
+    oldSerie: Serie;
+  };
 }
 
 export type SeriesActionTypes =
-  | GetSeriesActionType
+  | AddSerieActionType
   | PutSerieActionType
   | DeleteSerieActionType;

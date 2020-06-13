@@ -1,22 +1,29 @@
-import { Serie, GET_SERIES, PUT_SERIE, DELTE_SERIE } from "./types";
+import { Serie, PUT_SERIE, DELTE_SERIE, ADD_SERIE } from "./types";
 
-export function getSeries(newSeries: Serie[]) {
+export function addSerie(newSerie: Serie) {
   return {
-    type: GET_SERIES,
-    payload: newSeries,
+    type: ADD_SERIE,
+    payload: {
+      newSerie,
+    },
   };
 }
 
-export function putSeries(serie: Serie) {
+export function putSeries(newSerie: Serie, oldSerie: Serie) {
   return {
     type: PUT_SERIE,
-    payload: serie,
+    payload: {
+      oldSerie,
+      newSerie,
+    },
   };
 }
 
-export function deleteSeries(serie: Serie) {
+export function deleteSeries(oldSerie: Serie) {
   return {
     type: DELTE_SERIE,
-    payload: serie,
+    payload: {
+      oldSerie,
+    },
   };
 }

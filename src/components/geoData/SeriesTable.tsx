@@ -2,7 +2,11 @@ import React, { useEffect } from "react";
 import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { putSeries, deleteSeries } from "../../store/geoData/series/actions";
+import {
+  addSerie,
+  putSeries,
+  deleteSeries,
+} from "../../store/geoData/series/actions";
 import { Serie } from "../../store/geoData/series/types";
 
 export default function SeriesTable() {
@@ -26,21 +30,23 @@ export default function SeriesTable() {
         onRowAdd: (newData: Serie) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(putSeries(newData));
+              dispatch(addSerie(newData));
               resolve();
             }, 100);
           }),
-        onRowUpdate: (newData: Serie) =>
+        onRowUpdate: (newData, oldData) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(putSeries(newData));
+              oldData
+                ? dispatch(putSeries(newData, oldData))
+                : console.log("oldData missing in onRowUpdate in SeriesTable");
               resolve();
             }, 100);
           }),
-        onRowDelete: (newData: Serie) =>
+        onRowDelete: (oldData: Serie) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(deleteSeries(newData));
+              dispatch(deleteSeries(oldData));
               resolve();
             }, 100);
           }),
