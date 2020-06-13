@@ -7,7 +7,7 @@ import createSagaMiddleware from "redux-saga";
 import { extentReducer } from "./extent/reducers";
 import { sectionReducer } from "./section/reducers";
 // geoData
-import { seriesReducer } from "./geoData/series/reducers";
+import geoData from "./geoData";
 import { surfacesReducer } from "./geoData/surfaces/reducers";
 import { surfacePointsReducer } from "./geoData/SurfacePoints/reducers";
 import { orientationsReducer } from "./geoData/Orientations/reducer";
@@ -19,10 +19,10 @@ import rootSaga from "../sagas";
 
 // combine reducers
 const rootReducer = combineReducers({
+  geoData,
   canvas: canvasReducer,
   extent: extentReducer,
   section: sectionReducer,
-  series: seriesReducer,
   surfaces: surfacesReducer,
   surfacePoints: surfacePointsReducer,
   orientations: orientationsReducer,

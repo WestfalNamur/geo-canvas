@@ -10,7 +10,8 @@ import {
 import { Serie } from "../../store/geoData/series/types";
 
 export default function SeriesTable() {
-  const seriesData = useSelector((state: RootState) => state.series.series);
+  const seriesState = (state: RootState) => state.geoData.series.series;
+  const seriesData = useSelector(seriesState);
   const dispatch = useDispatch();
   const columns: Array<Column<Serie>> = [
     { title: "Name", field: "name" },

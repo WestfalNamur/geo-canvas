@@ -2,7 +2,10 @@ import React from "react";
 import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { putSurface, deleteSurface } from "../../store/geoData/surfaces/actions";
+import {
+  putSurface,
+  deleteSurface,
+} from "../../store/geoData/surfaces/actions";
 import { Surface } from "../../store/geoData/surfaces/types";
 
 interface Lookup {
@@ -10,11 +13,11 @@ interface Lookup {
 }
 
 export default function SurfacesTable() {
-  // connect to store
-  const surfacesData = useSelector(
-    (state: RootState) => state.surfaces.surfaces
-  );
-  const seriesData = useSelector((state: RootState) => state.series.series);
+  // hooks
+  const surfaceState = (state: RootState) => state.surfaces.surfaces;
+  const surfacesData = useSelector(surfaceState);
+  const seriesState = (state: RootState) => state.geoData.series.series;
+  const seriesData = useSelector(seriesState);
   const dispatch = useDispatch();
   // Series lookup options // lookup requires an object-type not an array;
   let lookup: Lookup = {};
