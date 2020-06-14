@@ -5,12 +5,19 @@ import { Serie } from "../../store/geoData/series/types";
 interface ResponseObject {
   success: boolean;
   message: string;
-  data: SeriesServerData;
+  data: Serie[];
 }
 
-interface SeriesServerData {
-  name: {};
-  isfaul: {};
+export async function getSerieApi() {
+  const request_config: AxiosRequestConfig = {
+    method: "get",
+    baseURL,
+    url: "/geo-model/data/geo-model-series",
+  };
+  const response = await axios.request<ResponseObject>(request_config);
+  const { message, data } = response.data;
+  console.log(message);
+  return data;
 }
 
 export async function putSerieApi(serie: Serie) {
@@ -21,13 +28,12 @@ export async function putSerieApi(serie: Serie) {
   const request_config: AxiosRequestConfig = {
     method: "put",
     baseURL,
-    url: "/geo-model/data/geo-modsel-series",
+    url: "/geo-model/data/geo-model-series",
     data: putData,
   };
   const response = await axios.request<ResponseObject>(request_config);
-  const { data, message } = response.data;
+  const { message } = response.data;
   console.log(message);
-  return data;
 }
 
 export async function deleteSerieApi(serie: Serie) {
@@ -41,20 +47,15 @@ export async function deleteSerieApi(serie: Serie) {
     url: "/geo-model/data/geo-model-series",
     data,
   };
-  try {
-    const response = await axios.request<ResponseObject>(request_config);
-    const { message } = response.data;
-    console.log(message);
-  } catch (error) {
-    if (error.response) {
-      console.log("PUT-Series failed with: ", error.response.data.error);
-    } else {
-      console.log("Unknown error: ", error);
-    }
-  }
+  const response = await axios.request<ResponseObject>(request_config);
+  const { message } = response.data;
+  console.log(message);
 }
 
 /*
+
+  http://127.0.0.1:5000/geo-model/data/geo-modsel-series
+
 Use the axios.request<T>(...args) style definition.
 The last Response-interceptor in the array implicitly comply to an interface like (currentResponse: any) => T
 

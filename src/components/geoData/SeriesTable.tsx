@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";

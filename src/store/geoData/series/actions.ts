@@ -1,10 +1,26 @@
 import {
   Serie,
-  PUT_SERIE,
-  DELTE_SERIE,
+  GET_SERIES,
+  ADD_SERIES_FROM_SERVER,
   ADD_SERIE,
   ADD_SERIE_FAILED,
+  PUT_SERIE,
+  PUT_SERIE_FAILED,
+  DELTE_SERIE,
 } from "./types";
+
+export function getSeries() {
+  return {
+    type: GET_SERIES,
+  };
+}
+
+export function addSeriesFromServer(newSeries: Serie[]) {
+  return {
+    type: ADD_SERIES_FROM_SERVER,
+    payload: newSeries,
+  };
+}
 
 export function addSerie(newSerie: Serie) {
   return {
@@ -24,8 +40,18 @@ export function putSeries(newSerie: Serie, oldSerie: Serie) {
   return {
     type: PUT_SERIE,
     payload: {
-      oldSerie,
       newSerie,
+      oldSerie,
+    },
+  };
+}
+
+export function putSeriesFailed(newSerie: Serie, oldSerie: Serie) {
+  return {
+    type: PUT_SERIE_FAILED,
+    payload: {
+      newSerie,
+      oldSerie,
     },
   };
 }

@@ -1,9 +1,11 @@
 import {
   SeriesState,
   SeriesActionTypes,
+  ADD_SERIES_FROM_SERVER,
   ADD_SERIE,
   ADD_SERIE_FAILED,
   PUT_SERIE,
+  PUT_SERIE_FAILED,
   DELTE_SERIE,
 } from "./types";
 
@@ -16,6 +18,10 @@ export function seriesReducer(
   action: SeriesActionTypes
 ): SeriesState {
   switch (action.type) {
+    case ADD_SERIES_FROM_SERVER:
+      return {
+        series: action.payload,
+      };
     case ADD_SERIE:
       return {
         series: [...state.series, action.payload],
@@ -27,11 +33,18 @@ export function seriesReducer(
         ),
       };
     case PUT_SERIE:
-      const filteredSeries = state.series.filter(
+      const filteredSeriesPut = state.series.filter(
         (serie) => serie.name !== action.payload.oldSerie.name
       );
       return {
-        series: [...filteredSeries, action.payload.newSerie],
+        series: [...filteredSeriesPut, action.payload.newSerie],
+      };
+    case PUT_SERIE_FAILED:
+      const filteredSeriesPutFailed = state.series.filter(
+        (serie) => serie.name !== action.payload.newSerie.name
+      );
+      return {
+        series: [...filteredSeriesPutFailed, action.payload.oldSerie],
       };
     case DELTE_SERIE:
       return {
