@@ -1,18 +1,18 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { baseURL } from "../geoData";
-import { Serie } from "../../store/geoData/series/types";
+import { Surface } from "../../store/geoData/surfaces/types";
 
 interface ResponseObject {
   success: boolean;
   message: string;
-  data: Serie[];
+  data: Surface[];
 }
 
-export async function getSerieApi() {
+export async function getSurfaceApi() {
   const request_config: AxiosRequestConfig = {
     method: "get",
     baseURL,
-    url: "/geo-model/data/geo-model-series",
+    url: "/geo-model/data/geo-model-surfaces",
   };
   const response = await axios.request<ResponseObject>(request_config);
   const { message, data } = response.data;
@@ -20,15 +20,15 @@ export async function getSerieApi() {
   return data;
 }
 
-export async function putSerieApi(serie: Serie) {
-  const data: Serie = {
-    name: serie.name,
-    isfault: serie.isfault,
+export async function putSurfaceApi(surface: Surface) {
+  const data: Surface = {
+    name: surface.name,
+    serie: surface.serie,
   };
   const request_config: AxiosRequestConfig = {
     method: "put",
     baseURL,
-    url: "/geo-model/data/geo-model-series",
+    url: "/geo-model/data/geo-model-surfaces",
     data,
   };
   const response = await axios.request<ResponseObject>(request_config);
@@ -36,15 +36,15 @@ export async function putSerieApi(serie: Serie) {
   console.log(message);
 }
 
-export async function deleteSerieApi(serie: Serie) {
-  const data: Serie = {
-    name: serie.name,
-    isfault: serie.isfault,
+export async function deleteSurfaceApi(surface: Surface) {
+  const data: Surface = {
+    name: surface.name,
+    serie: surface.serie,
   };
   const request_config: AxiosRequestConfig = {
     method: "delete",
     baseURL,
-    url: "/geo-model/data/geo-model-series",
+    url: "/geo-model/data/geo-model-surfaces",
     data,
   };
   const response = await axios.request<ResponseObject>(request_config);

@@ -28,7 +28,7 @@ export default function SeriesTable() {
       columns={columns}
       data={seriesData}
       editable={{
-        onRowAdd: (newData: Serie) =>
+        onRowAdd: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               dispatch(addSerie(newData));
@@ -44,7 +44,7 @@ export default function SeriesTable() {
               resolve();
             }, 100);
           }),
-        onRowDelete: (oldData: Serie) =>
+        onRowDelete: (oldData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               dispatch(deleteSeries(oldData));

@@ -3,10 +3,11 @@ import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import {
+  addSurfacePoint,
   putSurfacePoint,
   deleteSurfacePoint,
-} from "../../store/geoData/SurfacePoints/actions";
-import { SurfacePoint } from "../../store/geoData/SurfacePoints/types";
+} from "../../store/geoData/surfacePoints/actions";
+import { SurfacePoint } from "../../store/geoData/surfacePoints/types";
 
 interface Lookup {
   [key: string]: string;
@@ -15,10 +16,10 @@ interface Lookup {
 export default function SurfacePointsTable() {
   // connect to store
   const surfacePointsData = useSelector(
-    (state: RootState) => state.surfacePoints.surfacePoints
+    (state: RootState) => state.geoData.surfacePoints.surfacePoints
   );
   const surfacesData = useSelector(
-    (state: RootState) => state.surfaces.surfaces
+    (state: RootState) => state.geoData.surfaces.surfaces
   );
   const dispatch = useDispatch();
   // get lookup options for possible surfaces
@@ -57,23 +58,30 @@ export default function SurfacePointsTable() {
       columns={columns}
       data={surfacePointsData}
       editable={{
-        onRowAdd: (newData: SurfacePoint) =>
+        onRowAdd: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               const data = reshapeData(newData);
-              dispatch(putSurfacePoint(data));
+              dispatch(addSurfacePoint(data));
               resolve();
             }, 100);
           }),
-        onRowUpdate: (newData: SurfacePoint) =>
+        onRowUpdate: (newData, oldData) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              const data = reshapeData(newData);
-              dispatch(putSurfacePoint(data));
+              if (oldData) {
+                const newSurfacePointData = reshapeData(newData);
+                const oldSurfacePointData = reshapeData(oldData);
+                dispatch(
+                  putSurfacePoint(newSurfacePointData, oldSurfacePointData)
+                );
+              } else {
+                console.log("oldData missing");
+              }
               resolve();
             }, 100);
           }),
-        onRowDelete: (newData: SurfacePoint) =>
+        onRowDelete: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               const data = reshapeData(newData);

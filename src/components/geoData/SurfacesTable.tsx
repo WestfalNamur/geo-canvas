@@ -3,6 +3,7 @@ import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import {
+  addSurface,
   putSurface,
   deleteSurface,
 } from "../../store/geoData/surfaces/actions";
@@ -14,7 +15,7 @@ interface Lookup {
 
 export default function SurfacesTable() {
   // hooks
-  const surfaceState = (state: RootState) => state.surfaces.surfaces;
+  const surfaceState = (state: RootState) => state.geoData.surfaces.surfaces;
   const surfacesData = useSelector(surfaceState);
   const seriesState = (state: RootState) => state.geoData.series.series;
   const seriesData = useSelector(seriesState);
@@ -35,21 +36,23 @@ export default function SurfacesTable() {
       columns={columns}
       data={surfacesData}
       editable={{
-        onRowAdd: (newData: Surface) =>
+        onRowAdd: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(putSurface(newData));
+              dispatch(addSurface(newData));
               resolve();
             }, 100);
           }),
-        onRowUpdate: (newData: Surface) =>
+        onRowUpdate: (newData, oldData) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(putSurface(newData));
+              oldData
+                ? dispatch(putSurface(newData, oldData))
+                : console.log("oldData missing in onRowUpdate in SurfaceTable");
               resolve();
             }, 100);
           }),
-        onRowDelete: (newData: Surface) =>
+        onRowDelete: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               dispatch(deleteSurface(newData));

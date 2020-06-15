@@ -8,9 +8,6 @@ import { extentReducer } from "./extent/reducers";
 import { sectionReducer } from "./section/reducers";
 // geoData
 import geoData from "./geoData";
-import { surfacesReducer } from "./geoData/surfaces/reducers";
-import { surfacePointsReducer } from "./geoData/SurfacePoints/reducers";
-import { orientationsReducer } from "./geoData/Orientations/reducer";
 // canvas
 import { canvasReducer } from "./canvas/reducers";
 
@@ -23,9 +20,6 @@ const rootReducer = combineReducers({
   canvas: canvasReducer,
   extent: extentReducer,
   section: sectionReducer,
-  surfaces: surfacesReducer,
-  surfacePoints: surfacePointsReducer,
-  orientations: orientationsReducer,
 });
 
 // create middelwares

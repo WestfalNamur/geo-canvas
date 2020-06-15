@@ -6,7 +6,7 @@ import {
 } from "../api/geoData/Series";
 import {
   GetSeriesActionType,
-  AddSerieFailedActionType,
+  AddSerieActionType,
   PutSerieActionType,
   DeleteSerieActionType,
 } from "../store/geoData/series/types";
@@ -17,7 +17,7 @@ import {
  * => PUT only works on existing Series;
  */
 /*************************** Subroutines *************************************/
-function* getSerieSaga(action: GetSeriesActionType) {
+function* getSeriesSaga(action: GetSeriesActionType) {
   try {
     const data = yield call(getSerieApi);
     yield put({ type: "ADD_SERIES_FROM_SERVER", payload: data });
@@ -30,32 +30,32 @@ function* getSerieSaga(action: GetSeriesActionType) {
   }
 }
 
-function* addSerieSaga(action: AddSerieFailedActionType) {
+function* addSerieSaga(action: AddSerieActionType) {
   try {
     // @ts-ignore
     yield call(putSerieApi, action.payload);
   } catch (error) {
-    yield put({ type: "ADD_SERIE_FAILED", payload: action.payload });
     if (error.response) {
       console.log("PUT-Series failed with: ", error.response.data.error);
     } else {
       console.log("Unknown error: ", error);
     }
+    yield put({ type: "ADD_SERIE_FAILED", payload: action.payload });
   }
 }
 
-function* putSerieSage(action: PutSerieActionType) {
+function* putSerieSaga(action: PutSerieActionType) {
   const { newSerie } = action.payload;
   try {
     // @ts-ignore
     yield call(putSerieApi, newSerie);
   } catch (error) {
-    yield put({ type: "PUT_SERIE_FAILED", payload: action.payload });
     if (error.response) {
       console.log("PUT-Series failed with: ", error.response.data.error);
     } else {
       console.log("Unknown error: ", error);
     }
+    yield put({ type: "PUT_SERIE_FAILED", payload: action.payload });
   }
 }
 
@@ -63,18 +63,18 @@ function* deleteSerieSaga(action: DeleteSerieActionType) {
   try {
     yield call(deleteSerieApi, action.payload);
   } catch (error) {
-    yield put({ type: "DELETE_SERIE_FAILED", payload: action.payload });
     if (error.response) {
       console.log("DELETE-Series failed with: ", error.response.data.error);
     } else {
       console.log("Unknown error: ", error);
     }
+    yield put({ type: "DELETE_SERIE_FAILED", payload: action.payload });
   }
 }
 
 /*************************** Watchers ***************************************/
 export function* watchGetSeries() {
-  yield takeEvery("GET_SERIES", getSerieSaga);
+  yield takeEvery("GET_SERIES", getSeriesSaga);
 }
 
 export function* watchAddSerie() {
@@ -82,7 +82,7 @@ export function* watchAddSerie() {
 }
 
 export function* watchPutSerie() {
-  yield takeEvery("PUT_SERIE", putSerieSage);
+  yield takeEvery("PUT_SERIE", putSerieSaga);
 }
 
 export function* watchDeleteSerie() {

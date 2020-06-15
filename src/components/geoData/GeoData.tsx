@@ -5,7 +5,9 @@ import SurfacesTable from "./SurfacesTable";
 import SurfacePointsTable from "./SurfacePointsTable";
 import OrientationsTable from "./OrientationsTable";
 import { useDispatch } from "react-redux";
+
 import { getSeries } from "../../store/geoData/series/actions";
+import { getSurfaces } from  "../../store/geoData/surfaces/actions"
 
 export default function GeoData() {
   // fetch data from server
@@ -13,6 +15,7 @@ export default function GeoData() {
   useEffect(() => {
     // replace with function to get all data
     dispatch(getSeries());
+    dispatch(getSurfaces());
   });
   return (
     <div className="GeoData">
