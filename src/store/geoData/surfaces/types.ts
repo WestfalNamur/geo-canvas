@@ -18,20 +18,55 @@ export interface SurfacesState {
 
 export interface GetSurfacesActionType {
   type: typeof GET_SURFACES;
+}
+
+export interface AddSurfaceFromServerActionType {
+  type: typeof ADD_SUFACES_FROM_SERVER;
   payload: Surface[];
+}
+
+export interface AddSurfaceActionType {
+  type: typeof ADD_SURFACE;
+  payload: Surface;
+}
+
+export interface AddSurfaceFailedActionType {
+  type: typeof ADD_SURFACE_FAILED;
+  payload: Surface;
 }
 
 export interface PutSurfaceActionType {
   type: typeof PUT_SURFACE;
+  payload: {
+    oldSurface: Surface;
+    newSurface: Surface;
+  };
+}
+
+export interface PutSurfaceFailedActionType {
+  type: typeof PUT_SURFACE_FAILED;
+  payload: {
+    oldSurface: Surface;
+    newSurface: Surface;
+  };
+}
+
+export interface DeleteSurfaceActionType {
+  type: typeof DELETE_SURFACE;
   payload: Surface;
 }
 
-export interface DeleteSurfaceAvtionType {
-  type: typeof DELETE_SURFACE;
+export interface DeleteSurfaceFailedActionType {
+  type: typeof DELETE_SURFACE_FAILED;
   payload: Surface;
 }
 
 export type SufacesActionTypes =
   | GetSurfacesActionType
+  | AddSurfaceFromServerActionType
+  | AddSurfaceActionType
+  | AddSurfaceFailedActionType
   | PutSurfaceActionType
-  | DeleteSurfaceAvtionType;
+  | PutSurfaceFailedActionType
+  | DeleteSurfaceActionType
+  | DeleteSurfaceFailedActionType;

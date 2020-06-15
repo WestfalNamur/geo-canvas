@@ -1,13 +1,17 @@
 import {
   SurfacesState,
   SufacesActionTypes,
-  GET_SURFACES,
+  ADD_SUFACES_FROM_SERVER,
+  ADD_SURFACE,
+  ADD_SURFACE_FAILED,
   PUT_SURFACE,
+  PUT_SURFACE_FAILED,
   DELETE_SURFACE,
+  DELETE_SURFACE_FAILED,
 } from "./types";
 
 const initialState: SurfacesState = {
-  surfaces: []
+  surfaces: [],
 };
 
 export function surfacesReducer(
@@ -15,22 +19,43 @@ export function surfacesReducer(
   action: SufacesActionTypes
 ): SurfacesState {
   switch (action.type) {
-    case GET_SURFACES:
+    case ADD_SUFACES_FROM_SERVER:
       return {
         surfaces: action.payload,
       };
+    case ADD_SURFACE:
+      return {
+        surfaces: [...state.surfaces, action.payload],
+      };
+    case ADD_SURFACE_FAILED:
+      return {
+        surfaces: state.surfaces.filter(
+          (surface) => surface.name !== action.payload.name
+        ),
+      };
     case PUT_SURFACE:
-      const filteredSurfaces = state.surfaces.filter(
-        (surface) => surface.name !== action.payload.name
+      const filteredSurfacesPut = state.surfaces.filter(
+        (surface) => surface.name !== action.payload.oldSurface.name
       );
       return {
-        surfaces: [...filteredSurfaces, action.payload],
+        surfaces: [...filteredSurfacesPut, action.payload.newSurface],
+      };
+    case PUT_SURFACE_FAILED:
+      const filteredSurfacesPutFailed = state.surfaces.filter(
+        (surface) => surface.name !== action.payload.newSurface.name
+      );
+      return {
+        surfaces: [...filteredSurfacesPutFailed, action.payload.oldSurface],
       };
     case DELETE_SURFACE:
       return {
         surfaces: state.surfaces.filter(
           (surface) => surface.name !== action.payload.name
         ),
+      };
+    case DELETE_SURFACE_FAILED:
+      return {
+        surfaces: [...state.surfaces, action.payload],
       };
     default:
       return state;
