@@ -13,21 +13,17 @@ import { SeriesActionTypes } from "../store/geoData/series/types";
 import { SufacesActionTypes } from "../store/geoData/surfaces/types";
 import { SurfacePointActionTypes } from "../store/geoData/SurfacePoints/types";
 import { OrientationActionTypes } from "../store/geoData/Orientations/types";
-import { watchGetSeries, watchAddSerie, watchPutSerie } from "./Series";
+import {
+  watchGetSeries,
+  watchAddSerie,
+  watchPutSerie,
+  watchDeleteSerie,
+} from "./Series";
 
 // TODO:
 // fix @ts-ignore
 
 /*************************** Subroutines *************************************/
-
-function* deleteSerieIterator(action: SeriesActionTypes) {
-  try {
-    // @ts-ignore
-    yield call(deleteSerieApi, action.payload);
-  } catch (error) {
-    console.log(error);
-  }
-}
 
 function* putSurfaceIterator(action: SufacesActionTypes) {
   try {
@@ -84,11 +80,6 @@ function* deleteOrientationIterator(action: OrientationActionTypes) {
 }
 
 /*************************** Watchers ***************************************/
-
-function* watchDeleteSerie() {
-  yield takeEvery("DELETE_SERIE", deleteSerieIterator);
-}
-
 function* watchPutSurface() {
   yield takeEvery("PUT_SURFACE", putSurfaceIterator);
 }
@@ -118,8 +109,8 @@ export default function* rootSaga() {
     watchGetSeries(),
     watchAddSerie(),
     watchPutSerie(),
-
     watchDeleteSerie(),
+
     watchPutSurface(),
     watchDeleteSurface(),
     watchPutSurfacePoint(),

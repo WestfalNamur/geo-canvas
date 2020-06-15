@@ -11,6 +11,7 @@ export default function GeoData() {
   // fetch data from server
   const dispatch = useDispatch();
   useEffect(() => {
+    // replace with function to get all data
     dispatch(getSeries());
   });
   return (

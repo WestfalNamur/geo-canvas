@@ -7,6 +7,7 @@ import {
   PUT_SERIE,
   PUT_SERIE_FAILED,
   DELTE_SERIE,
+  DELTE_SERIE_FAILED,
 } from "./types";
 
 export function getSeries() {
@@ -59,6 +60,13 @@ export function putSeriesFailed(newSerie: Serie, oldSerie: Serie) {
 export function deleteSeries(oldSerie: Serie) {
   return {
     type: DELTE_SERIE,
+    payload: oldSerie,
+  };
+}
+
+export function deleteSerieFailed(oldSerie: Serie) {
+  return {
+    type: DELTE_SERIE_FAILED,
     payload: oldSerie,
   };
 }

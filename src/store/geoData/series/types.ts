@@ -5,6 +5,7 @@ export const ADD_SERIE_FAILED = "ADD_SERIE_FAILED";
 export const PUT_SERIE = "PUT_SERIE";
 export const PUT_SERIE_FAILED = "PUT_SERIE_FAILED";
 export const DELTE_SERIE = "DELETE_SERIE";
+export const DELTE_SERIE_FAILED = "DELETE_SERIE_FAILED";
 
 export interface Serie {
   name: string;
@@ -55,6 +56,11 @@ export interface DeleteSerieActionType {
   payload: Serie;
 }
 
+export interface DeleteSerieFailedActionType {
+  type: typeof DELTE_SERIE_FAILED;
+  payload: Serie;
+}
+
 export type SeriesActionTypes =
   | GetSeriesActionType
   | AddSeriesFromServerActionType
@@ -62,4 +68,5 @@ export type SeriesActionTypes =
   | AddSerieFailedActionType
   | PutSerieActionType
   | PutSerieFailedActionType
-  | DeleteSerieActionType;
+  | DeleteSerieActionType
+  | DeleteSerieFailedActionType;

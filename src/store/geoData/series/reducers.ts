@@ -7,6 +7,7 @@ import {
   PUT_SERIE,
   PUT_SERIE_FAILED,
   DELTE_SERIE,
+  DELTE_SERIE_FAILED,
 } from "./types";
 
 const initialState: SeriesState = {
@@ -51,6 +52,10 @@ export function seriesReducer(
         series: state.series.filter(
           (serie) => serie.name !== action.payload.name
         ),
+      };
+    case DELTE_SERIE_FAILED:
+      return {
+        series: [...state.series, action.payload],
       };
     default:
       return state;
