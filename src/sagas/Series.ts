@@ -12,10 +12,11 @@ import {
 } from "../store/geoData/series/types";
 
 /*
- * BUG: Series can still be ranamed.
- * Update backend to accept POST (onyl when Serie not yet present.).
- * => PUT only works on existing Series;
+ * TODO: Renaming now works by deleting and putAdd the updated data.
+ * Write proper POST & PUT api.
+ *  => handle deleteSurfacePointApi failure in PUT api;
  */
+
 /*************************** Subroutines *************************************/
 function* getSeriesSaga(action: GetSeriesActionType) {
   try {
@@ -32,7 +33,6 @@ function* getSeriesSaga(action: GetSeriesActionType) {
 
 function* addSerieSaga(action: AddSerieActionType) {
   try {
-    // @ts-ignore
     yield call(putSerieApi, action.payload);
   } catch (error) {
     if (error.response) {
@@ -45,9 +45,9 @@ function* addSerieSaga(action: AddSerieActionType) {
 }
 
 function* putSerieSaga(action: PutSerieActionType) {
-  const { newSerie } = action.payload;
+  const { newSerie, oldSerie } = action.payload;
   try {
-    // @ts-ignore
+    yield call(deleteSerieApi, oldSerie);
     yield call(putSerieApi, newSerie);
   } catch (error) {
     if (error.response) {

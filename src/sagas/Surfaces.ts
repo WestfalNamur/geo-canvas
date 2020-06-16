@@ -12,10 +12,11 @@ import {
 } from "../store/geoData/surfaces/types";
 
 /*
- * BUG: Surface can still be ranamed.
- * Update backend to accept POST (onyl when Surface not yet present.).
- * => PUT only works on existing Surface;
+ * TODO: Renaming now works by deleting and putAdd the updated data.
+ * Write proper POST & PUT api.
+ *  => handle deleteSurfacePointApi failure in PUT api;
  */
+
 /*************************** Subroutines *************************************/
 function* getSurfacesSaga(action: GetSurfacesActionType) {
   try {
@@ -32,7 +33,6 @@ function* getSurfacesSaga(action: GetSurfacesActionType) {
 
 function* addSurfaceSaga(action: AddSurfaceActionType) {
   try {
-    // @ts-ignore
     yield call(putSurfaceApi, action.payload);
   } catch (error) {
     if (error.response) {
@@ -45,9 +45,9 @@ function* addSurfaceSaga(action: AddSurfaceActionType) {
 }
 
 function* putSurfaceSaga(action: PutSurfaceActionType) {
-  const { newSurface } = action.payload;
+  const { newSurface, oldSurface } = action.payload;
   try {
-    // @ts-ignore
+    yield call(deleteSurfaceApi, oldSurface);
     yield call(putSurfaceApi, newSurface);
   } catch (error) {
     if (error.response) {

@@ -7,15 +7,18 @@ import OrientationsTable from "./OrientationsTable";
 import { useDispatch } from "react-redux";
 
 import { getSeries } from "../../store/geoData/series/actions";
-import { getSurfaces } from  "../../store/geoData/surfaces/actions"
+import { getSurfaces } from "../../store/geoData/surfaces/actions";
+import { getSurfacePoints } from "../../store/geoData/surfacePoints/actions";
+import { getOrientations } from "../../store/geoData/orientations/actions";
 
 export default function GeoData() {
   // fetch data from server
   const dispatch = useDispatch();
   useEffect(() => {
-    // replace with function to get all data
     dispatch(getSeries());
     dispatch(getSurfaces());
+    dispatch(getSurfacePoints());
+    dispatch(getOrientations());
   });
   return (
     <div className="GeoData">

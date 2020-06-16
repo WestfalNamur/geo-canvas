@@ -12,10 +12,11 @@ import {
 } from "../store/geoData/surfacePoints/types";
 
 /*
- * BUG: surfacePoints can still be ranamed.
- * Update backend to accept POST (onyl when surfacePoints not yet present.).
- * => PUT only works on existing surfacePoints;
+ * TODO: Renaming now works by deleting and putAdd the updated data.
+ * Write proper POST & PUT api.
+ *  => handle deleteSurfacePointApi failure in PUT api;
  */
+
 /*************************** Subroutines *************************************/
 function* getSurfacePointsSaga(action: GetSurfacePointsActionType) {
   try {
@@ -32,7 +33,6 @@ function* getSurfacePointsSaga(action: GetSurfacePointsActionType) {
 
 function* addSurfacePointsSaga(action: AddSurfacePointActionType) {
   try {
-    // @ts-ignore
     yield call(putSurfacePointApi, action.payload);
   } catch (error) {
     if (error.response) {
@@ -45,9 +45,9 @@ function* addSurfacePointsSaga(action: AddSurfacePointActionType) {
 }
 
 function* putSurfacePointSaga(action: PutSurfacePointActionType) {
-  const { newSurfacePoint } = action.payload;
+  const { newSurfacePoint, oldSurfacePoint } = action.payload;
   try {
-    // @ts-ignore
+    yield call(deleteSurfacePointApi, oldSurfacePoint);
     yield call(putSurfacePointApi, newSurfacePoint);
   } catch (error) {
     if (error.response) {
@@ -61,7 +61,6 @@ function* putSurfacePointSaga(action: PutSurfacePointActionType) {
 
 function* deleteSurfacePointSaga(action: DeleteSurfacePointActionType) {
   try {
-    // @ts-ignore
     yield call(deleteSurfacePointApi, action.payload);
   } catch (error) {
     if (error.response) {

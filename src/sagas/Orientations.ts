@@ -12,10 +12,11 @@ import {
 } from "../store/geoData/orientations/types";
 
 /*
- * BUG: orientations can still be ranamed.
- * Update backend to accept POST (onyl when orientations not yet present.).
- * => PUT only works on existing orientations;
+ * TODO: Renaming now works by deleting and putAdd the updated data.
+ * Write proper POST & PUT api.
+ *  => handle deleteSurfacePointApi failure in PUT api;
  */
+
 /*************************** Subroutines *************************************/
 function* getOrientationsSaga(action: GetOrientationsActionType) {
   try {
@@ -32,7 +33,6 @@ function* getOrientationsSaga(action: GetOrientationsActionType) {
 
 function* addOrientationSaga(action: AddOrientaionActionType) {
   try {
-    // @ts-ignore
     yield call(putOrientationApi, action.payload);
   } catch (error) {
     if (error.response) {
@@ -45,9 +45,9 @@ function* addOrientationSaga(action: AddOrientaionActionType) {
 }
 
 function* putOrientationSaga(action: PutOrientationActionType) {
-  const { newOrientation } = action.payload;
+  const { newOrientation, oldOrientation } = action.payload;
   try {
-    // @ts-ignore
+    yield call(deleteOrientationApi, oldOrientation);
     yield call(putOrientationApi, newOrientation);
   } catch (error) {
     if (error.response) {
