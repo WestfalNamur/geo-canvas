@@ -3,10 +3,11 @@ import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import {
+  addOrientation,
   putOrientation,
   deleteOrientation,
-} from "../../store/Orientations/actions";
-import { Orientation } from "../../store/Orientations/types";
+} from "../../store/geoData/orientations/actions";
+import { Orientation } from "../../store/geoData/orientations/types";
 
 interface Lookup {
   [key: string]: string;
@@ -15,10 +16,10 @@ interface Lookup {
 export default function OrientationsTable() {
   // connect to store
   const orientaionData = useSelector(
-    (state: RootState) => state.orientations.orientations
+    (state: RootState) => state.geoData.orientations.orientations
   );
   const surfacesData = useSelector(
-    (state: RootState) => state.surfaces.surfaces
+    (state: RootState) => state.geoData.surfaces.surfaces
   );
   const dispatch = useDispatch();
   // get lookup options for possible surfaces
@@ -63,23 +64,28 @@ export default function OrientationsTable() {
       columns={columns}
       data={orientaionData}
       editable={{
-        onRowAdd: (newData: Orientation) =>
+        onRowAdd: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               const data = reshapeData(newData);
-              dispatch(putOrientation(data));
+              dispatch(addOrientation(data));
               resolve();
             }, 100);
           }),
-        onRowUpdate: (newData: Orientation) =>
+        onRowUpdate: (newData, oldData) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              const data = reshapeData(newData);
-              dispatch(putOrientation(data));
+              if (oldData) {
+                const newOrientation = reshapeData(newData);
+                const oldOrientation = reshapeData(oldData);
+                dispatch(putOrientation(newOrientation, oldOrientation));
+              } else {
+                console.log("oldData missing");
+              }
               resolve();
             }, 100);
           }),
-        onRowDelete: (newData: Orientation) =>
+        onRowDelete: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               const data = reshapeData(newData);

@@ -2,11 +2,16 @@ import React from "react";
 import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { putSeries, deleteSeries } from "../../store/series/actions";
-import { Serie } from "../../store/series/types";
+import {
+  addSerie,
+  putSeries,
+  deleteSeries,
+} from "../../store/geoData/series/actions";
+import { Serie } from "../../store/geoData/series/types";
 
 export default function SeriesTable() {
-  const seriesData = useSelector((state: RootState) => state.series.series);
+  const seriesState = (state: RootState) => state.geoData.series.series;
+  const seriesData = useSelector(seriesState);
   const dispatch = useDispatch();
   const columns: Array<Column<Serie>> = [
     { title: "Name", field: "name" },
@@ -14,7 +19,6 @@ export default function SeriesTable() {
       title: "Isfault",
       field: "isfault",
       type: "boolean",
-      initialEditValue: false,
     },
   ];
 
@@ -24,24 +28,26 @@ export default function SeriesTable() {
       columns={columns}
       data={seriesData}
       editable={{
-        onRowAdd: (newData: Serie) =>
+        onRowAdd: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(putSeries(newData));
+              dispatch(addSerie(newData));
               resolve();
             }, 100);
           }),
-        onRowUpdate: (newData: Serie) =>
+        onRowUpdate: (newData, oldData) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(putSeries(newData));
+              oldData
+                ? dispatch(putSeries(newData, oldData))
+                : console.log("oldData missing in onRowUpdate in SeriesTable");
               resolve();
             }, 100);
           }),
-        onRowDelete: (newData: Serie) =>
+        onRowDelete: (oldData) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(deleteSeries(newData));
+              dispatch(deleteSeries(oldData));
               resolve();
             }, 100);
           }),

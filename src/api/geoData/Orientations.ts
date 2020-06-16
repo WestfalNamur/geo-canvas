@@ -1,13 +1,24 @@
-import { Orientation } from "../store/geoData/orientations/types";
 import axios, { AxiosRequestConfig } from "axios";
+import { baseURL } from "../geoData";
+import { Orientation } from "../../store/geoData/orientations/types";
 
-// TODO:
-// MaterialTable table data object type  => need for data processing
-// remove boilerplates => DRY
+interface ResponseObject {
+  success: boolean;
+  message: string;
+  data: Orientation[];
+}
 
-export const baseURL: string = "http://127.0.0.1:5000";
-
-/*************************** Topoligical data *********************************/
+export async function getOrientationsApi() {
+  const request_config: AxiosRequestConfig = {
+    method: "get",
+    baseURL,
+    url: "/geo-model/data/geo-model-orientations",
+  };
+  const response = await axios.request<ResponseObject>(request_config);
+  const { message, data } = response.data;
+  console.log(message);
+  return data;
+}
 
 export async function putOrientationApi(orientation: Orientation) {
   const data: Orientation = {
@@ -27,22 +38,12 @@ export async function putOrientationApi(orientation: Orientation) {
   const request_config: AxiosRequestConfig = {
     method: "put",
     baseURL,
-    url: "/geo-model/data/geo-model-surface-orientations",
+    url: "/geo-model/data/geo-model-orientations",
     data,
   };
-  try {
-    const response = await axios(request_config);
-    return response;
-  } catch (error) {
-    if (error.response) {
-      console.log(
-        "Delete-Orientation failed with: ",
-        error.response.data.error
-      );
-    } else {
-      console.log("Unknown error: ", error);
-    }
-  }
+  const response = await axios.request<ResponseObject>(request_config);
+  const { message } = response.data;
+  console.log(message);
 }
 
 export async function deleteOrientationApi(orientation: Orientation) {
@@ -63,20 +64,10 @@ export async function deleteOrientationApi(orientation: Orientation) {
   const request_config: AxiosRequestConfig = {
     method: "delete",
     baseURL,
-    url: "/geo-model/data/geo-model-surface-orientations",
+    url: "/geo-model/data/geo-model-orientations",
     data,
   };
-  try {
-    const response = await axios(request_config);
-    return response;
-  } catch (error) {
-    if (error.response) {
-      console.log(
-        "Delete-Orientation failed with: ",
-        error.response.data.error
-      );
-    } else {
-      console.log("Unknown error: ", error);
-    }
-  }
+  const response = await axios.request<ResponseObject>(request_config);
+  const { message } = response.data;
+  console.log(message);
 }

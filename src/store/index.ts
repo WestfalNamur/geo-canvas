@@ -3,27 +3,23 @@ import { logger } from "redux-logger";
 import createSagaMiddleware from "redux-saga";
 
 // reducers
-import { canvasReducer } from "./canvas/reducers";
-
+// metaData
 import { extentReducer } from "./extent/reducers";
 import { sectionReducer } from "./section/reducers";
-import { seriesReducer } from "./series/reducers";
-import { surfacesReducer } from "./surfaces/reducers";
-import { surfacePointsReducer } from "./SurfacePoints/reducers";
-import { orientationsReducer } from "./Orientations/reducer";
+// geoData
+import geoData from "./geoData";
+// canvas
+import { canvasReducer } from "./canvas/reducers";
 
 // middleware
 import rootSaga from "../sagas";
 
 // combine reducers
 const rootReducer = combineReducers({
+  geoData,
   canvas: canvasReducer,
   extent: extentReducer,
   section: sectionReducer,
-  series: seriesReducer,
-  surfaces: surfacesReducer,
-  surfacePoints: surfacePointsReducer,
-  orientations: orientationsReducer,
 });
 
 // create middelwares

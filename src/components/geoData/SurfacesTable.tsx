@@ -2,19 +2,23 @@ import React from "react";
 import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { putSurface, deleteSurface } from "../../store/surfaces/actions";
-import { Surface } from "../../store/surfaces/types";
+import {
+  addSurface,
+  putSurface,
+  deleteSurface,
+} from "../../store/geoData/surfaces/actions";
+import { Surface } from "../../store/geoData/surfaces/types";
 
 interface Lookup {
   [key: string]: string;
 }
 
 export default function SurfacesTable() {
-  // connect to store
-  const surfacesData = useSelector(
-    (state: RootState) => state.surfaces.surfaces
-  );
-  const seriesData = useSelector((state: RootState) => state.series.series);
+  // hooks
+  const surfaceState = (state: RootState) => state.geoData.surfaces.surfaces;
+  const surfacesData = useSelector(surfaceState);
+  const seriesState = (state: RootState) => state.geoData.series.series;
+  const seriesData = useSelector(seriesState);
   const dispatch = useDispatch();
   // Series lookup options // lookup requires an object-type not an array;
   let lookup: Lookup = {};
@@ -32,21 +36,23 @@ export default function SurfacesTable() {
       columns={columns}
       data={surfacesData}
       editable={{
-        onRowAdd: (newData: Surface) =>
+        onRowAdd: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(putSurface(newData));
+              dispatch(addSurface(newData));
               resolve();
             }, 100);
           }),
-        onRowUpdate: (newData: Surface) =>
+        onRowUpdate: (newData, oldData) =>
           new Promise((resolve) => {
             setTimeout(() => {
-              dispatch(putSurface(newData));
+              oldData
+                ? dispatch(putSurface(newData, oldData))
+                : console.log("oldData missing in onRowUpdate in SurfaceTable");
               resolve();
             }, 100);
           }),
-        onRowDelete: (newData: Surface) =>
+        onRowDelete: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               dispatch(deleteSurface(newData));
