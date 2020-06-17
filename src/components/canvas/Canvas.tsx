@@ -1,35 +1,22 @@
-import React, { useRef, useLayoutEffect, useState } from "react";
+import React from "react";
+import useDimensions from "react-cool-dimensions";
+import { CanvasSize } from "../../store/meta/canvasSize/types";
+import { updateCanvasSize } from "../../store/meta/canvasSize/action";
 import { useDispatch } from "react-redux";
-import { updateCanvasSize } from "../../store/canvas/actions";
-
-interface CanvasSize {
-  width: number;
-  height: number;
-}
-
-interface ComponentState {
-  canvasSize: CanvasSize;
-}
 
 export default function Canvas() {
-  const targetRef = useRef();
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const dispatch = useDispatch();
+  const { ref, width, height } = useDimensions({
+    onResize: ({ width, height }) => {
+      const newCanvasSize: CanvasSize = { width, height };
+      dispatch(updateCanvasSize(newCanvasSize));
+    },
+  });
 
-  useLayoutEffect(() => {
-    if (targetRef.current) {
-      setDimensions({
-        // @ts-ignore
-        width: targetRef.current.offsetWidth,
-        // @ts-ignore
-        height: targetRef.current.offsetHeight,
-      });
-    }
-  }, []);
   return (
-    // @ts-ignore
-    <div ref={targetRef}>
-      <p>{dimensions.width}</p>
-      <p>{dimensions.height}</p>
+    //@ts-ignore
+    <div ref={ref}>
+      Hi! My width is {width}px and height is {height}px
     </div>
   );
 }
