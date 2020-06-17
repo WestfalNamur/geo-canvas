@@ -1,28 +1,35 @@
-import React from "react";
+import React, { useRef, useLayoutEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateCanvasSize } from "../../store/canvas/actions";
 
-// window size handler; updates local state and store;
-// handler located on window not component;
-function useWindowSize() {
-  const dispatch = useDispatch();
-  function updateCanvasSizeToStore() {
-    dispatch(
-      updateCanvasSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      })
-    );
-    return () => window.removeEventListener("resize", updateCanvasSizeToStore);
-  }
-  window.addEventListener("resize", updateCanvasSizeToStore);
+interface CanvasSize {
+  width: number;
+  height: number;
+}
+
+interface ComponentState {
+  canvasSize: CanvasSize;
 }
 
 export default function Canvas() {
-  useWindowSize();
+  const targetRef = useRef();
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useLayoutEffect(() => {
+    if (targetRef.current) {
+      setDimensions({
+        // @ts-ignore
+        width: targetRef.current.offsetWidth,
+        // @ts-ignore
+        height: targetRef.current.offsetHeight,
+      });
+    }
+  }, []);
   return (
-    <div className="Canvas">
-      <header className="App-header">Hello Canvas!</header>
+    // @ts-ignore
+    <div ref={targetRef}>
+      <p>{dimensions.width}</p>
+      <p>{dimensions.height}</p>
     </div>
   );
 }

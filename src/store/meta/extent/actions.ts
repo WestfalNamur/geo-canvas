@@ -1,8 +1,40 @@
-import { ExtentValue, UPDATE_EXTENT } from "./types";
+import {
+  Extent,
+  GET_EXTENT,
+  GET_EXTENT_FROM_SERVER,
+  UPDATE_EXTENT,
+  UPDATE_EXTENT_FAILED,
+} from "./types";
 
-export function updateExtent(newExtentValue: ExtentValue) {
+export function getExtent() {
+  return {
+    type: GET_EXTENT,
+  };
+}
+
+export function getExtentFromServer(extent: Extent) {
+  return {
+    type: GET_EXTENT_FROM_SERVER,
+    payload: extent,
+  };
+}
+
+export function updateExtent(newExtent: Extent, oldExtent: Extent) {
   return {
     type: UPDATE_EXTENT,
-    payload: newExtentValue,
+    payload: {
+      newExtent,
+      oldExtent,
+    },
+  };
+}
+
+export function updateExtentFailed(newExtent: Extent, oldExtent: Extent) {
+  return {
+    type: UPDATE_EXTENT_FAILED,
+    payload: {
+      newExtent,
+      oldExtent,
+    },
   };
 }

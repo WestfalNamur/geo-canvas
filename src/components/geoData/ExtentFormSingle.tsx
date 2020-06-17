@@ -1,52 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
 import TextField from "@material-ui/core/TextField";
-import { useDispatch } from "react-redux";
-import { updateExtent } from "../../store/extent/actions";
-
-/* Single extent form.
- * TODO: - Source value=store value for value-i
- *       - Avoide double render / disptach
- */
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { updateExtent } from "../../store/meta/extent/actions";
+import { Extent } from "../../store/meta/extent/types";
 
 interface Props {
   label: string;
+  extentValue: Number;
 }
 
-export default function ExtentFormSingle({ label }: Props) {
-  const [value, setValue] = useState("0");
+export default function ExtentFormSingle({ label, extentValue }: Props) {
+  // store
+  const extentState = (state: RootState) => state.meta.extent.extent;
+  const extent = useSelector(extentState);
   const dispatch = useDispatch();
-
-  value !== "" &&
-    dispatch(
-      updateExtent({
-        name: label,
-        value: Number(value),
-      })
-    );
-
-  const invalidInput = (
+  // wont update if input is not convertable to number type;
+  const form = (
     <TextField
-      value={value}
+      value={String(extentValue)}
       onChange={(event) => {
-        setValue(event.target.value);
-      }}
-      error
-      type="number"
-      variant="outlined"
-      label={label}
-      helperText="Must be a number"
-    />
-  );
-  const validInput = (
-    <TextField
-      value={value}
-      onChange={(event) => {
-        setValue(event.target.value);
+        const newExtent: Extent = {
+          ...extent,
+          ...{ [label]: Number(event.target.value) },
+        };
+        dispatch(updateExtent(newExtent, extent));
       }}
       type="number"
       variant="outlined"
       label={label}
     />
   );
-  return value === "" ? invalidInput : validInput;
+  return form;
 }

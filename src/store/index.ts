@@ -4,8 +4,7 @@ import createSagaMiddleware from "redux-saga";
 
 // reducers
 // metaData
-import { extentReducer } from "./extent/reducers";
-import { sectionReducer } from "./section/reducers";
+import meta from "./meta";
 // geoData
 import geoData from "./geoData";
 // canvas
@@ -17,9 +16,8 @@ import rootSaga from "../sagas";
 // combine reducers
 const rootReducer = combineReducers({
   geoData,
+  meta,
   canvas: canvasReducer,
-  extent: extentReducer,
-  section: sectionReducer,
 });
 
 // create middelwares

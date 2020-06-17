@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { baseURL } from "../geoData";
+import { baseURL } from "../";
 import { SurfacePoint } from "../../store/geoData/surfacePoints/types";
 
 interface ResponseObject {

@@ -1,17 +1,19 @@
 import {
   ExtentState,
   ExtentActionTypes,
+  GET_EXTENT_FROM_SERVER,
   UPDATE_EXTENT,
+  UPDATE_EXTENT_FAILED,
 } from "./types";
 
 const initialState: ExtentState = {
   extent: {
-    xmin: 0,
-    xmax: 1000,
-    ymin: 0,
-    ymax: 1000,
-    zmin: 0,
-    zmax: 1000,
+    x_min: 0,
+    x_max: 1000,
+    y_min: 0,
+    y_max: 1000,
+    z_min: 0,
+    z_max: 1000,
   },
 };
 
@@ -20,42 +22,18 @@ export function extentReducer(
   action: ExtentActionTypes
 ): ExtentState {
   switch (action.type) {
+    case GET_EXTENT_FROM_SERVER:
+      return {
+        extent: action.payload,
+      };
     case UPDATE_EXTENT:
-      const extent = state.extent;
-      switch (action.payload.name) {
-        case (action.payload.name = "xmin"):
-          extent.xmin = action.payload.value;
-          return {
-            extent: extent,
-          };
-        case (action.payload.name = "xmax"):
-          extent.xmax = action.payload.value;
-          return {
-            extent: extent,
-          };
-        case (action.payload.name = "ymin"):
-          extent.ymin = action.payload.value;
-          return {
-            extent: extent,
-          };
-        case (action.payload.name = "ymax"):
-          extent.ymax = action.payload.value;
-          return {
-            extent: extent,
-          };
-        case (action.payload.name = "zmin"):
-          extent.zmin = action.payload.value;
-          return {
-            extent: extent,
-          };
-        case (action.payload.name = "zmax"):
-          extent.zmax = action.payload.value;
-          return {
-            extent: extent,
-          };
-        default:
-          return state;
-      }
+      return {
+        extent: action.payload.newExtent,
+      };
+    case UPDATE_EXTENT_FAILED:
+      return {
+        extent: action.payload.oldExtent,
+      };
     default:
       return state;
   }

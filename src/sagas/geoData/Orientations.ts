@@ -3,13 +3,13 @@ import {
   getOrientationsApi,
   putOrientationApi,
   deleteOrientationApi,
-} from "../api/geoData/Orientations";
+} from "../../api/geoData/Orientations";
 import {
   GetOrientationsActionType,
   AddOrientaionActionType,
   PutOrientationActionType,
   DeleteOrientationActionType,
-} from "../store/geoData/orientations/types";
+} from "../../store/geoData/orientations/types";
 
 /*
  * TODO: Renaming now works by deleting and putAdd the updated data.

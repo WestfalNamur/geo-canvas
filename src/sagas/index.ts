@@ -4,25 +4,26 @@ import {
   watchAddSerie,
   watchPutSerie,
   watchDeleteSerie,
-} from "./Series";
+} from "./geoData/Series";
 import {
   watchGetSurfaces,
   watchAddSurface,
   watchPutSurface,
   watchDeleteSurface,
-} from "./Surfaces";
+} from "./geoData/Surfaces";
 import {
   watchGetSurfacPoints,
   watchAddSurfacePoint,
   watchPutSurfacePoint,
   watchDeleteSurfacePoint,
-} from "./SurfacePoints";
+} from "./geoData/SurfacePoints";
 import {
   watchGetOrientation,
   watchAddOrientation,
   watchPutOrientation,
   watchDeleteOrientation,
-} from "./Orientations";
+} from "./geoData/Orientations";
+import { watchGetExtent, watchPutExtent } from "./meta/extent";
 
 export default function* rootSaga() {
   yield all([
@@ -45,5 +46,8 @@ export default function* rootSaga() {
     watchAddOrientation(),
     watchPutOrientation(),
     watchDeleteOrientation(),
+
+    watchGetExtent(),
+    watchPutExtent(),
   ]);
 }

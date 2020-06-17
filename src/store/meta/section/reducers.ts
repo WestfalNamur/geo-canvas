@@ -1,4 +1,10 @@
-import { SectionState, SectionActionTypes, UPDATE_SECTION } from "./types";
+import {
+  SectionState,
+  SectionActionTypes,
+  GET_SECTION_FROM_SERVER,
+  UPDATE_SECTION,
+  UPDATE_SECTION_FAILED,
+} from "./types";
 
 const initialState: SectionState = {
   section: {
@@ -13,9 +19,17 @@ export function sectionReducer(
   action: SectionActionTypes
 ): SectionState {
   switch (action.type) {
-    case UPDATE_SECTION:
+    case GET_SECTION_FROM_SERVER:
       return {
         section: action.payload,
+      };
+    case UPDATE_SECTION:
+      return {
+        section: action.payload.newSection,
+      };
+    case UPDATE_SECTION_FAILED:
+      return {
+        section: action.payload.oldSection,
       };
     default:
       return state;

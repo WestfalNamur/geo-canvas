@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { baseURL } from "../geoData";
+import { baseURL } from "../";
 import { Orientation } from "../../store/geoData/orientations/types";
 
 interface ResponseObject {
