@@ -8,7 +8,7 @@ import meta from "./meta";
 // geoData
 import geoData from "./geoData";
 // canvas
-import { canvasReducer } from "./canvas/reducers";
+import canvas from "./canvas";
 
 // middleware
 import rootSaga from "../sagas";
@@ -17,7 +17,7 @@ import rootSaga from "../sagas";
 const rootReducer = combineReducers({
   geoData,
   meta,
-  canvas: canvasReducer,
+  canvas,
 });
 
 // create middelwares

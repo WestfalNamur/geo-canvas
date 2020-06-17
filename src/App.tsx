@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import "./utils/App.css";
 import Routes from "./Routes";
 import AppBarTop from "./components/AppBarTop";
@@ -10,8 +10,23 @@ import { getSurfacePoints } from "./store/geoData/surfacePoints/actions";
 import { getOrientations } from "./store/geoData/orientations/actions";
 import { getExtent } from "./store/meta/extent/actions";
 
-function App() {
+import { APP_BAR_HEIGHT } from "./utils/CONSTANTS";
+import { updateCanvasSize } from "./store/canvas/canvasSize/action";
+
+export default function App() {
   const dispatch = useDispatch();
+  // update canvas size as it is a function of the windo size
+  useLayoutEffect(() => {
+    function updateCanvasSizeComp() {
+      const { innerWidth, innerHeight } = window;
+      const width = innerWidth;
+      const height = innerHeight - APP_BAR_HEIGHT;
+      dispatch(updateCanvasSize({ width, height }));
+    }
+    window.addEventListener("resize", updateCanvasSizeComp);
+    updateCanvasSizeComp();
+    return () => window.removeEventListener("resize", updateCanvasSizeComp);
+  }, []);
   // TODO: make concurrent
   useEffect(() => {
     dispatch(getSeries());
@@ -20,6 +35,7 @@ function App() {
     dispatch(getOrientations());
     dispatch(getExtent());
   });
+
   return (
     <div className="App">
       <AppBarTop />
@@ -27,5 +43,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
