@@ -9,6 +9,8 @@ import meta from "./meta";
 import geoData from "./geoData";
 // canvas
 import canvas from "./canvas";
+// solutions
+import solutions from './solutions'
 
 // middleware
 import rootSaga from "../sagas";
@@ -18,6 +20,7 @@ const rootReducer = combineReducers({
   geoData,
   meta,
   canvas,
+  solutions
 });
 
 // create middelwares
