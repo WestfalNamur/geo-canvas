@@ -24,6 +24,7 @@ import {
   watchDeleteOrientation,
 } from "./geoData/Orientations";
 import { watchGetExtent, watchPutExtent } from "./meta/extent";
+import { watchGetSection, watchPutSection } from "./meta/section";
 import { watchGetSectionPolygonsSaga } from "./solutions/SectionPolygons";
 
 export default function* rootSaga() {
@@ -50,6 +51,10 @@ export default function* rootSaga() {
 
     watchGetExtent(),
     watchPutExtent(),
+
+    watchGetSection(),
+    watchPutSection(),
+
     watchGetSectionPolygonsSaga(),
   ]);
 }

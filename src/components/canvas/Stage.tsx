@@ -1,9 +1,10 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Stage, Layer, Rect } from "react-konva";
 import { SectionPolygon } from "../../store/solutions/sectionPolygons/types";
 import resSecPol from "../../utils/numerical/rescaleSectionPolygons";
+import LayerPolygons from './LayerPolygons'
 
 /* StageComponent
  * Issue:
@@ -47,6 +48,7 @@ export default function StageComponent() {
           fill="rgb(51,51,51)"
         />
       </Layer>
+      <LayerPolygons polygons={resSectionPolygons}/>
     </Stage>
   );
 }

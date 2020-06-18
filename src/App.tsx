@@ -9,6 +9,7 @@ import { getSurfaces } from "./store/geoData/surfaces/actions";
 import { getSurfacePoints } from "./store/geoData/surfacePoints/actions";
 import { getOrientations } from "./store/geoData/orientations/actions";
 import { getExtent } from "./store/meta/extent/actions";
+import { getSection } from "./store/meta/section/actions";
 import { getSectionPolygons } from "./store/solutions/sectionPolygons/actions";
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
     dispatch(getSurfacePoints());
     dispatch(getOrientations());
     dispatch(getExtent());
+    dispatch(getSection());
     dispatch(getSectionPolygons());
   });
 
