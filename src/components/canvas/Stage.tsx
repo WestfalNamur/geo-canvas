@@ -3,9 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { Stage, Layer, Rect } from "react-konva";
 import { SectionPolygon } from "../../store/solutions/sectionPolygons/types";
-import { Section } from "../../store/meta/section/types";
-import { Extent } from "../../store/meta/extent/types";
-import { CanvasSize } from "../../store/canvas/canvasSize/types";
+import resSecPol from "../../utils/numerical/rescaleSectionPolygons";
 
 /* StageComponent
  * Issue:
@@ -21,6 +19,24 @@ export default function StageComponent() {
   const canvasSizeState = (state: RootState) =>
     state.canvas.canvasSize.canvasSize;
   const canvasSize = useSelector(canvasSizeState);
+
+  const sectionState = (state: RootState) => state.meta.section.section;
+  const section = useSelector(sectionState);
+
+  const sectionPolygonsState = (state: RootState) =>
+    state.solutions.sectionPolygons.sectionPolygons;
+  const sectionPolygons = useSelector(sectionPolygonsState);
+
+  const extentState = (state: RootState) => state.meta.extent.extent;
+  const extent = useSelector(extentState);
+
+  // rescale section polygons
+  const resSectionPolygons: SectionPolygon[] = resSecPol(
+    section,
+    canvasSize,
+    extent,
+    sectionPolygons
+  );
 
   return (
     <Stage width={canvasSize.width} height={canvasSize.height}>

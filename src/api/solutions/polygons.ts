@@ -6,7 +6,7 @@ interface ResponseObject {
   success: boolean;
   message: string;
   data: {
-    [key: string]: SectionPolygon;
+    [key: string]: number[];
   };
 }
 
@@ -21,7 +21,7 @@ export async function getSectionPolygonsApi() {
   console.log(message);
   const sectPolyKeys = Object.keys(data);
   const sectionPolygons: SectionPolygon[] = sectPolyKeys.map((key) => {
-    return { name: data[key].name, points: data[key].points };
+    return { name: key, points: data[key] };
   });
   return sectionPolygons;
 }
