@@ -14,7 +14,7 @@ export async function getSectionPolygonsApi() {
   const request_config: AxiosRequestConfig = {
     method: "get",
     baseURL,
-    url: "/geo-model/pipelines/canvas-section",
+    url: "/geo-model/realization/single-run-section-poygons",
   };
   const response = await axios.request<ResponseObject>(request_config);
   const { message, data } = response.data;

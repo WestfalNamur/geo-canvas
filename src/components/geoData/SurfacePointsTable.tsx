@@ -32,7 +32,7 @@ export default function SurfacePointsTable() {
     { title: "y", field: "y", type: "numeric" },
     { title: "z", field: "z", type: "numeric" },
     { title: "surface", field: "surface", lookup },
-    { title: "probdist", field: "probdist", lookup: { 0: "normal" } },
+    { title: "probdist", field: "probdist", lookup: { normal: "normal" } },
     { title: "param1", field: "param1", type: "numeric" },
     { title: "param2", field: "param2", type: "numeric" },
     { title: "active", field: "active", type: "boolean" },
