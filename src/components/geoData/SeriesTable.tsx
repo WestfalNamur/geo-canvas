@@ -20,6 +20,7 @@ export default function SeriesTable() {
       field: "isfault",
       type: "boolean",
     },
+    { title: "Order", field: "order_series", type: "numeric" },
   ];
 
   return (

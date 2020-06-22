@@ -10,6 +10,7 @@ export const DELTE_SERIE_FAILED = "DELETE_SERIE_FAILED";
 export interface Serie {
   name: string;
   isfault: boolean;
+  order_series: number;
 }
 
 export interface SeriesState {

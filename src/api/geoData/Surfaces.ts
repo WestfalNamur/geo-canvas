@@ -24,6 +24,7 @@ export async function putSurfaceApi(surface: Surface) {
   const data: Surface = {
     name: surface.name,
     serie: surface.serie,
+    order_surface: Number(surface.order_surface),
   };
   const request_config: AxiosRequestConfig = {
     method: "put",
@@ -40,6 +41,7 @@ export async function deleteSurfaceApi(surface: Surface) {
   const data: Surface = {
     name: surface.name,
     serie: surface.serie,
+    order_surface: surface.order_surface,
   };
   const request_config: AxiosRequestConfig = {
     method: "delete",

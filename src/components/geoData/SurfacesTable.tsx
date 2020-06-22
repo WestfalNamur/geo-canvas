@@ -28,6 +28,7 @@ export default function SurfacesTable() {
   const columns: Array<Column<Surface>> = [
     { title: "Name", field: "name" },
     { title: "Series", field: "serie", lookup },
+    { title: "Order", field: "order_surface", type: "numeric" },
   ];
 
   return (

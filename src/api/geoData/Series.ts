@@ -24,6 +24,7 @@ export async function putSerieApi(serie: Serie) {
   const data: Serie = {
     name: serie.name,
     isfault: serie.isfault,
+    order_series: Number(serie.order_series),
   };
   const request_config: AxiosRequestConfig = {
     method: "put",
@@ -40,6 +41,7 @@ export async function deleteSerieApi(serie: Serie) {
   const data: Serie = {
     name: serie.name,
     isfault: serie.isfault,
+    order_series: serie.order_series,
   };
   const request_config: AxiosRequestConfig = {
     method: "delete",
