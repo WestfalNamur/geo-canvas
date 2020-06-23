@@ -4,9 +4,9 @@ export const UPDATE_SECTION = "UPDATA_SECTION";
 export const UPDATE_SECTION_FAILED = "UPDATE_SECTION_FAILED";
 
 export interface Section {
-  p1: [number, number];
-  p2: [number, number];
-  resolution: [number, number];
+  p1: [number, number]; // [x0, y0]
+  p2: [number, number]; // [x, y1]
+  resolution: [number, number]; // [xres, yres]
 }
 
 export interface SectionState {
