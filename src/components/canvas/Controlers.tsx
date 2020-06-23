@@ -40,25 +40,51 @@ export default function Controlers() {
 
   // local variabels
   const [axisIsX, setAxisIsX] = useState<boolean>(true);
-  const stepSize = (extent.x_max - extent.x_min) / 10;
-  const positionOnAxis = `Position on axis: ${section.p1[1]}`;
+  const stepSize: number = axisIsX
+    ? (extent.x_max - extent.x_min) / 10
+    : (extent.y_max - extent.y_min) / 10;
+  const positionOnAxis: string = axisIsX
+    ? `Position on x-axis: ${section.p1[0]}`
+    : `Position on y-axis: ${section.p1[1]}`;
+  const middleSection: number = axisIsX
+    ? (extent.x_max - extent.x_min) / 2
+    : (extent.y_max - extent.y_min) / 2;
 
   // functions
   const handleSliderChange = (event: any, newValue: number | number[]) => {
     const slice: number = typeof newValue === "number" ? newValue : newValue[0];
     const oldSection = section;
-    const newSection: Section = {
-      p1: [section.p1[0], slice],
-      p2: [section.p2[0], slice],
-      resolution: section.resolution,
-    };
+    const newSection: Section = axisIsX
+      ? {
+          p1: [slice, section.p1[1]],
+          p2: [slice, section.p2[1]],
+          resolution: section.resolution,
+        }
+      : {
+          p1: [section.p1[0], slice],
+          p2: [section.p2[0], slice],
+          resolution: section.resolution,
+        };
     dispatch(updateSection(newSection, oldSection));
     dispatch(getSectionPolygons());
   };
 
-  console.log(axisIsX)
   const handleSwitchToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAxisIsX(!axisIsX);
+    const oldSection = section;
+    const newSection: Section = !axisIsX
+      ? {
+          p1: [middleSection, extent.y_min],
+          p2: [middleSection, extent.y_max],
+          resolution: section.resolution,
+        }
+      : {
+          p1: [extent.x_min, middleSection],
+          p2: [extent.x_max, middleSection],
+          resolution: section.resolution,
+        };
+    dispatch(updateSection(newSection, oldSection));
+    dispatch(getSectionPolygons());
   };
 
   return (
@@ -68,16 +94,29 @@ export default function Controlers() {
           {positionOnAxis}
         </Typography>
         <Grid item xs>
-          <Slider
-            value={section.p1[1]}
-            aria-labelledby="discrete-slider-small-steps"
-            step={stepSize}
-            marks
-            min={extent.x_min}
-            max={extent.x_max}
-            valueLabelDisplay="auto"
-            onChange={handleSliderChange}
-          />
+          {axisIsX ? (
+            <Slider
+              value={section.p1[0]}
+              aria-labelledby="discrete-slider-small-steps"
+              step={stepSize}
+              marks
+              min={extent.x_min}
+              max={extent.x_max}
+              valueLabelDisplay="auto"
+              onChange={handleSliderChange}
+            />
+          ) : (
+            <Slider
+              value={section.p1[1]}
+              aria-labelledby="discrete-slider-small-steps"
+              step={stepSize}
+              marks
+              min={extent.y_min}
+              max={extent.y_max}
+              valueLabelDisplay="auto"
+              onChange={handleSliderChange}
+            />
+          )}
         </Grid>
       </div>
       <div className={classes.switch}>
