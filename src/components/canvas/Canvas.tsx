@@ -1,8 +1,9 @@
 import React, { useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
-import { APP_BAR_HEIGHT } from "../../utils/CONSTANTS";
+import { APP_BAR_HEIGHT, FOTTER_HEIGHT } from "../../utils/CONSTANTS";
 import { updateCanvasSize } from "../../store/canvas/canvasSize/action";
 import StageComponent from "./Stage";
+import Controlers from './Controlers'
 
 export default function Canvas() {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ export default function Canvas() {
     function updateCanvasSizeComp() {
       const { innerWidth, innerHeight } = window;
       const width = innerWidth;
-      const height = innerHeight - APP_BAR_HEIGHT;
+      const height = innerHeight - APP_BAR_HEIGHT - FOTTER_HEIGHT;
       dispatch(updateCanvasSize({ width, height }));
     }
     window.addEventListener("resize", updateCanvasSizeComp);
@@ -22,6 +23,7 @@ export default function Canvas() {
   return (
     <div>
       <StageComponent />
+      <Controlers />
     </div>
   );
 }

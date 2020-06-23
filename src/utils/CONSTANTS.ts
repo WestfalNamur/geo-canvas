@@ -1,12 +1,17 @@
 export const APP_BAR_HEIGHT = 64;
+export const FOTTER_HEIGHT = 70
 
 export const COLOR_LIST = [
+  "indigo",
   "blue",
-  "green",
-  "red",
+  "lightBlue",
   "cyan",
-  "magenta",
+  "teal",
+  "green",
+  "lightGreen",
+  "lime",
   "yellow",
-  "black",
-  "white",
+  "amber",
+  "orange",
+  "deepOrange",
 ];

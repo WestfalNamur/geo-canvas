@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
     appBar: {
       flexGrow: 1,
       backgroundColor: "#347B98",
-      height: `${APP_BAR_HEIGHT}px`,
+      height: APP_BAR_HEIGHT,
     },
     link: {
       color: "black",
