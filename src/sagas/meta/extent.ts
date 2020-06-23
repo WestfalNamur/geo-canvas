@@ -1,4 +1,4 @@
-import { call, takeEvery, put, debounce } from "redux-saga/effects";
+import { call, takeEvery, put } from "redux-saga/effects";
 import { getExtentApi, putExtentApi } from "../../api/meta/extent";
 import {
   GetExtentActionType,
@@ -39,5 +39,5 @@ export function* watchGetExtent() {
 }
 
 export function* watchPutExtent() {
-  yield debounce(1000, "UPDATE_EXTENT", putExtentSaga);
+  yield takeEvery("UPDATE_EXTENT", putExtentSaga);
 }

@@ -1,4 +1,4 @@
-import { call, takeEvery, put, debounce } from "redux-saga/effects";
+import { call, takeEvery, put } from "redux-saga/effects";
 import { getSectionApi, putSectionApi } from "../../api/meta/section";
 import {
   GetSectionActionType,
@@ -39,5 +39,5 @@ export function* watchGetSection() {
 }
 
 export function* watchPutSection() {
-  yield debounce(1000, "UPDATE_SECTION", putSectionSaga);
+  yield takeEvery("UPDATA_SECTION", putSectionSaga);
 }

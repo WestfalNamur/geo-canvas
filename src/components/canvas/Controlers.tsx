@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { updateSection } from "../../store/meta/section/actions";
 import { Section } from "../../store/meta/section/types";
+import { getSectionPolygons } from "../../store/solutions/sectionPolygons/actions";
 
 const useStyles = makeStyles({
   root: {
@@ -42,6 +43,7 @@ export default function Controlers() {
       resolution: section.resolution,
     };
     dispatch(updateSection(newSection, oldSection));
+    dispatch(getSectionPolygons());
   };
 
   return (
