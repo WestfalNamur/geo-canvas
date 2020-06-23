@@ -5,7 +5,7 @@ export const UPDATE_SECTION_FAILED = "UPDATE_SECTION_FAILED";
 
 export interface Section {
   p1: [number, number]; // [x0, y0]
-  p2: [number, number]; // [x, y1]
+  p2: [number, number]; // [x1, y1]
   resolution: [number, number]; // [xres, yres]
 }
 

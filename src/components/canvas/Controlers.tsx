@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import Switch from "@material-ui/core/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
@@ -38,37 +39,47 @@ export default function Controlers() {
   const sectionState = (state: RootState) => state.meta.section.section;
   const section = useSelector(sectionState);
 
-  // local variabels
+  // local variabel: boolean selected axis is x-axis;
   const [axisIsX, setAxisIsX] = useState<boolean>(true);
+  // local variabel: function of selected axis and its extent;
   const stepSize: number = axisIsX
     ? (extent.x_max - extent.x_min) / 10
     : (extent.y_max - extent.y_min) / 10;
+  // local variabel: header for slider as function of selected axis;
   const positionOnAxis: string = axisIsX
     ? `Position on x-axis: ${section.p1[0]}`
     : `Position on y-axis: ${section.p1[1]}`;
+  // local variabel: middle of the slected axis to provide a value when
+  // switching axis;
   const middleSection: number = axisIsX
     ? (extent.x_max - extent.x_min) / 2
     : (extent.y_max - extent.y_min) / 2;
 
-  // functions
+  // functions: handles changes of the slider by dispatching the updated
+  // section and requesting a new polygon set; Slices/sections are along axis
+  // not perpendicular to it;
   const handleSliderChange = (event: any, newValue: number | number[]) => {
     const slice: number = typeof newValue === "number" ? newValue : newValue[0];
     const oldSection = section;
     const newSection: Section = axisIsX
       ? {
-          p1: [slice, section.p1[1]],
-          p2: [slice, section.p2[1]],
+          p1: [slice, section.p1[1]], // [x0, y0]
+          p2: [slice, section.p2[1]], // [x1, y1]
           resolution: section.resolution,
         }
       : {
-          p1: [section.p1[0], slice],
-          p2: [section.p2[0], slice],
+          p1: [section.p1[0], slice], // [x0, y0]
+          p2: [section.p2[0], slice], // [x1, y1]
           resolution: section.resolution,
         };
     dispatch(updateSection(newSection, oldSection));
     dispatch(getSectionPolygons());
   };
 
+  // handles axis switch; Before switch the values of the selected axis are
+  // the same for p1 and p2. Hence they need to be set to thier extent values
+  // on switch and the other axis values get a default of the middle of the
+  // section; Dispatches new section and requests new polygons;
   const handleSwitchToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAxisIsX(!axisIsX);
     const oldSection = section;
@@ -120,11 +131,18 @@ export default function Controlers() {
         </Grid>
       </div>
       <div className={classes.switch}>
-        <Switch
-          checked={axisIsX}
-          onChange={handleSwitchToggle}
-          color="primary"
-          name="AxisIsX"
+        <FormControlLabel
+          value="top"
+          control={
+            <Switch
+              checked={axisIsX}
+              onChange={handleSwitchToggle}
+              color="primary"
+              name="AxisIsX"
+            />
+          }
+          label={axisIsX ? "Axis: X" : "Axis: Y"}
+          labelPlacement="top"
         />
       </div>
     </div>
