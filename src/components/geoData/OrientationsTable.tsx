@@ -1,6 +1,7 @@
 import React from "react";
 import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import { RootState } from "../../store";
 import {
   addOrientation,
@@ -42,8 +43,9 @@ export default function OrientationsTable() {
   ];
   // helper functions // convert input String types to Number
   const reshapeData = (newData: Orientation) => {
+    const new_id: string = uuidv4();
     const reshapedData: Orientation = {
-      id: `${newData.x}${newData.y}${newData.z}`,
+      id: newData.id ? newData.id : new_id,
       x: Number(newData.x),
       y: Number(newData.y),
       z: Number(newData.z),
@@ -55,6 +57,7 @@ export default function OrientationsTable() {
       param1: Number(newData.param1),
       param2: Number(newData.param2),
       active: newData.active,
+      locstr: `${newData.x}${newData.y}${newData.z}`,
     };
     return reshapedData;
   };

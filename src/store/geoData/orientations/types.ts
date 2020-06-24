@@ -20,6 +20,7 @@ export interface Orientation {
   param1: number;
   param2: number;
   active: boolean;
+  locstr: string;
 }
 
 export interface OrientationsState {

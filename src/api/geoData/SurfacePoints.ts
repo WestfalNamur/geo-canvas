@@ -31,6 +31,7 @@ export async function putSurfacePointApi(surfacePoint: SurfacePoint) {
     param1: surfacePoint.param1,
     param2: surfacePoint.param2,
     active: surfacePoint.active,
+    locstr: surfacePoint.locstr,
   };
   const request_config: AxiosRequestConfig = {
     method: "put",
@@ -54,6 +55,7 @@ export async function deleteSurfacePointApi(surfacePoint: SurfacePoint) {
     param1: surfacePoint.param1,
     param2: surfacePoint.param2,
     active: surfacePoint.active,
+    locstr: surfacePoint.locstr,
   };
   const request_config: AxiosRequestConfig = {
     method: "delete",

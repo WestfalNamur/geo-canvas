@@ -45,9 +45,8 @@ function* addSurfacePointsSaga(action: AddSurfacePointActionType) {
 }
 
 function* putSurfacePointSaga(action: PutSurfacePointActionType) {
-  const { newSurfacePoint, oldSurfacePoint } = action.payload;
+  const { newSurfacePoint } = action.payload;
   try {
-    yield call(deleteSurfacePointApi, oldSurfacePoint);
     yield call(putSurfacePointApi, newSurfacePoint);
   } catch (error) {
     if (error.response) {

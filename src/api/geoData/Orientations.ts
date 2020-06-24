@@ -34,6 +34,7 @@ export async function putOrientationApi(orientation: Orientation) {
     param1: orientation.param1,
     param2: orientation.param2,
     active: orientation.active,
+    locstr: orientation.locstr,
   };
   const request_config: AxiosRequestConfig = {
     method: "put",
@@ -60,6 +61,7 @@ export async function deleteOrientationApi(orientation: Orientation) {
     param1: orientation.param1,
     param2: orientation.param2,
     active: orientation.active,
+    locstr: orientation.locstr,
   };
   const request_config: AxiosRequestConfig = {
     method: "delete",
