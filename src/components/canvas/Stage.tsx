@@ -5,6 +5,7 @@ import { Stage, Layer, Rect } from "react-konva";
 import { SectionPolygon } from "../../store/solutions/sectionPolygons/types";
 import resSecPol from "../../utils/numerical/rescaleSectionPolygons";
 import LayerPolygons from "./LayerPolygons";
+import LayerPoints from "./LayerPoints";
 
 /* StageComponent
  * Issue:
@@ -34,6 +35,10 @@ export default function StageComponent() {
   const surfacesState = (state: RootState) => state.geoData.surfaces.surfaces;
   const surfaces = useSelector(surfacesState);
 
+  const surfacePointsState = (state: RootState) =>
+    state.geoData.surfacePoints.surfacePoints;
+  const surfacePoints = useSelector(surfacePointsState);
+
   // rescale section polygons
   const resSectionPolygons: SectionPolygon[] = resSecPol(
     section,
@@ -52,6 +57,12 @@ export default function StageComponent() {
         />
       </Layer>
       <LayerPolygons polygons={resSectionPolygons} surfaces={surfaces} />
+      <LayerPoints
+        surfacePoints={surfacePoints}
+        surfaces={surfaces}
+        section={section}
+        extent={extent}
+      />
     </Stage>
   );
 }
