@@ -62,6 +62,7 @@ export default function StageComponent() {
         surfaces={surfaces}
         section={section}
         extent={extent}
+        canvasSize={canvasSize}
       />
     </Stage>
   );
