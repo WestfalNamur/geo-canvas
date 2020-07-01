@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Stage, Layer, Rect } from "react-konva";
 import LayerPoints from "./LayerPoints";
+import LayerSectionTops from "./LayerSectionTops";
 
 /* StageComponent
  * Issue:
@@ -32,6 +33,10 @@ export default function StageComponent() {
     state.geoData.surfacePoints.surfacePoints;
   const surfacePoints = useSelector(surfacePointsState);
 
+  const secetionTopsState = (state: RootState) =>
+    state.solutions.sectionTops.sectionTops;
+  const sectionTops = useSelector(secetionTopsState);
+
   return (
     <Stage width={canvasSize.width} height={canvasSize.height}>
       <Layer>
@@ -41,6 +46,12 @@ export default function StageComponent() {
           fill="white"
         />
       </Layer>
+      <LayerSectionTops
+        sectionTops={sectionTops}
+        section={section}
+        extent={extent}
+        canvasSize={canvasSize}
+      />
       <LayerPoints
         surfacePoints={surfacePoints}
         surfaces={surfaces}
