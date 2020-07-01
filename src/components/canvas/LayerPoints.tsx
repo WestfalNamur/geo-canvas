@@ -59,7 +59,7 @@ export default function LayerPolygons({
     // get color of surface => depending on surface_order:
     const surfaceName: string = surfacePoint.surface;
     const suface = surfaces.filter((surface) => surface.name === surfaceName);
-    const surfacePos = suface[0].order_surface;
+    const surfacePos = suface[0] ? suface[0].order_surface : 0;
     const color = COLOR_LIST[surfacePos];
     // calcualte circle position
     if (axisIsX) {
@@ -85,8 +85,7 @@ export default function LayerPolygons({
     <Layer>
       {reshapedPoints.map((p) => {
         const { x, y, z, id, color } = p;
-        const xval = x ? x : y;
-        console.log(xval, z);
+        const xval = x ? x : y; // depending if ploting along x or y
         return <Circle x={xval} y={z} key={id} radius={5} fill={color} />;
       })}
     </Layer>
