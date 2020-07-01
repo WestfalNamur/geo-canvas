@@ -23,7 +23,6 @@ export async function getSectionTopsApi() {
   const response = await axios.request<ResponseObject>(request_config);
   const { message, data } = response.data;
   console.log(message);
-  console.log(data);
   const sectTopsKeys = Object.keys(data);
   const sectionTops: SectionTop[] = sectTopsKeys.map((key) => {
     return { blockSurface: key, xyzValues: data[key] };

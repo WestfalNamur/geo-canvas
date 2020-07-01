@@ -2,9 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Stage, Layer, Rect } from "react-konva";
-import { SectionPolygon } from "../../store/solutions/sectionPolygons/types";
-import resSecPol from "../../utils/numerical/rescaleSectionPolygons";
-import LayerPolygons from "./LayerPolygons";
 import LayerPoints from "./LayerPoints";
 
 /* StageComponent
@@ -25,10 +22,6 @@ export default function StageComponent() {
   const sectionState = (state: RootState) => state.meta.section.section;
   const section = useSelector(sectionState);
 
-  const sectionPolygonsState = (state: RootState) =>
-    state.solutions.sectionPolygons.sectionPolygons;
-  const sectionPolygons = useSelector(sectionPolygonsState);
-
   const extentState = (state: RootState) => state.meta.extent.extent;
   const extent = useSelector(extentState);
 
@@ -39,14 +32,6 @@ export default function StageComponent() {
     state.geoData.surfacePoints.surfacePoints;
   const surfacePoints = useSelector(surfacePointsState);
 
-  // rescale section polygons
-  const resSectionPolygons: SectionPolygon[] = resSecPol(
-    section,
-    canvasSize,
-    extent,
-    sectionPolygons
-  );
-
   return (
     <Stage width={canvasSize.width} height={canvasSize.height}>
       <Layer>
@@ -56,7 +41,6 @@ export default function StageComponent() {
           fill="white"
         />
       </Layer>
-      <LayerPolygons polygons={resSectionPolygons} surfaces={surfaces} />
       <LayerPoints
         surfacePoints={surfacePoints}
         surfaces={surfaces}

@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { updateSection } from "../../store/meta/section/actions";
 import { Section } from "../../store/meta/section/types";
-import { getSectionPolygons } from "../../store/solutions/sectionPolygons/actions";
+import { getSectionTops } from "../../store/solutions/sectionTops/actions";
 
 const useStyles = makeStyles({
   root: {
@@ -73,7 +73,7 @@ export default function Controlers() {
           resolution: section.resolution,
         };
     dispatch(updateSection(newSection, oldSection));
-    dispatch(getSectionPolygons());
+    dispatch(getSectionTops());
   };
 
   // handles axis switch; Before switch the values of the selected axis are
@@ -95,7 +95,7 @@ export default function Controlers() {
           resolution: section.resolution,
         };
     dispatch(updateSection(newSection, oldSection));
-    dispatch(getSectionPolygons());
+    dispatch(getSectionTops());
   };
 
   return (
