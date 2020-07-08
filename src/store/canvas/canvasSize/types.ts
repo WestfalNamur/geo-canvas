@@ -5,13 +5,13 @@ export interface CanvasSize {
   height: number;
 }
 
-export interface CanvasState {
-  size: CanvasSize;
+export interface CanvasSizeState {
+  canvasSize: CanvasSize;
 }
 
-export interface CanvasSizeActionType {
+export interface UpdateCanvasSizeAction {
   type: typeof UPDATE_CANVAS_SIZE;
   payload: CanvasSize;
 }
 
-export type CanvasActionTypes = CanvasSizeActionType;
+export type CanvasSizeActionTypes = UpdateCanvasSizeAction;

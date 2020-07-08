@@ -3,13 +3,13 @@ import {
   getSurfaceApi,
   putSurfaceApi,
   deleteSurfaceApi,
-} from "../api/geoData/Surfaces";
+} from "../../api/geoData/Surfaces";
 import {
   GetSurfacesActionType,
   AddSurfaceActionType,
   PutSurfaceActionType,
   DeleteSurfaceActionType,
-} from "../store/geoData/surfaces/types";
+} from "../../store/geoData/surfaces/types";
 
 /*
  * TODO: Renaming now works by deleting and putAdd the updated data.

@@ -4,12 +4,13 @@ import createSagaMiddleware from "redux-saga";
 
 // reducers
 // metaData
-import { extentReducer } from "./extent/reducers";
-import { sectionReducer } from "./section/reducers";
+import meta from "./meta";
 // geoData
 import geoData from "./geoData";
 // canvas
-import { canvasReducer } from "./canvas/reducers";
+import canvas from "./canvas";
+// solutions
+import solutions from './solutions'
 
 // middleware
 import rootSaga from "../sagas";
@@ -17,9 +18,9 @@ import rootSaga from "../sagas";
 // combine reducers
 const rootReducer = combineReducers({
   geoData,
-  canvas: canvasReducer,
-  extent: extentReducer,
-  section: sectionReducer,
+  meta,
+  canvas,
+  solutions
 });
 
 // create middelwares
@@ -31,7 +32,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 // configure and create store
 export const store = createStore(
   rootReducer,
-  applyMiddleware(sagaMiddleware, logger)
+  applyMiddleware(sagaMiddleware)
 );
 
 // start saga

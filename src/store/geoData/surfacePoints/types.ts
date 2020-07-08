@@ -17,6 +17,7 @@ export interface SurfacePoint {
   param1: number;
   param2: number;
   active: boolean;
+  locstr: string;
 }
 
 export interface SurfacePointsState {

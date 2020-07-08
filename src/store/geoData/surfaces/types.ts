@@ -10,6 +10,7 @@ export const DELETE_SURFACE_FAILED = "DELETE_SURFACE_FAILED";
 export interface Surface {
   name: string;
   serie: string;
+  order_surface: number;
 }
 
 export interface SurfacesState {

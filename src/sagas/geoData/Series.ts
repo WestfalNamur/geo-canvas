@@ -3,13 +3,13 @@ import {
   getSerieApi,
   putSerieApi,
   deleteSerieApi,
-} from "../api/geoData/Series";
+} from "../../api/geoData/Series";
 import {
   GetSeriesActionType,
   AddSerieActionType,
   PutSerieActionType,
   DeleteSerieActionType,
-} from "../store/geoData/series/types";
+} from "../../store/geoData/series/types";
 
 /*
  * TODO: Renaming now works by deleting and putAdd the updated data.

@@ -8,6 +8,7 @@ import OrientationsTable from "./OrientationsTable";
 export default function GeoData() {
   return (
     <div className="GeoData">
+      <ExtentForm />
       <SeriesTable />
       <SurfacesTable />
       <SurfacePointsTable />

@@ -3,13 +3,13 @@ import {
   getSurfacePointApi,
   putSurfacePointApi,
   deleteSurfacePointApi,
-} from "../api/geoData/SurfacePoints";
+} from "../../api/geoData/SurfacePoints";
 import {
   GetSurfacePointsActionType,
   AddSurfacePointActionType,
   PutSurfacePointActionType,
   DeleteSurfacePointActionType,
-} from "../store/geoData/surfacePoints/types";
+} from "../../store/geoData/surfacePoints/types";
 
 /*
  * TODO: Renaming now works by deleting and putAdd the updated data.
@@ -45,9 +45,8 @@ function* addSurfacePointsSaga(action: AddSurfacePointActionType) {
 }
 
 function* putSurfacePointSaga(action: PutSurfacePointActionType) {
-  const { newSurfacePoint, oldSurfacePoint } = action.payload;
+  const { newSurfacePoint } = action.payload;
   try {
-    yield call(deleteSurfacePointApi, oldSurfacePoint);
     yield call(putSurfacePointApi, newSurfacePoint);
   } catch (error) {
     if (error.response) {

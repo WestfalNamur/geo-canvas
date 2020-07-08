@@ -1,28 +1,29 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
-import { updateCanvasSize } from "../../store/canvas/actions";
-
-// window size handler; updates local state and store;
-// handler located on window not component;
-function useWindowSize() {
-  const dispatch = useDispatch();
-  function updateCanvasSizeToStore() {
-    dispatch(
-      updateCanvasSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      })
-    );
-    return () => window.removeEventListener("resize", updateCanvasSizeToStore);
-  }
-  window.addEventListener("resize", updateCanvasSizeToStore);
-}
+import { APP_BAR_HEIGHT, FOTTER_HEIGHT } from "../../utils/CONSTANTS";
+import { updateCanvasSize } from "../../store/canvas/canvasSize/action";
+import StageComponent from "./Stage";
+import Controlers from './Controlers'
 
 export default function Canvas() {
-  useWindowSize();
+  const dispatch = useDispatch();
+  // update canvas size as it is a function of the windo size
+  useLayoutEffect(() => {
+    function updateCanvasSizeComp() {
+      const { innerWidth, innerHeight } = window;
+      const width = innerWidth;
+      const height = innerHeight - APP_BAR_HEIGHT - FOTTER_HEIGHT;
+      dispatch(updateCanvasSize({ width, height }));
+    }
+    window.addEventListener("resize", updateCanvasSizeComp);
+    updateCanvasSizeComp();
+    return () => window.removeEventListener("resize", updateCanvasSizeComp);
+  });
+
   return (
-    <div className="Canvas">
-      <header className="App-header">Hello Canvas!</header>
+    <div>
+      <StageComponent />
+      <Controlers />
     </div>
   );
 }

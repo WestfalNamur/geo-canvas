@@ -1,6 +1,7 @@
 import React from "react";
 import MaterialTable, { Column } from "material-table";
 import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import { RootState } from "../../store";
 import {
   addSurfacePoint,
@@ -32,15 +33,16 @@ export default function SurfacePointsTable() {
     { title: "y", field: "y", type: "numeric" },
     { title: "z", field: "z", type: "numeric" },
     { title: "surface", field: "surface", lookup },
-    { title: "probdist", field: "probdist", lookup: { 0: "normal" } },
+    { title: "probdist", field: "probdist", lookup: { normal: "normal" } },
     { title: "param1", field: "param1", type: "numeric" },
     { title: "param2", field: "param2", type: "numeric" },
     { title: "active", field: "active", type: "boolean" },
   ];
   // helper functions // convert input String types to Number
   const reshapeData = (newData: SurfacePoint) => {
+    const new_id: string = uuidv4();
     const reshapedData: SurfacePoint = {
-      id: `${newData.x}${newData.y}${newData.z}`,
+      id: newData.id ? newData.id : new_id,
       x: Number(newData.x),
       y: Number(newData.y),
       z: Number(newData.z),
@@ -49,12 +51,13 @@ export default function SurfacePointsTable() {
       param1: Number(newData.param1),
       param2: Number(newData.param2),
       active: newData.active,
+      locstr: `${newData.x}${newData.y}${newData.z}`,
     };
     return reshapedData;
   };
   return (
     <MaterialTable
-      title="Series"
+      title="SurfacePoints"
       columns={columns}
       data={surfacePointsData}
       editable={{
