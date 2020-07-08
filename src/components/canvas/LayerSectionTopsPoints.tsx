@@ -1,5 +1,5 @@
 import React from "react";
-import { Layer, Line } from "react-konva";
+import { Layer, Circle } from "react-konva";
 import { Section } from "../../store/meta/section/types";
 import { Extent } from "../../store/meta/extent/types";
 import { CanvasSize } from "../../store/canvas/canvasSize/types";
@@ -30,37 +30,27 @@ export default function LayerSectionTops({
   const tops = sectionTops.map((sectionTop) => {
     const { xyzValues, blockSurface } = sectionTop;
     const { xvals, yvals, zvals } = xyzValues;
-    const ys = xvals.map((y) => (y / extent.y_max) * canvasSize.width);
-    const xs = yvals.map((x) => (x / extent.x_max) * canvasSize.width);
+    const ys = yvals.map((y) => (y / extent.y_max) * canvasSize.width);
+    const xs = xvals.map((x) => (x / extent.x_max) * canvasSize.width);
     const zs = zvals.map((z) => (z / extent.z_max) * canvasSize.height);
     if (axisIsX) {
-      let xzvals: number[] = [];
-      xs.map((x, i) => {
-        xzvals = [...xzvals, x, zs[i]];
-      });
-      return { blockSurface, xzvals };
+      const xz = { xs: ys, zs: zs };
+      return { blockSurface, xz };
     } else {
-      let xzvals: number[] = [];
-      ys.map((y, i) => {
-        xzvals = [...xzvals, y, zs[i]];
-      });
-      return { blockSurface, xzvals };
+      const xz = { xs: xs, zs: zs };
+      return { blockSurface, xz };
     }
   });
   return (
     <Layer>
+      <Circle x={555} y={555} key={'adf'} radius={50} fill="black" />
       {tops.map((top) => {
-        const { blockSurface, xzvals } = top;
-        return (
-          <Line
-            points={xzvals}
-            //@ts-ignore
-            key={blockSurface}
-            stroke="black"
-            strokeWidth={2}
-            dash={[5]}
-          />
-        );
+        const { blockSurface, xz } = top;
+        xz.xs.map((x, i) => {
+          const y: number = xz.zs[i];
+          const id: string = `${x}${y}`;
+          return <Circle x={x} y={y} key={id} radius={5} fill="black" />;
+        });
       })}
     </Layer>
   );

@@ -38,7 +38,12 @@ export default function StageComponent() {
   const sectionTops = useSelector(secetionTopsState);
 
   return (
-    <Stage width={canvasSize.width} height={canvasSize.height}>
+    <Stage
+      width={canvasSize.width}
+      height={canvasSize.height}
+      scaleY={-1}
+      y={canvasSize.height}
+    >
       <Layer>
         <Rect
           width={canvasSize.width}

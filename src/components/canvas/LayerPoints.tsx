@@ -86,7 +86,16 @@ export default function LayerPolygons({
       {reshapedPoints.map((p) => {
         const { x, y, z, id, color } = p;
         const xval = x ? x : y; // depending if ploting along x or y
-        return <Circle x={xval} y={z} key={id} radius={5} fill={color} />;
+        return (
+          <Circle
+            x={xval}
+            y={z}
+            key={id}
+            radius={5}
+            fill={color}
+            draggable={true}
+          />
+        );
       })}
     </Layer>
   );
