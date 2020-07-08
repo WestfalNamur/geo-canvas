@@ -1,5 +1,6 @@
 import React from "react";
-import { Layer, Circle } from "react-konva";
+import Konva from "konva";
+import { Layer, Ellipse } from "react-konva";
 import { Surface } from "../../store/geoData/surfaces/types";
 import { SurfacePoint } from "../../store/geoData/surfacePoints/types";
 import { Section } from "../../store/meta/section/types";
@@ -23,6 +24,14 @@ interface CirclePoint {
   z: number;
   id: string;
   color: string;
+}
+
+function onDragEnd(e: Konva.KonvaEventObject<DragEvent>) {
+  const { _id } = e.target;
+  const { x, y } = e.target.attrs;
+  console.log(x, y, _id);
+  // dispatch update of surface point
+  // dispatch get new tops
 }
 
 export default function LayerPolygons({
@@ -86,14 +95,18 @@ export default function LayerPolygons({
       {reshapedPoints.map((p) => {
         const { x, y, z, id, color } = p;
         const xval = x ? x : y; // depending if ploting along x or y
+        const text: string = x ? `(x:${x}/z${z})` : `(y:${y}/z${z})`;
         return (
-          <Circle
+          <Ellipse
             x={xval}
             y={z}
+            radiusX={10}
+            radiusY={10}
             key={id}
-            radius={5}
             fill={color}
+            stroke="black"
             draggable={true}
+            onDragEnd={onDragEnd}
           />
         );
       })}

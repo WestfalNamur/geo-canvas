@@ -48,7 +48,7 @@ export default function StageComponent() {
         <Rect
           width={canvasSize.width}
           height={canvasSize.height}
-          fill="white"
+          fill="grey"
         />
       </Layer>
       <LayerSectionTops
