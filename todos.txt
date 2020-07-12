@@ -1,0 +1,14 @@
+0. Fix controlers axis bug  # p1 == p2
+1. Plot surface tops with corresponding color.
+2. Smooth tops line if possible.
+3. Saga for movement of surface point
+4. Add err. along all axis as attribute of surface points
+5. Get entropy map
+6. Plot entropy map
+7. Menue to select surface
+8. Add new surface point
+9. Draw line of selected surface and add store for it
+10a. Parametization api Backend
+10b. Parametization saga
+11. Plot parametized (returned set of points)
+12. Plot orientations 
