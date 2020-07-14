@@ -8,6 +8,8 @@ import LayerSectionTops from "./LayerSectionTops";
 import { SurfacePoint } from "../../store/geoData/surfacePoints/types";
 import { putSurfacePoint } from "../../store/geoData/surfacePoints/actions";
 import { getSectionTops } from "../../store/solutions/sectionTops/actions";
+import { SelectedSurfacePoint } from "../../store/meta/selected/types";
+import { updateSelectedSurfacePoint } from "../../store/meta/selected/actions";
 
 /* StageComponent
  * Issue:
@@ -64,7 +66,8 @@ export default function StageComponent() {
     }
     newSurfacePointData.z = (y / canvasSize.height) * extent.z_max;
     // dispatch update of surface point
-    console.log(newSurfacePointData, oldSurfacePointData[0]);
+    const selectedSurfacePoint: SelectedSurfacePoint = { id };
+    dispatch(updateSelectedSurfacePoint(selectedSurfacePoint));
     dispatch(putSurfacePoint(newSurfacePointData, oldSurfacePointData[0]));
     // request new top
     dispatch(getSectionTops());

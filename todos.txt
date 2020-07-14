@@ -1,7 +1,7 @@
 0. Fix controlers axis bug  # p1 == p2
 1. Plot surface tops with corresponding color.
-2. Smooth tops line if possible.
-3. Saga for movement of surface point
+2. 
+3. 
 4. Add err. along all axis as attribute of surface points
 5. Get entropy map
 6. Plot entropy map

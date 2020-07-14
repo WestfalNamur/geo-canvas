@@ -57,8 +57,8 @@ export default function LayerSectionTops({
             //@ts-ignore
             key={blockSurface}
             stroke="black"
-            strokeWidth={2}
-            dash={[5]}
+            strokeWidth={5}
+            tension={2}
           />
         );
       })}
