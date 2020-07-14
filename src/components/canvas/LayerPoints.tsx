@@ -1,11 +1,12 @@
 import React from "react";
-import { Layer, Ellipse } from "react-konva";
+import { Layer, Ellipse, Transformer } from "react-konva";
 import { Surface } from "../../store/geoData/surfaces/types";
 import { SurfacePoint } from "../../store/geoData/surfacePoints/types";
 import { Section } from "../../store/meta/section/types";
 import { Extent } from "../../store/meta/extent/types";
 import { CanvasSize } from "../../store/canvas/canvasSize/types";
 import { COLOR_LIST } from "../../utils/CONSTANTS";
+import Points from "./Points";
 
 interface Props {
   surfaces: Surface[];
@@ -13,7 +14,7 @@ interface Props {
   section: Section;
   extent: Extent;
   canvasSize: CanvasSize;
-  updatePointCoordinates: any;  // quick fix as end of thesis
+  updatePointCoordinates: any; // quick fix as end of thesis
 }
 
 interface CirclePoint {
@@ -22,6 +23,7 @@ interface CirclePoint {
   z: number;
   id: string;
   color: string;
+  param1: number;
 }
 
 export default function LayerPolygons({
@@ -56,6 +58,8 @@ export default function LayerPolygons({
   );
   // resphape for konva-input
   const reshapedPoints = filteredSurfacePoints.map((surfacePoint) => {
+    // destructure
+    const { param1 } = surfacePoint;
     // get color of surface => depending on surface_order:
     const surfaceName: string = surfacePoint.surface;
     const suface = surfaces.filter((surface) => surface.name === surfaceName);
@@ -68,6 +72,7 @@ export default function LayerPolygons({
         z: (surfacePoint.z / extent.z_max) * canvasSize.height,
         id: surfacePoint.id,
         color,
+        param1,
       };
       return circlePoint;
     } else {
@@ -76,6 +81,7 @@ export default function LayerPolygons({
         z: (surfacePoint.z / extent.z_max) * canvasSize.height,
         id: surfacePoint.id,
         color,
+        param1,
       };
       return circlePoint;
     }
@@ -84,21 +90,18 @@ export default function LayerPolygons({
   return (
     <Layer>
       {reshapedPoints.map((p) => {
-        const { x, y, z, id, color } = p;
+        const { x, y, z, id, color, param1 } = p;
         const xval = x ? x : y; // depending if ploting along x or y
-        const text: string = x ? `(x:${x}/z${z})` : `(y:${y}/z${z})`;
         return (
-          <Ellipse
-            x={xval}
-            y={z}
-            radiusX={10}
-            radiusY={10}
-            id={id}
+          <Points
+            x={x}
+            y={y}
+            z={z}
             key={id}
-            fill={color}
-            stroke="black"
-            draggable={true}
-            onDragEnd={updatePointCoordinates}
+            id={id}
+            color={color}
+            param1={param1}
+            updatePointCoordinates={updatePointCoordinates}
           />
         );
       })}
