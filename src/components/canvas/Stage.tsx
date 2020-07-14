@@ -1,9 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import Konva from "konva";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { Stage, Layer, Rect } from "react-konva";
 import LayerPoints from "./LayerPoints";
 import LayerSectionTops from "./LayerSectionTops";
+import { SurfacePoint } from "../../store/geoData/surfacePoints/types";
+import { putSurfacePoint } from "../../store/geoData/surfacePoints/actions";
+import { getSectionTops } from "../../store/solutions/sectionTops/actions";
 
 /* StageComponent
  * Issue:
@@ -16,6 +20,8 @@ import LayerSectionTops from "./LayerSectionTops";
 
 export default function StageComponent() {
   // conect to store
+  const dispatch = useDispatch();
+
   const canvasSizeState = (state: RootState) =>
     state.canvas.canvasSize.canvasSize;
   const canvasSize = useSelector(canvasSizeState);
@@ -37,6 +43,33 @@ export default function StageComponent() {
     state.solutions.sectionTops.sectionTops;
   const sectionTops = useSelector(secetionTopsState);
 
+  const updatePointCoordinates = (e: Konva.KonvaEventObject<DragEvent>) => {
+    // destructure
+    const { id, x, y } = e.target.attrs;
+    // get meta data
+    const axisIsX: boolean = section.p1[0] === section.p2[0] ? true : false;
+    // get old surfacePoint data
+    const oldSurfacePointData = surfacePoints.filter(
+      (surfacePoint) => surfacePoint.id === id
+    );
+    // deep copy
+    let newSurfacePointData: SurfacePoint = Object.assign(
+      oldSurfacePointData[0]
+    );
+    // update to newCoordinates
+    if (axisIsX) {
+      newSurfacePointData.x = (x / canvasSize.width) * extent.x_max;
+    } else {
+      newSurfacePointData.y = (x / canvasSize.width) * extent.y_max;
+    }
+    newSurfacePointData.z = (y / canvasSize.height) * extent.z_max;
+    // dispatch update of surface point
+    console.log(newSurfacePointData, oldSurfacePointData[0]);
+    dispatch(putSurfacePoint(newSurfacePointData, oldSurfacePointData[0]));
+    // request new top
+    dispatch(getSectionTops());
+  };
+
   return (
     <Stage
       width={canvasSize.width}
@@ -45,11 +78,7 @@ export default function StageComponent() {
       y={canvasSize.height}
     >
       <Layer>
-        <Rect
-          width={canvasSize.width}
-          height={canvasSize.height}
-          fill="grey"
-        />
+        <Rect width={canvasSize.width} height={canvasSize.height} fill="grey" />
       </Layer>
       <LayerSectionTops
         sectionTops={sectionTops}
@@ -63,6 +92,7 @@ export default function StageComponent() {
         section={section}
         extent={extent}
         canvasSize={canvasSize}
+        updatePointCoordinates={updatePointCoordinates}
       />
     </Stage>
   );

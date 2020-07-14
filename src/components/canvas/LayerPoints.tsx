@@ -1,5 +1,4 @@
 import React from "react";
-import Konva from "konva";
 import { Layer, Ellipse } from "react-konva";
 import { Surface } from "../../store/geoData/surfaces/types";
 import { SurfacePoint } from "../../store/geoData/surfacePoints/types";
@@ -8,14 +7,13 @@ import { Extent } from "../../store/meta/extent/types";
 import { CanvasSize } from "../../store/canvas/canvasSize/types";
 import { COLOR_LIST } from "../../utils/CONSTANTS";
 
-// check axis => upside-down?
-
 interface Props {
   surfaces: Surface[];
   surfacePoints: SurfacePoint[];
   section: Section;
   extent: Extent;
   canvasSize: CanvasSize;
+  updatePointCoordinates: any;  // quick fix as end of thesis
 }
 
 interface CirclePoint {
@@ -26,20 +24,13 @@ interface CirclePoint {
   color: string;
 }
 
-function onDragEnd(e: Konva.KonvaEventObject<DragEvent>) {
-  const { _id } = e.target;
-  const { x, y } = e.target.attrs;
-  console.log(x, y, _id);
-  // dispatch update of surface point
-  // dispatch get new tops
-}
-
 export default function LayerPolygons({
   surfacePoints,
   surfaces,
   section,
   extent,
   canvasSize,
+  updatePointCoordinates,
 }: Props) {
   // find out which axis is selcted
   const axisIsX: boolean = section.p1[0] === section.p2[0] ? true : false;
@@ -102,11 +93,12 @@ export default function LayerPolygons({
             y={z}
             radiusX={10}
             radiusY={10}
+            id={id}
             key={id}
             fill={color}
             stroke="black"
             draggable={true}
-            onDragEnd={onDragEnd}
+            onDragEnd={updatePointCoordinates}
           />
         );
       })}
