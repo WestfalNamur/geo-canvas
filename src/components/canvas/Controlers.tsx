@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Paper from "@material-ui/core/Paper";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
@@ -16,16 +17,11 @@ import { getSectionTops } from "../../store/solutions/sectionTops/actions";
 
 const useStyles = makeStyles({
   root: {
-    width: 300,
     maxHeight: FOTTER_HEIGHT,
   },
-  slider: {
+  paper: {
+    height: FOTTER_HEIGHT,
     width: 200,
-    float: "left",
-  },
-  switch: {
-    width: 100,
-    float: "left",
   },
 });
 
@@ -73,7 +69,7 @@ export default function Controlers() {
           resolution: section.resolution,
         };
     dispatch(updateSection(newSection, oldSection));
-    console.log(newSection.p1, newSection.p2)
+    console.log(newSection.p1, newSection.p2);
     dispatch(getSectionTops());
   };
 
@@ -101,51 +97,59 @@ export default function Controlers() {
 
   return (
     <div className={classes.root}>
-      <div className={classes.slider}>
-        <Typography id="continuous-slider" gutterBottom>
-          {positionOnAxis}
-        </Typography>
-        <Grid item xs>
-          {axisIsX ? (
-            <Slider
-              value={section.p1[0]}
-              aria-labelledby="discrete-slider-small-steps"
-              step={stepSize}
-              marks
-              min={extent.x_min}
-              max={extent.x_max}
-              valueLabelDisplay="auto"
-              onChange={handleSliderChange}
-            />
-          ) : (
-            <Slider
-              value={section.p1[1]}
-              aria-labelledby="discrete-slider-small-steps"
-              step={stepSize}
-              marks
-              min={extent.y_min}
-              max={extent.y_max}
-              valueLabelDisplay="auto"
-              onChange={handleSliderChange}
-            />
-          )}
+      <Grid container className={classes.root} spacing={2}>
+        <Grid item >
+          <Grid container justify="center" spacing={2}>
+            <Grid item xs={6}>
+              <Paper className={classes.paper}>
+                <Typography id="continuous-slider" gutterBottom>
+                  {positionOnAxis}
+                </Typography>
+                {axisIsX ? (
+                  <Slider
+                    value={section.p1[0]}
+                    aria-labelledby="discrete-slider-small-steps"
+                    step={stepSize}
+                    marks
+                    min={extent.x_min}
+                    max={extent.x_max}
+                    valueLabelDisplay="auto"
+                    onChange={handleSliderChange}
+                  />
+                ) : (
+                  <Slider
+                    value={section.p1[1]}
+                    aria-labelledby="discrete-slider-small-steps"
+                    step={stepSize}
+                    marks
+                    min={extent.y_min}
+                    max={extent.y_max}
+                    valueLabelDisplay="auto"
+                    onChange={handleSliderChange}
+                  />
+                )}
+              </Paper>
+            </Grid>
+            <Grid item xs={4}>
+              <Paper className={classes.paper}>
+                <FormControlLabel
+                  value="top"
+                  control={
+                    <Switch
+                      checked={axisIsX}
+                      onChange={handleSwitchToggle}
+                      color="primary"
+                      name="AxisIsX"
+                    />
+                  }
+                  label={axisIsX ? "Axis: X" : "Axis: Y"}
+                  labelPlacement="top"
+                />
+              </Paper>
+            </Grid>
+          </Grid>
         </Grid>
-      </div>
-      <div className={classes.switch}>
-        <FormControlLabel
-          value="top"
-          control={
-            <Switch
-              checked={axisIsX}
-              onChange={handleSwitchToggle}
-              color="primary"
-              name="AxisIsX"
-            />
-          }
-          label={axisIsX ? "Axis: X" : "Axis: Y"}
-          labelPlacement="top"
-        />
-      </div>
+      </Grid>
     </div>
   );
 }

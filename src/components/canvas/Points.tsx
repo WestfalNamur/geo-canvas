@@ -1,5 +1,5 @@
-import React from "react";
-import { Layer, Ellipse, Transformer } from "react-konva";
+import React, { useEffect } from "react";
+import { Ellipse, Transformer } from "react-konva";
 
 interface Props {
   x?: number;
@@ -21,7 +21,6 @@ export default function Points({
   updatePointCoordinates,
 }: Props) {
   const xval = x ? x : y; // depending if ploting along x or y
-  const text: string = x ? `(x:${x}/z${z})` : `(y:${y}/z${z})`;
   return (
     <Ellipse
       x={xval}

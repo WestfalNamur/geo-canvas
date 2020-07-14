@@ -1,5 +1,5 @@
 import React from "react";
-import { Layer, Ellipse, Transformer } from "react-konva";
+import { Layer } from "react-konva";
 import { Surface } from "../../store/geoData/surfaces/types";
 import { SurfacePoint } from "../../store/geoData/surfacePoints/types";
 import { Section } from "../../store/meta/section/types";
