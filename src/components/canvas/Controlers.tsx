@@ -8,12 +8,16 @@ import Slider from "@material-ui/core/Slider";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Paper from "@material-ui/core/Paper";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { updateSection } from "../../store/meta/section/actions";
 import { Section } from "../../store/meta/section/types";
 import { getSectionTops } from "../../store/solutions/sectionTops/actions";
+import { updateSelectedSurface } from "../../store/meta/selected/actions";
+import { SelectedSurface } from "../../store/meta/selected/types";
 
 const useStyles = makeStyles({
   root: {
@@ -22,6 +26,14 @@ const useStyles = makeStyles({
   paper: {
     height: FOTTER_HEIGHT,
     width: 200,
+  },
+  paperAxis: {
+    height: FOTTER_HEIGHT,
+    width: 100,
+  },
+  paperSurface: {
+    height: FOTTER_HEIGHT,
+    width: 100,
   },
 });
 
@@ -34,6 +46,11 @@ export default function Controlers() {
   const extent = useSelector(extentState);
   const sectionState = (state: RootState) => state.meta.section.section;
   const section = useSelector(sectionState);
+  const selectedSurfaceState = (state: RootState) =>
+    state.meta.selections.selectedSurface;
+  const selectedSurface = useSelector(selectedSurfaceState);
+  const surfacesState = (state: RootState) => state.geoData.surfaces.surfaces;
+  const surfaces = useSelector(surfacesState);
 
   // local variabel: boolean selected axis is x-axis;
   const [axisIsX, setAxisIsX] = useState<boolean>(true);
@@ -73,6 +90,18 @@ export default function Controlers() {
     dispatch(getSectionTops());
   };
 
+  const surfaceNames: string[] = surfaces.map((s) => s.name);
+  const handleSelectSurface = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    try {
+      const newSelectedSurface: SelectedSurface = {
+        name: event.target.value as string,
+      };
+      dispatch(updateSelectedSurface(newSelectedSurface));
+    } catch (err) {}
+  };
+
   // handles axis switch; Before switch the values of the selected axis are
   // the same for p1 and p2. Hence they need to be set to thier extent values
   // on switch and the other axis values get a default of the middle of the
@@ -98,9 +127,10 @@ export default function Controlers() {
   return (
     <div className={classes.root}>
       <Grid container className={classes.root} spacing={2}>
-        <Grid item >
+        <Grid item>
           <Grid container justify="center" spacing={2}>
-            <Grid item xs={6}>
+            {/* Slice selector*/}
+            <Grid item xs={4}>
               <Paper className={classes.paper}>
                 <Typography id="continuous-slider" gutterBottom>
                   {positionOnAxis}
@@ -130,8 +160,9 @@ export default function Controlers() {
                 )}
               </Paper>
             </Grid>
-            <Grid item xs={4}>
-              <Paper className={classes.paper}>
+            {/* Axis selector*/}
+            <Grid item xs={2}>
+              <Paper className={classes.paperAxis}>
                 <FormControlLabel
                   value="top"
                   control={
@@ -145,6 +176,21 @@ export default function Controlers() {
                   label={axisIsX ? "Axis: X" : "Axis: Y"}
                   labelPlacement="top"
                 />
+              </Paper>
+            </Grid>
+            {/* Surface selector*/}
+            <Grid item xs={2}>
+              <Paper className={classes.paperSurface}>
+                <Select
+                  value={selectedSurface.name ? selectedSurface.name : ""}
+                  onChange={handleSelectSurface}
+                >
+                  {surfaceNames.map((name) => (
+                    <MenuItem key={name} value={name}>
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
               </Paper>
             </Grid>
           </Grid>

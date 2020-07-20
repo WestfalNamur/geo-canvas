@@ -15,8 +15,7 @@ export async function getSectionApi() {
     url: "/geo-model/data/geo-model-section",
   };
   const response = await axios.request<ResponseObject>(request_config);
-  const { message, data } = response.data;
-  console.log(message);
+  const { data } = response.data;
   return data;
 }
 
@@ -32,7 +31,5 @@ export async function putSectionApi(section: Section) {
     url: "/geo-model/data/geo-model-section",
     data,
   };
-  const response = await axios.request<ResponseObject>(request_config);
-  const { message } = response.data;
-  console.log(message);
+  await axios.request<ResponseObject>(request_config);
 }

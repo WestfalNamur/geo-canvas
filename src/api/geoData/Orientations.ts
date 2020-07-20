@@ -15,8 +15,7 @@ export async function getOrientationsApi() {
     url: "/geo-model/data/geo-model-orientations",
   };
   const response = await axios.request<ResponseObject>(request_config);
-  const { message, data } = response.data;
-  console.log(message);
+  const { data } = response.data;
   return data;
 }
 
@@ -42,9 +41,7 @@ export async function putOrientationApi(orientation: Orientation) {
     url: "/geo-model/data/geo-model-orientations",
     data,
   };
-  const response = await axios.request<ResponseObject>(request_config);
-  const { message } = response.data;
-  console.log(message);
+  await axios.request<ResponseObject>(request_config);
 }
 
 export async function deleteOrientationApi(orientation: Orientation) {
@@ -69,7 +66,5 @@ export async function deleteOrientationApi(orientation: Orientation) {
     url: "/geo-model/data/geo-model-orientations",
     data,
   };
-  const response = await axios.request<ResponseObject>(request_config);
-  const { message } = response.data;
-  console.log(message);
+  await axios.request<ResponseObject>(request_config);
 }

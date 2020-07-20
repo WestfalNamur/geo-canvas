@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Ellipse, Transformer } from "react-konva";
+import React from "react";
+import { Ellipse } from "react-konva";
 
 interface Props {
   x?: number;

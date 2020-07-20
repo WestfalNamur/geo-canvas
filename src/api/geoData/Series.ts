@@ -15,8 +15,7 @@ export async function getSerieApi() {
     url: "/geo-model/data/geo-model-series",
   };
   const response = await axios.request<ResponseObject>(request_config);
-  const { message, data } = response.data;
-  console.log(message);
+  const { data } = response.data;
   return data;
 }
 
@@ -32,9 +31,7 @@ export async function putSerieApi(serie: Serie) {
     url: "/geo-model/data/geo-model-series",
     data,
   };
-  const response = await axios.request<ResponseObject>(request_config);
-  const { message } = response.data;
-  console.log(message);
+  await axios.request<ResponseObject>(request_config);
 }
 
 export async function deleteSerieApi(serie: Serie) {
@@ -49,7 +46,5 @@ export async function deleteSerieApi(serie: Serie) {
     url: "/geo-model/data/geo-model-series",
     data,
   };
-  const response = await axios.request<ResponseObject>(request_config);
-  const { message } = response.data;
-  console.log(message);
+  await axios.request<ResponseObject>(request_config);
 }

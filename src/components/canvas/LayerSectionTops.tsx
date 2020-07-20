@@ -28,19 +28,19 @@ export default function LayerSectionTops({
     // xyzValues is x0,y0,x1,y1,... of the section. Needs to be recalculated
     const xz: number[] = xyzValues.map((value, index) => {
       if (axisIsX) {
-        if (index % 2 == 0) {
+        if (index % 2 === 0) {
           // z axis in section
           return (value / 200) * canvasSize.width;
         } else {
-          // x axis as axisIsX == True
+          // x axis as axisIsX === True
           return (value / 200) * canvasSize.height;
         }
       } else {
-        if (index % 2 == 0) {
+        if (index % 2 === 0) {
           // z axis in section
           return (value / 200) * canvasSize.width;
         } else {
-          // y axis as axisIsX == False
+          // y axis as axisIsX === False
           return (value / 200) * canvasSize.height;
         }
       }

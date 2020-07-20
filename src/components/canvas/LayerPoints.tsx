@@ -94,8 +94,7 @@ export default function LayerPolygons({
         const xval = x ? x : y; // depending if ploting along x or y
         return (
           <Points
-            x={x}
-            y={y}
+            x={xval}
             z={z}
             key={id}
             id={id}
