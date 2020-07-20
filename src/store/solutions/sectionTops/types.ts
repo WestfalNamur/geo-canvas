@@ -3,11 +3,7 @@ export const SET_SECTION_TOPS = "SET_SECTION_TOPS";
 
 export interface SectionTop {
   blockSurface: String;
-  xyzValues: {
-    xvals: number[];
-    yvals: number[];
-    zvals: number[];
-  };
+  xyzValues: number[]
 }
 
 export interface SectionTopsState {

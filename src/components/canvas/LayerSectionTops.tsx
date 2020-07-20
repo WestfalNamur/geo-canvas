@@ -26,34 +26,39 @@ export default function LayerSectionTops({
   canvasSize,
 }: Props) {
   const axisIsX: boolean = section.p1[0] === section.p2[0] ? true : false;
-
-  const tops = sectionTops.map((sectionTop) => {
-    const { xyzValues, blockSurface } = sectionTop;
-    const { xvals, yvals, zvals } = xyzValues;
-    const ys = xvals.map((y) => (y / extent.y_max) * canvasSize.width);
-    const xs = yvals.map((x) => (x / extent.x_max) * canvasSize.width);
-    const zs = zvals.map((z) => (z / extent.z_max) * canvasSize.height);
-    if (axisIsX) {
-      let xzvals: number[] = [];
-      xs.map((x, i) => {
-        xzvals = [...xzvals, x, zs[i]];
-      });
-      return { blockSurface, xzvals };
-    } else {
-      let xzvals: number[] = [];
-      ys.map((y, i) => {
-        xzvals = [...xzvals, y, zs[i]];
-      });
-      return { blockSurface, xzvals };
-    }
+  // process coordinates  // 200 from section resolution
+  const tops = sectionTops.map((top) => {
+    const { xyzValues, blockSurface } = top;
+    // xyzValues is x0,y0,x1,y1,... of the section. Needs to be recalculated
+    const xz: number[] = xyzValues.map((value, index) => {
+      if (axisIsX) {
+        if (index % 2 == 0) {
+          // z axis in section
+          return (value / 200) * canvasSize.width;
+        } else {
+          // x axis as axisIsX == True
+          return (value / 200) * canvasSize.height;
+        }
+      } else {
+        if (index % 2 == 0) {
+          // z axis in section
+          return (value / 200) * canvasSize.width;
+        } else {
+          // y axis as axisIsX == False
+          return (value / 200) * canvasSize.height;
+        }
+      }
+    });
+    return { blockSurface, xz };
   });
+
   return (
     <Layer>
       {tops.map((top) => {
-        const { blockSurface, xzvals } = top;
+        const { blockSurface, xz } = top;
         return (
           <Line
-            points={xzvals}
+            points={xz}
             //@ts-ignore
             key={blockSurface}
             stroke="black"
