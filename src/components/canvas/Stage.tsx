@@ -88,6 +88,7 @@ export default function StageComponent() {
         section={section}
         extent={extent}
         canvasSize={canvasSize}
+        surfaces={surfaces}
       />
       <LayerPoints
         surfacePoints={surfacePoints}

@@ -5,25 +5,21 @@ import { Extent } from "../../store/meta/extent/types";
 import { CanvasSize } from "../../store/canvas/canvasSize/types";
 import { COLOR_LIST } from "../../utils/CONSTANTS";
 import { SectionTop } from "./../../store/solutions/sectionTops/types";
+import { Surface } from "../../store/geoData/surfaces/types";
 
 interface Props {
   sectionTops: SectionTop[];
   section: Section;
   extent: Extent;
   canvasSize: CanvasSize;
+  surfaces: Surface[];
 }
-
-/* TODO
- * 1. axis is inverted  // numpy [::-1,:]
- * Order of points leads to zick-zacklines
- * Ensure that dimensions are right
- */
 
 export default function LayerSectionTops({
   sectionTops,
   section,
-  extent,
   canvasSize,
+  surfaces,
 }: Props) {
   const axisIsX: boolean = section.p1[0] === section.p2[0] ? true : false;
   // process coordinates  // 200 from section resolution
@@ -49,19 +45,25 @@ export default function LayerSectionTops({
         }
       }
     });
-    return { blockSurface, xz };
+    // get color of surface
+    const name: String = blockSurface;
+    const suface = surfaces.filter((s) => s.name === name);
+    const surfacePos = suface[0] ? suface[0].order_surface : 0;
+    const color = COLOR_LIST[surfacePos];
+    // return
+    return { name, xz, color };
   });
 
   return (
     <Layer>
       {tops.map((top) => {
-        const { blockSurface, xz } = top;
+        const { name, xz, color } = top;
         return (
           <Line
             points={xz}
             //@ts-ignore
-            key={blockSurface}
-            stroke="black"
+            key={name}
+            stroke={color}
             strokeWidth={5}
             tension={2}
           />
