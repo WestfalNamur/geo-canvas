@@ -25,8 +25,8 @@ export default function Points({
     <Ellipse
       x={xval}
       y={z}
-      radiusX={param1}
-      radiusY={10}
+      radiusY={param1}
+      radiusX={10}
       id={id}
       key={id}
       fill={color}

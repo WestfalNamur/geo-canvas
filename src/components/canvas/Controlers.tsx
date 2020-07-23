@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ControlersError from "./ControlersError";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { FOTTER_HEIGHT } from "../../utils/CONSTANTS";
@@ -10,6 +11,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Paper from "@material-ui/core/Paper";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
@@ -24,16 +26,20 @@ const useStyles = makeStyles({
     maxHeight: FOTTER_HEIGHT,
   },
   paper: {
-    height: FOTTER_HEIGHT,
+    height: FOTTER_HEIGHT - 10,
     width: 200,
   },
   paperAxis: {
-    height: FOTTER_HEIGHT,
+    height: FOTTER_HEIGHT - 10,
     width: 100,
   },
   paperSurface: {
-    height: FOTTER_HEIGHT,
+    height: FOTTER_HEIGHT - 10,
     width: 100,
+  },
+  paperError: {
+    height: FOTTER_HEIGHT - 10,
+    width: 180,
   },
 });
 
@@ -130,7 +136,7 @@ export default function Controlers() {
         <Grid item>
           <Grid container justify="center" spacing={2}>
             {/* Slice selector*/}
-            <Grid item xs={4}>
+            <Grid item>
               <Paper className={classes.paper}>
                 <Typography id="continuous-slider" gutterBottom>
                   {positionOnAxis}
@@ -161,7 +167,7 @@ export default function Controlers() {
               </Paper>
             </Grid>
             {/* Axis selector*/}
-            <Grid item xs={2}>
+            <Grid item>
               <Paper className={classes.paperAxis}>
                 <FormControlLabel
                   value="top"
@@ -179,9 +185,13 @@ export default function Controlers() {
               </Paper>
             </Grid>
             {/* Surface selector*/}
-            <Grid item xs={2}>
+            <Grid item>
               <Paper className={classes.paperSurface}>
+                <InputLabel shrink htmlFor="age-native-label-placeholder">
+                  Surface
+                </InputLabel>
                 <Select
+                  label="Selected surface"
                   value={selectedSurface.name ? selectedSurface.name : ""}
                   onChange={handleSelectSurface}
                 >
@@ -191,6 +201,12 @@ export default function Controlers() {
                     </MenuItem>
                   ))}
                 </Select>
+              </Paper>
+            </Grid>
+            {/* Error selector */}
+            <Grid item>
+              <Paper className={classes.paperError}>
+                <ControlersError />
               </Paper>
             </Grid>
           </Grid>
