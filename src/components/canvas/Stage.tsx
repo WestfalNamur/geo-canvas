@@ -5,11 +5,14 @@ import { RootState } from "../../store";
 import { Stage, Layer, Rect } from "react-konva";
 import LayerPoints from "./LayerPoints";
 import LayerSectionTops from "./LayerSectionTops";
+import LayerOrientations from "./LayerOrientations";
 import { SurfacePoint } from "../../store/geoData/surfacePoints/types";
 import { putSurfacePoint } from "../../store/geoData/surfacePoints/actions";
 import { getSectionTops } from "../../store/solutions/sectionTops/actions";
 import { SelectedSurfacePoint } from "../../store/meta/selected/types";
 import { updateSelectedSurfacePoint } from "../../store/meta/selected/actions";
+import { Orientation } from "../../store/geoData/orientations/types";
+import { putOrientation } from "../../store/geoData/orientations/actions";
 
 /* StageComponent
  * Issue:
@@ -45,6 +48,10 @@ export default function StageComponent() {
     state.solutions.sectionTops.sectionTops;
   const sectionTops = useSelector(secetionTopsState);
 
+  const orientationsState = (state: RootState) =>
+    state.geoData.orientations.orientations;
+  const orientations = useSelector(orientationsState);
+
   const updatePointCoordinates = (e: Konva.KonvaEventObject<DragEvent>) => {
     // destructure
     const { id, x, y } = e.target.attrs;
@@ -73,6 +80,35 @@ export default function StageComponent() {
     dispatch(getSectionTops());
   };
 
+  const updateOrientationCoordinates = (
+    e: Konva.KonvaEventObject<DragEvent>
+  ) => {
+    // destructure
+    const { id, x, y } = e.target.attrs;
+    // get meta data
+    const axisIsX: boolean = section.p1[0] === section.p2[0] ? true : false;
+    // get old surfacePoint data
+    const oldOrientaionData = orientations.filter(
+      (orientation) => orientation.id === id
+    );
+    // deep copy
+    let newOrientaionData: Orientation = Object.assign(oldOrientaionData[0]);
+    // update to newCoordinates
+    if (axisIsX) {
+      newOrientaionData.x = (x / canvasSize.width) * extent.x_max;
+    } else {
+      newOrientaionData.y = (x / canvasSize.width) * extent.y_max;
+    }
+    newOrientaionData.z = (y / canvasSize.height) * extent.z_max;
+    // dispatch update of surface point
+    const selectedSurfacePoint: SelectedSurfacePoint = { id };
+    dispatch(updateSelectedSurfacePoint(selectedSurfacePoint));
+    // TODO: hanlde selected orientation
+    dispatch(putOrientation(newOrientaionData, oldOrientaionData[0]));
+    // request new top
+    dispatch(getSectionTops());
+  };
+
   return (
     <Stage
       width={canvasSize.width}
@@ -97,6 +133,14 @@ export default function StageComponent() {
         extent={extent}
         canvasSize={canvasSize}
         updatePointCoordinates={updatePointCoordinates}
+      />
+      <LayerOrientations
+        orientations={orientations}
+        surfaces={surfaces}
+        section={section}
+        extent={extent}
+        canvasSize={canvasSize}
+        updateOrientationCoordinates={updateOrientationCoordinates}
       />
     </Stage>
   );

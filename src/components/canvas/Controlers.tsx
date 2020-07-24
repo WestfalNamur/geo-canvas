@@ -92,7 +92,6 @@ export default function Controlers() {
           resolution: section.resolution,
         };
     dispatch(updateSection(newSection, oldSection));
-    console.log(newSection.p1, newSection.p2);
     dispatch(getSectionTops());
   };
 
