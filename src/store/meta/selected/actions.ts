@@ -5,6 +5,9 @@ import {
   UPDATE_SELECTED_SURFACE,
   SelectedOrientation,
   UPDATE_SELECTED_ORIENTAION,
+  SelectedDrawingOption,
+  UPDATE_SELECTED_DRAWING_OPTION,
+  TOGGLE_SHOW_IE,
 } from "./types";
 
 export function updateSelectedSurfacePoint(
@@ -29,5 +32,20 @@ export function updateSelectedOrientaion(
   return {
     type: UPDATE_SELECTED_ORIENTAION,
     payload: selectedOrientation,
+  };
+}
+
+export function updateSelectedDrawingOption(
+  selectedDrawingOption: SelectedDrawingOption
+) {
+  return {
+    type: UPDATE_SELECTED_DRAWING_OPTION,
+    payload: selectedDrawingOption,
+  };
+}
+
+export function toggleShowIE() {
+  return {
+    type: TOGGLE_SHOW_IE,
   };
 }

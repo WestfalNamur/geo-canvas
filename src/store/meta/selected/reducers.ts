@@ -4,6 +4,8 @@ import {
   UPDATE_SELECTED_SURFACE_POINT,
   UPDATE_SELECTED_SURFACE,
   UPDATE_SELECTED_ORIENTAION,
+  UPDATE_SELECTED_DRAWING_OPTION,
+  TOGGLE_SHOW_IE,
 } from "./types";
 
 const initialState: SelectionsState = {
@@ -15,6 +17,12 @@ const initialState: SelectionsState = {
   },
   selecledOrientaion: {
     id: null,
+  },
+  selectedDrawingOption: {
+    option: null,
+  },
+  showIE: {
+    showIe: false,
   },
 };
 
@@ -37,6 +45,16 @@ export function selectionsReducers(
       return {
         ...state,
         selecledOrientaion: action.payload,
+      };
+    case UPDATE_SELECTED_DRAWING_OPTION:
+      return {
+        ...state,
+        selectedDrawingOption: action.payload,
+      };
+    case TOGGLE_SHOW_IE:
+      return {
+        ...state,
+        showIE: { showIe: !state.showIE.showIe },
       };
     default:
       return state;

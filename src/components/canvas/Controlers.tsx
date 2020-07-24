@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import ControlersError from "./ControlersError";
+import ControlersSurfaceSelector from "./ControlersSurfaceSelector";
+import ControlersDrawingOption from "./ControlersDrawingOption";
+import IEButton from "./ControlersEntropy";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { FOTTER_HEIGHT } from "../../utils/CONSTANTS";
@@ -9,17 +12,12 @@ import Slider from "@material-ui/core/Slider";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Paper from "@material-ui/core/Paper";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { updateSection } from "../../store/meta/section/actions";
 import { Section } from "../../store/meta/section/types";
 import { getSectionTops } from "../../store/solutions/sectionTops/actions";
-import { updateSelectedSurface } from "../../store/meta/selected/actions";
-import { SelectedSurface } from "../../store/meta/selected/types";
 
 const useStyles = makeStyles({
   root: {
@@ -52,11 +50,6 @@ export default function Controlers() {
   const extent = useSelector(extentState);
   const sectionState = (state: RootState) => state.meta.section.section;
   const section = useSelector(sectionState);
-  const selectedSurfaceState = (state: RootState) =>
-    state.meta.selections.selectedSurface;
-  const selectedSurface = useSelector(selectedSurfaceState);
-  const surfacesState = (state: RootState) => state.geoData.surfaces.surfaces;
-  const surfaces = useSelector(surfacesState);
 
   // local variabel: boolean selected axis is x-axis;
   const [axisIsX, setAxisIsX] = useState<boolean>(true);
@@ -93,18 +86,6 @@ export default function Controlers() {
         };
     dispatch(updateSection(newSection, oldSection));
     dispatch(getSectionTops());
-  };
-
-  const surfaceNames: string[] = surfaces.map((s) => s.name);
-  const handleSelectSurface = (
-    event: React.ChangeEvent<{ value: unknown }>
-  ) => {
-    try {
-      const newSelectedSurface: SelectedSurface = {
-        name: event.target.value as string,
-      };
-      dispatch(updateSelectedSurface(newSelectedSurface));
-    } catch (err) {}
   };
 
   // handles axis switch; Before switch the values of the selected axis are
@@ -183,29 +164,28 @@ export default function Controlers() {
                 />
               </Paper>
             </Grid>
-            {/* Surface selector*/}
-            <Grid item>
-              <Paper className={classes.paperSurface}>
-                <InputLabel shrink htmlFor="age-native-label-placeholder">
-                  Surface
-                </InputLabel>
-                <Select
-                  label="Selected surface"
-                  value={selectedSurface.name ? selectedSurface.name : ""}
-                  onChange={handleSelectSurface}
-                >
-                  {surfaceNames.map((name) => (
-                    <MenuItem key={name} value={name}>
-                      {name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </Paper>
-            </Grid>
             {/* Error selector */}
             <Grid item>
               <Paper className={classes.paperError}>
                 <ControlersError />
+              </Paper>
+            </Grid>
+            {/* Surface selector*/}
+            <Grid item>
+              <Paper className={classes.paperSurface}>
+                <ControlersSurfaceSelector />
+              </Paper>
+            </Grid>
+            {/* Drawing option */}
+            <Grid item>
+              <Paper className={classes.paperSurface}>
+                <ControlersDrawingOption />
+              </Paper>
+            </Grid>
+            {/* Show entropy map */}
+            <Grid item>
+              <Paper className={classes.paperSurface}>
+                <IEButton />
               </Paper>
             </Grid>
           </Grid>

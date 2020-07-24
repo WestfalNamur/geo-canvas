@@ -43,7 +43,6 @@ export default function ControlersError() {
             ...data[0],
             ...{ ["param1"]: Number(event.target.value) },
           };
-          console.log(newData);
           dispatch(putSurfacePoint(newData, data[0]));
         }}
       />
