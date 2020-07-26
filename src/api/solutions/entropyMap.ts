@@ -8,6 +8,6 @@ export async function getEntropyMap() {
     url: '/geo-model/compute/section/entropy-img',
   };
   const response = await axios.request<any>(request_config);
-  console.log(response);
+  const base64str = response.data.data
   return response;
 }

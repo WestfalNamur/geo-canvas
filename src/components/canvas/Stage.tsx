@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Konva from "konva";
+import useImage from "use-image";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
-import { Stage, Layer, Rect } from "react-konva";
+import { Stage, Layer, Rect, Image } from "react-konva";
 import LayerPoints from "./LayerPoints";
 import LayerSectionTops from "./LayerSectionTops";
 import LayerOrientations from "./LayerOrientations";
@@ -80,6 +81,9 @@ export default function StageComponent() {
     dispatch(getSectionTops());
   };
 
+  const showIEState = (state: RootState) => state.meta.selections.showIE.showIe;
+  const showIE = useSelector(showIEState);
+
   const updateOrientationCoordinates = (
     e: Konva.KonvaEventObject<DragEvent>
   ) => {
@@ -109,39 +113,89 @@ export default function StageComponent() {
     dispatch(getSectionTops());
   };
 
-  return (
-    <Stage
-      width={canvasSize.width}
-      height={canvasSize.height}
-      scaleY={-1}
-      y={canvasSize.height}
-    >
-      <Layer>
-        <Rect width={canvasSize.width} height={canvasSize.height} fill="grey" />
-      </Layer>
-      <LayerSectionTops
-        sectionTops={sectionTops}
-        section={section}
-        extent={extent}
-        canvasSize={canvasSize}
-        surfaces={surfaces}
+  const Entropy = () => {
+    const [image] = useImage(
+      "http://127.0.0.1:5000/geo-model/compute/section/entropy-image"
+    );
+    return (
+      <Image
+        image={image}
+        width={canvasSize.width}
+        height={canvasSize.height}
       />
-      <LayerPoints
-        surfacePoints={surfacePoints}
-        surfaces={surfaces}
-        section={section}
-        extent={extent}
-        canvasSize={canvasSize}
-        updatePointCoordinates={updatePointCoordinates}
-      />
-      <LayerOrientations
-        orientations={orientations}
-        surfaces={surfaces}
-        section={section}
-        extent={extent}
-        canvasSize={canvasSize}
-        updateOrientationCoordinates={updateOrientationCoordinates}
-      />
-    </Stage>
-  );
+    );
+  };
+
+  // background change on condition
+  let stage;
+  if (showIE) {
+    return (
+      <Stage
+        width={canvasSize.width}
+        height={canvasSize.height}
+        scaleY={-1}
+        y={canvasSize.height}
+      >
+        <Layer>
+          <Entropy />
+        </Layer>
+        <LayerPoints
+          surfacePoints={surfacePoints}
+          surfaces={surfaces}
+          section={section}
+          extent={extent}
+          canvasSize={canvasSize}
+          updatePointCoordinates={updatePointCoordinates}
+        />
+        <LayerOrientations
+          orientations={orientations}
+          surfaces={surfaces}
+          section={section}
+          extent={extent}
+          canvasSize={canvasSize}
+          updateOrientationCoordinates={updateOrientationCoordinates}
+        />
+      </Stage>
+    );
+  } else {
+    return (
+      <Stage
+        width={canvasSize.width}
+        height={canvasSize.height}
+        scaleY={-1}
+        y={canvasSize.height}
+      >
+        <Layer>
+          <Rect
+            width={canvasSize.width}
+            height={canvasSize.height}
+            fill="grey"
+          />
+        </Layer>
+        <LayerSectionTops
+          sectionTops={sectionTops}
+          section={section}
+          extent={extent}
+          canvasSize={canvasSize}
+          surfaces={surfaces}
+        />
+        <LayerPoints
+          surfacePoints={surfacePoints}
+          surfaces={surfaces}
+          section={section}
+          extent={extent}
+          canvasSize={canvasSize}
+          updatePointCoordinates={updatePointCoordinates}
+        />
+        <LayerOrientations
+          orientations={orientations}
+          surfaces={surfaces}
+          section={section}
+          extent={extent}
+          canvasSize={canvasSize}
+          updateOrientationCoordinates={updateOrientationCoordinates}
+        />
+      </Stage>
+    );
+  }
 }
