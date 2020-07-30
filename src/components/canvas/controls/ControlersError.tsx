@@ -1,9 +1,9 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { putSurfacePoint } from "../../store/geoData/surfacePoints/actions";
-import { SurfacePoint } from "../../store/geoData/surfacePoints/types";
+import { RootState } from "../../../store";
+import { putSurfacePoint } from "../../../store/geoData/surfacePoints/actions";
+import { SurfacePoint } from "../../../store/geoData/surfacePoints/types";
 
 export default function ControlersError() {
   // store

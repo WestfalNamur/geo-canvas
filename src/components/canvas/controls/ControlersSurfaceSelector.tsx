@@ -1,9 +1,9 @@
 import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../store";
-import { updateSelectedSurface } from "../../store/meta/selected/actions";
-import { SelectedSurface } from "../../store/meta/selected/types";
+import { RootState } from "../../../store";
+import { updateSelectedSurface } from "../../../store/meta/selected/actions";
+import { SelectedSurface } from "../../../store/meta/selected/types";
 
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";

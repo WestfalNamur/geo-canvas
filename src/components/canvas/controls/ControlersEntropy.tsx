@@ -1,8 +1,8 @@
 import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { toggleShowIE } from "../../store/meta/selected/actions";
+import { RootState } from "../../../store";
+import { toggleShowIE } from "../../../store/meta/selected/actions";
 
 import Button from "@material-ui/core/Button";
 

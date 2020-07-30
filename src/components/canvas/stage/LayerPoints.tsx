@@ -1,11 +1,11 @@
 import React from "react";
 import { Layer } from "react-konva";
-import { Surface } from "../../store/geoData/surfaces/types";
-import { SurfacePoint } from "../../store/geoData/surfacePoints/types";
-import { Section } from "../../store/meta/section/types";
-import { Extent } from "../../store/meta/extent/types";
-import { CanvasSize } from "../../store/canvas/canvasSize/types";
-import { COLOR_LIST } from "../../utils/CONSTANTS";
+import { Surface } from "../../../store/geoData/surfaces/types";
+import { SurfacePoint } from "../../../store/geoData/surfacePoints/types";
+import { Section } from "../../../store/meta/section/types";
+import { Extent } from "../../../store/meta/extent/types";
+import { CanvasSize } from "../../../store/canvas/canvasSize/types";
+import { COLOR_LIST } from "../../../utils/CONSTANTS";
 import Points from "./Points";
 
 interface Props {

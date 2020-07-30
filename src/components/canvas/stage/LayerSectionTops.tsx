@@ -1,11 +1,11 @@
 import React from "react";
 import { Layer, Line } from "react-konva";
-import { Section } from "../../store/meta/section/types";
-import { Extent } from "../../store/meta/extent/types";
-import { CanvasSize } from "../../store/canvas/canvasSize/types";
-import { COLOR_LIST } from "../../utils/CONSTANTS";
-import { SectionTop } from "./../../store/solutions/sectionTops/types";
-import { Surface } from "../../store/geoData/surfaces/types";
+import { Section } from "../../../store/meta/section/types";
+import { Extent } from "../../../store/meta/extent/types";
+import { CanvasSize } from "../../../store/canvas/canvasSize/types";
+import { COLOR_LIST } from "../../../utils/CONSTANTS";
+import { SectionTop } from ".././../../store/solutions/sectionTops/types";
+import { Surface } from "../../../store/geoData/surfaces/types";
 
 interface Props {
   sectionTops: SectionTop[];

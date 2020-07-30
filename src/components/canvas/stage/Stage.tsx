@@ -2,23 +2,23 @@ import React, { useState } from "react";
 import Konva from "konva";
 import useImage from "use-image";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "../../../store";
 import { Stage, Layer, Rect, Image } from "react-konva";
 import LayerPoints from "./LayerPoints";
 import LayerSectionTops from "./LayerSectionTops";
 import LayerOrientations from "./LayerOrientations";
-import { SurfacePoint } from "../../store/geoData/surfacePoints/types";
-import { putSurfacePoint } from "../../store/geoData/surfacePoints/actions";
-import { getSectionTops } from "../../store/solutions/sectionTops/actions";
-import { SelectedSurfacePoint } from "../../store/meta/selected/types";
-import { updateSelectedSurfacePoint } from "../../store/meta/selected/actions";
-import { Orientation } from "../../store/geoData/orientations/types";
-import { putOrientation } from "../../store/geoData/orientations/actions";
-import { Surface } from "../../store/geoData/surfaces/types";
-import { APP_BAR_HEIGHT } from "../../utils/CONSTANTS";
-import meta from "../../store/meta";
+import { SurfacePoint } from "../../../store/geoData/surfacePoints/types";
+import { putSurfacePoint } from "../../../store/geoData/surfacePoints/actions";
+import { getSectionTops } from "../../../store/solutions/sectionTops/actions";
+import { SelectedSurfacePoint } from "../../../store/meta/selected/types";
+import { updateSelectedSurfacePoint } from "../../../store/meta/selected/actions";
+import { Orientation } from "../../../store/geoData/orientations/types";
+import { putOrientation } from "../../../store/geoData/orientations/actions";
+import { Surface } from "../../../store/geoData/surfaces/types";
+import { APP_BAR_HEIGHT } from "../../../utils/CONSTANTS";
+import meta from "../../../store/meta";
 import { v4 as uuidv4 } from "uuid";
-import { addSurfacePoint } from "../../store/geoData/surfacePoints/actions"
+import { addSurfacePoint } from "../../../store/geoData/surfacePoints/actions"
 
 /* StageComponent
  * Issue:

@@ -5,7 +5,7 @@ import ControlersDrawingOption from "./ControlersDrawingOption";
 import IEButton from "./ControlersEntropy";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { FOTTER_HEIGHT } from "../../utils/CONSTANTS";
+import { FOTTER_HEIGHT } from "../../../utils/CONSTANTS";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
@@ -14,10 +14,10 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Paper from "@material-ui/core/Paper";
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../store";
-import { updateSection } from "../../store/meta/section/actions";
-import { Section } from "../../store/meta/section/types";
-import { getSectionTops } from "../../store/solutions/sectionTops/actions";
+import { RootState } from "../../../store";
+import { updateSection } from "../../../store/meta/section/actions";
+import { Section } from "../../../store/meta/section/types";
+import { getSectionTops } from "../../../store/solutions/sectionTops/actions";
 
 const useStyles = makeStyles({
   root: {
