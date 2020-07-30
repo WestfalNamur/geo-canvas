@@ -14,6 +14,7 @@ import { SelectedSurfacePoint } from "../../store/meta/selected/types";
 import { updateSelectedSurfacePoint } from "../../store/meta/selected/actions";
 import { Orientation } from "../../store/geoData/orientations/types";
 import { putOrientation } from "../../store/geoData/orientations/actions";
+import { Surface } from "../../store/geoData/surfaces/types";
 
 /* StageComponent
  * Issue:
@@ -25,6 +26,9 @@ import { putOrientation } from "../../store/geoData/orientations/actions";
  */
 
 export default function StageComponent() {
+  // state
+  const [isDown, setIsDown] = useState(false);
+
   // conect to store
   const dispatch = useDispatch();
 
@@ -52,6 +56,16 @@ export default function StageComponent() {
   const orientationsState = (state: RootState) =>
     state.geoData.orientations.orientations;
   const orientations = useSelector(orientationsState);
+
+  const selectedSurfaceState = (state: RootState) =>
+    state.meta.selections.selectedSurface;
+  const selectedSurface = useSelector(selectedSurfaceState);
+
+  const selectedDrawingOptionState = (state: RootState) =>
+    state.meta.selections.selectedDrawingOption;
+  const selectedDrawingOption = useSelector(selectedDrawingOptionState);
+
+  const surfaceNames: string[] = surfaces.map((s) => s.name);
 
   const updatePointCoordinates = (e: Konva.KonvaEventObject<DragEvent>) => {
     // destructure
@@ -126,8 +140,18 @@ export default function StageComponent() {
     );
   };
 
+  const mouseMove = (e: any) => {
+    if (selectedSurface.name) {
+      // console.log(selectedSurface.name)
+      console.log(surfaceNames);
+      const surface: Surface = surfaces.filter(
+        (surface) => surface.name === selectedSurface.name
+      );
+      console.log(surface);
+    }
+  };
+
   // background change on condition
-  let stage;
   if (showIE) {
     return (
       <Stage
@@ -164,6 +188,9 @@ export default function StageComponent() {
         height={canvasSize.height}
         scaleY={-1}
         y={canvasSize.height}
+        onMouseDown={(e) => setIsDown(true)}
+        onMouseUp={(e) => setIsDown(false)}
+        onMouseMove={(e) => isDown && mouseMove(e)}
       >
         <Layer>
           <Rect
