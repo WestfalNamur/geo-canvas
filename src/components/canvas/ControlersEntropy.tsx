@@ -24,7 +24,7 @@ export default function IEButton() {
 
   const btnNo = (
     <Button variant="contained" onClick={handleClick}>
-      Do not how Entropy
+      Show Entropy
     </Button>
   );
 

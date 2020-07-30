@@ -22,6 +22,7 @@ import { getSectionTops } from "../../store/solutions/sectionTops/actions";
 const useStyles = makeStyles({
   root: {
     maxHeight: FOTTER_HEIGHT,
+    color: 'black'
   },
   paper: {
     height: FOTTER_HEIGHT - 10,
@@ -117,7 +118,6 @@ export default function Controlers() {
           <Grid container justify="center" spacing={2}>
             {/* Slice selector*/}
             <Grid item>
-              <Paper className={classes.paper}>
                 <Typography id="continuous-slider" gutterBottom>
                   {positionOnAxis}
                 </Typography>
@@ -144,11 +144,9 @@ export default function Controlers() {
                     onChange={handleSliderChange}
                   />
                 )}
-              </Paper>
             </Grid>
             {/* Axis selector*/}
             <Grid item>
-              <Paper className={classes.paperAxis}>
                 <FormControlLabel
                   value="top"
                   control={
@@ -162,25 +160,18 @@ export default function Controlers() {
                   label={axisIsX ? "Axis: X" : "Axis: Y"}
                   labelPlacement="top"
                 />
-              </Paper>
             </Grid>
             {/* Error selector */}
             <Grid item>
-              <Paper className={classes.paperError}>
                 <ControlersError />
-              </Paper>
             </Grid>
             {/* Surface selector*/}
             <Grid item>
-              <Paper className={classes.paperSurface}>
                 <ControlersSurfaceSelector />
-              </Paper>
             </Grid>
             {/* Drawing option */}
             <Grid item>
-              <Paper className={classes.paperSurface}>
                 <ControlersDrawingOption />
-              </Paper>
             </Grid>
             {/* Show entropy map */}
             <Grid item>
