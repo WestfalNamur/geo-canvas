@@ -32,7 +32,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 // configure and create store
 export const store = createStore(
   rootReducer,
-  applyMiddleware(sagaMiddleware)
+  applyMiddleware(sagaMiddleware, logger)
 );
 
 // start saga
