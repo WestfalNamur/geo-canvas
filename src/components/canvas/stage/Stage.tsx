@@ -14,9 +14,7 @@ import { SelectedSurfacePoint } from "../../../store/meta/selected/types";
 import { updateSelectedSurfacePoint } from "../../../store/meta/selected/actions";
 import { Orientation } from "../../../store/geoData/orientations/types";
 import { putOrientation } from "../../../store/geoData/orientations/actions";
-import { Surface } from "../../../store/geoData/surfaces/types";
 import { APP_BAR_HEIGHT } from "../../../utils/CONSTANTS";
-import meta from "../../../store/meta";
 import { v4 as uuidv4 } from "uuid";
 import { addSurfacePoint } from "../../../store/geoData/surfacePoints/actions"
 
@@ -258,7 +256,7 @@ export default function StageComponent() {
           <Rect
             width={canvasSize.width}
             height={canvasSize.height}
-            fill="grey"
+            fill="#333333"
           />
         </Layer>
         <LayerSectionTops

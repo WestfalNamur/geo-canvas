@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import ControlersError from "./ControlersError";
-import ControlersSurfaceSelector from "./ControlersSurfaceSelector";
-import ControlersDrawingOption from "./ControlersDrawingOption";
-import IEButton from "./ControlersEntropy";
+import Error from "./Error";
+import SurfaceSelector from "./SurfaceSelector";
+import DrawingOption from "./DrawingOption";
+import IEButton from "./Entropy";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { FOTTER_HEIGHT } from "../../../utils/CONSTANTS";
@@ -12,6 +12,7 @@ import Slider from "@material-ui/core/Slider";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Paper from "@material-ui/core/Paper";
+import AppBar from "@material-ui/core/AppBar";
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
@@ -22,15 +23,19 @@ import { getSectionTops } from "../../../store/solutions/sectionTops/actions";
 const useStyles = makeStyles({
   root: {
     maxHeight: FOTTER_HEIGHT,
-    color: 'black'
+    color: "black",
   },
-  paper: {
+  appBar: {
+    height: FOTTER_HEIGHT,
+    background: "orange",
+  },
+  slider: {
     height: FOTTER_HEIGHT - 10,
     width: 200,
+    //color: "blue",
   },
-  paperAxis: {
-    height: FOTTER_HEIGHT - 10,
-    width: 100,
+  axis: {
+    //color: "orange",
   },
   paperSurface: {
     height: FOTTER_HEIGHT - 10,
@@ -112,66 +117,69 @@ export default function Controlers() {
   };
 
   return (
-    <div className={classes.root}>
+    <AppBar position="static" className={classes.appBar}>
       <Grid container className={classes.root} spacing={2}>
         <Grid item>
           <Grid container justify="center" spacing={2}>
-            {/* Slice selector*/}
+            {/* Slice selector */}
             <Grid item>
-                <Typography id="continuous-slider" gutterBottom>
-                  {positionOnAxis}
-                </Typography>
-                {axisIsX ? (
-                  <Slider
-                    value={section.p1[0]}
-                    aria-labelledby="discrete-slider-small-steps"
-                    step={stepSize}
-                    marks
-                    min={extent.x_min}
-                    max={extent.x_max}
-                    valueLabelDisplay="auto"
-                    onChange={handleSliderChange}
-                  />
-                ) : (
-                  <Slider
-                    value={section.p1[1]}
-                    aria-labelledby="discrete-slider-small-steps"
-                    step={stepSize}
-                    marks
-                    min={extent.y_min}
-                    max={extent.y_max}
-                    valueLabelDisplay="auto"
-                    onChange={handleSliderChange}
-                  />
-                )}
+              <Typography id="continuous-slider" gutterBottom>
+                {positionOnAxis}
+              </Typography>
+              {axisIsX ? (
+                <Slider
+                  value={section.p1[0]}
+                  aria-labelledby="discrete-slider-small-steps"
+                  step={stepSize}
+                  marks
+                  min={extent.x_min}
+                  max={extent.x_max}
+                  valueLabelDisplay="auto"
+                  onChange={handleSliderChange}
+                  className={classes.slider}
+                />
+              ) : (
+                <Slider
+                  value={section.p1[1]}
+                  aria-labelledby="discrete-slider-small-steps"
+                  step={stepSize}
+                  marks
+                  min={extent.y_min}
+                  max={extent.y_max}
+                  valueLabelDisplay="auto"
+                  onChange={handleSliderChange}
+                  className={classes.slider}
+                />
+              )}
             </Grid>
             {/* Axis selector*/}
             <Grid item>
-                <FormControlLabel
-                  value="top"
-                  control={
-                    <Switch
-                      checked={axisIsX}
-                      onChange={handleSwitchToggle}
-                      color="primary"
-                      name="AxisIsX"
-                    />
-                  }
-                  label={axisIsX ? "Axis: X" : "Axis: Y"}
-                  labelPlacement="top"
-                />
+              <FormControlLabel
+                value="top"
+                control={
+                  <Switch
+                    checked={axisIsX}
+                    onChange={handleSwitchToggle}
+                    color="primary"
+                    name="AxisIsX"
+                    className={classes.axis}
+                  />
+                }
+                label={axisIsX ? "Axis: X" : "Axis: Y"}
+                labelPlacement="top"
+              />
             </Grid>
             {/* Error selector */}
             <Grid item>
-                <ControlersError />
+              <Error />
             </Grid>
             {/* Surface selector*/}
             <Grid item>
-                <ControlersSurfaceSelector />
+              <SurfaceSelector />
             </Grid>
             {/* Drawing option */}
             <Grid item>
-                <ControlersDrawingOption />
+              <DrawingOption />
             </Grid>
             {/* Show entropy map */}
             <Grid item>
@@ -182,6 +190,6 @@ export default function Controlers() {
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </AppBar>
   );
 }
