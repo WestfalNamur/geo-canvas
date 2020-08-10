@@ -15,8 +15,7 @@ export async function getSurfaceApi() {
     url: "/geo-model/data/geo-model-surfaces",
   };
   const response = await axios.request<ResponseObject>(request_config);
-  const { message, data } = response.data;
-  console.log(message);
+  const { data } = response.data;
   return data;
 }
 
@@ -32,9 +31,7 @@ export async function putSurfaceApi(surface: Surface) {
     url: "/geo-model/data/geo-model-surfaces",
     data,
   };
-  const response = await axios.request<ResponseObject>(request_config);
-  const { message } = response.data;
-  console.log(message);
+  await axios.request<ResponseObject>(request_config);
 }
 
 export async function deleteSurfaceApi(surface: Surface) {
@@ -49,7 +46,5 @@ export async function deleteSurfaceApi(surface: Surface) {
     url: "/geo-model/data/geo-model-surfaces",
     data,
   };
-  const response = await axios.request<ResponseObject>(request_config);
-  const { message } = response.data;
-  console.log(message);
+  await axios.request<ResponseObject>(request_config);
 }

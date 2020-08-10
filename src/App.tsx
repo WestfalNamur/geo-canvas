@@ -12,6 +12,7 @@ import { getExtent } from "./store/meta/extent/actions";
 import { getSection } from "./store/meta/section/actions";
 // import { getSectionPolygons } from "./store/solutions/sectionPolygons/actions";
 import { getSectionTops } from "./store/solutions/sectionTops/actions";
+import { getEntropyMap } from "./api/solutions/entropyMap"
 
 export default function App() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ export default function App() {
     dispatch(getSection());
     //dispatch(getSectionPolygons());
     dispatch(getSectionTops());
+    // getEntropyMap()
   });
 
   return (

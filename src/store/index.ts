@@ -10,7 +10,7 @@ import geoData from "./geoData";
 // canvas
 import canvas from "./canvas";
 // solutions
-import solutions from './solutions'
+import solutions from "./solutions";
 
 // middleware
 import rootSaga from "../sagas";
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
   geoData,
   meta,
   canvas,
-  solutions
+  solutions,
 });
 
 // create middelwares
@@ -32,7 +32,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 // configure and create store
 export const store = createStore(
   rootReducer,
-  applyMiddleware(sagaMiddleware)
+  applyMiddleware(sagaMiddleware, logger)
 );
 
 // start saga

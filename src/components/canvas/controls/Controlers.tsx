@@ -1,31 +1,49 @@
 import React, { useState } from "react";
+import Error from "./Error";
+import SurfaceSelector from "./SurfaceSelector";
+import DrawingOption from "./DrawingOption";
+import IEButton from "./Entropy";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { FOTTER_HEIGHT } from "../../utils/CONSTANTS";
+import { FOTTER_HEIGHT } from "../../../utils/CONSTANTS";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Paper from "@material-ui/core/Paper";
+import AppBar from "@material-ui/core/AppBar";
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../store";
-import { updateSection } from "../../store/meta/section/actions";
-import { Section } from "../../store/meta/section/types";
-import { getSectionTops } from "../../store/solutions/sectionTops/actions";
+import { RootState } from "../../../store";
+import { updateSection } from "../../../store/meta/section/actions";
+import { Section } from "../../../store/meta/section/types";
+import { getSectionTops } from "../../../store/solutions/sectionTops/actions";
 
 const useStyles = makeStyles({
   root: {
-    width: 300,
     maxHeight: FOTTER_HEIGHT,
+    color: "black",
+  },
+  appBar: {
+    height: FOTTER_HEIGHT,
+    background: "orange",
   },
   slider: {
+    height: FOTTER_HEIGHT - 10,
     width: 200,
-    float: "left",
+    //color: "blue",
   },
-  switch: {
+  axis: {
+    //color: "orange",
+  },
+  paperSurface: {
+    height: FOTTER_HEIGHT - 10,
     width: 100,
-    float: "left",
+  },
+  paperError: {
+    height: FOTTER_HEIGHT - 10,
+    width: 180,
   },
 });
 
@@ -73,7 +91,6 @@ export default function Controlers() {
           resolution: section.resolution,
         };
     dispatch(updateSection(newSection, oldSection));
-    console.log(newSection.p1, newSection.p2)
     dispatch(getSectionTops());
   };
 
@@ -100,52 +117,79 @@ export default function Controlers() {
   };
 
   return (
-    <div className={classes.root}>
-      <div className={classes.slider}>
-        <Typography id="continuous-slider" gutterBottom>
-          {positionOnAxis}
-        </Typography>
-        <Grid item xs>
-          {axisIsX ? (
-            <Slider
-              value={section.p1[0]}
-              aria-labelledby="discrete-slider-small-steps"
-              step={stepSize}
-              marks
-              min={extent.x_min}
-              max={extent.x_max}
-              valueLabelDisplay="auto"
-              onChange={handleSliderChange}
-            />
-          ) : (
-            <Slider
-              value={section.p1[1]}
-              aria-labelledby="discrete-slider-small-steps"
-              step={stepSize}
-              marks
-              min={extent.y_min}
-              max={extent.y_max}
-              valueLabelDisplay="auto"
-              onChange={handleSliderChange}
-            />
-          )}
+    <AppBar position="static" className={classes.appBar}>
+      <Grid container className={classes.root} spacing={2}>
+        <Grid item>
+          <Grid container justify="center" spacing={2}>
+            {/* Slice selector */}
+            <Grid item>
+              <Typography id="continuous-slider" gutterBottom>
+                {positionOnAxis}
+              </Typography>
+              {axisIsX ? (
+                <Slider
+                  value={section.p1[0]}
+                  aria-labelledby="discrete-slider-small-steps"
+                  step={stepSize}
+                  marks
+                  min={extent.x_min}
+                  max={extent.x_max}
+                  valueLabelDisplay="auto"
+                  onChange={handleSliderChange}
+                  className={classes.slider}
+                />
+              ) : (
+                <Slider
+                  value={section.p1[1]}
+                  aria-labelledby="discrete-slider-small-steps"
+                  step={stepSize}
+                  marks
+                  min={extent.y_min}
+                  max={extent.y_max}
+                  valueLabelDisplay="auto"
+                  onChange={handleSliderChange}
+                  className={classes.slider}
+                />
+              )}
+            </Grid>
+            {/* Axis selector*/}
+            <Grid item>
+              <FormControlLabel
+                value="top"
+                control={
+                  <Switch
+                    checked={axisIsX}
+                    onChange={handleSwitchToggle}
+                    color="primary"
+                    name="AxisIsX"
+                    className={classes.axis}
+                  />
+                }
+                label={axisIsX ? "Axis: X" : "Axis: Y"}
+                labelPlacement="top"
+              />
+            </Grid>
+            {/* Error selector */}
+            <Grid item>
+              <Error />
+            </Grid>
+            {/* Surface selector*/}
+            <Grid item>
+              <SurfaceSelector />
+            </Grid>
+            {/* Drawing option */}
+            <Grid item>
+              <DrawingOption />
+            </Grid>
+            {/* Show entropy map */}
+            <Grid item>
+              <Paper className={classes.paperSurface}>
+                <IEButton />
+              </Paper>
+            </Grid>
+          </Grid>
         </Grid>
-      </div>
-      <div className={classes.switch}>
-        <FormControlLabel
-          value="top"
-          control={
-            <Switch
-              checked={axisIsX}
-              onChange={handleSwitchToggle}
-              color="primary"
-              name="AxisIsX"
-            />
-          }
-          label={axisIsX ? "Axis: X" : "Axis: Y"}
-          labelPlacement="top"
-        />
-      </div>
-    </div>
+      </Grid>
+    </AppBar>
   );
 }

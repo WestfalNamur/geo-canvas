@@ -2,8 +2,8 @@ import React, { useLayoutEffect } from "react";
 import { useDispatch } from "react-redux";
 import { APP_BAR_HEIGHT, FOTTER_HEIGHT } from "../../utils/CONSTANTS";
 import { updateCanvasSize } from "../../store/canvas/canvasSize/action";
-import StageComponent from "./Stage";
-import Controlers from './Controlers'
+import StageComponent from "./stage/Stage";
+import Controlers from './controls/Controlers'
 
 export default function Canvas() {
   const dispatch = useDispatch();

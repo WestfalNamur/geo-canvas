@@ -15,8 +15,7 @@ export async function getExtentApi() {
     url: "/geo-model/data/geo-model-extent",
   };
   const response = await axios.request<ResponseObject>(request_config);
-  const { message, data } = response.data;
-  console.log(message);
+  const { data } = response.data;
   return data;
 }
 
@@ -35,7 +34,5 @@ export async function putExtentApi(extent: Extent) {
     url: "/geo-model/data/geo-model-extent",
     data,
   };
-  const response = await axios.request<ResponseObject>(request_config);
-  const { message } = response.data;
-  console.log(message);
+  await axios.request<ResponseObject>(request_config);
 }
