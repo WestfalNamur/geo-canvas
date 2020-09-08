@@ -38,8 +38,8 @@ export default function LayerPolygons({
   const axisIsX: boolean = section.p1[0] === section.p2[0] ? true : false;
   // calcualte projection distance depending on selected axis
   const projection_distance: number = axisIsX
-    ? (extent.x_max - extent.x_min) / 10
-    : (extent.y_max - extent.y_min) / 10;
+    ? (extent.x_max - extent.x_min) / 1
+    : (extent.y_max - extent.y_min) / 1;
   // filter surfacePoints that are in projection distance
   const filteredSurfacePoints: SurfacePoint[] = surfacePoints.filter(
     (surfacePoint) => {
