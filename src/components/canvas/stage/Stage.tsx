@@ -158,6 +158,19 @@ export default function StageComponent() {
     );
   };
 
+  const Outcrop = () => {
+    const [image] = useImage(
+      "http://127.0.0.1:5000/geo-model/compute/section/outcrop-image"
+    );
+    return (
+      <Image
+        image={image}
+        width={canvasSize.width}
+        height={canvasSize.height}
+      />
+    );
+  };
+
   const mouseMove = (e: any) => {
     if (selectedSurface.name) {
       if (surfaceNames.includes(selectedSurface.name)) {
@@ -259,6 +272,9 @@ export default function StageComponent() {
             fill="#333333"
           />
         </Layer>
+        <Layer>
+          <Outcrop />
+        </Layer>
         <LayerSectionTops
           sectionTops={sectionTops}
           section={section}
@@ -282,6 +298,7 @@ export default function StageComponent() {
           canvasSize={canvasSize}
           updateOrientationCoordinates={updateOrientationCoordinates}
         />
+
       </Stage>
     );
   }
