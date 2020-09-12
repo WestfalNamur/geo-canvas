@@ -25,6 +25,7 @@ export async function putSectionApi(section: Section) {
     p2: section.p2,
     resolution: section.resolution,
   };
+  console.log(data)
   const request_config: AxiosRequestConfig = {
     method: "put",
     baseURL,

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import Konva from "konva";
-import useImage from "use-image";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
-import { Stage, Layer, Rect, Image } from "react-konva";
+import { Stage, Layer, Rect } from "react-konva";
 import LayerPoints from "./LayerPoints";
 import LayerSectionTops from "./LayerSectionTops";
 import LayerOrientations from "./LayerOrientations";

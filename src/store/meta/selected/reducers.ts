@@ -19,7 +19,7 @@ const initialState: SelectionsState = {
     id: null,
   },
   selectedDrawingOption: {
-    option: null,
+    option: "None",
   },
   showIE: {
     showIe: false,
