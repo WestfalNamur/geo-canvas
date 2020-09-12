@@ -16,7 +16,7 @@ import { Orientation } from "../../../store/geoData/orientations/types";
 import { putOrientation } from "../../../store/geoData/orientations/actions";
 import { APP_BAR_HEIGHT } from "../../../utils/CONSTANTS";
 import { v4 as uuidv4 } from "uuid";
-import { addSurfacePoint } from "../../../store/geoData/surfacePoints/actions"
+import { addSurfacePoint } from "../../../store/geoData/surfacePoints/actions";
 
 /* StageComponent
  * Issue:
@@ -145,32 +145,6 @@ export default function StageComponent() {
     dispatch(getSectionTops());
   };
 
-  const Entropy = () => {
-    const [image] = useImage(
-      "http://127.0.0.1:5000/geo-model/compute/section/entropy-image"
-    );
-    return (
-      <Image
-        image={image}
-        width={canvasSize.width}
-        height={canvasSize.height}
-      />
-    );
-  };
-
-  const Outcrop = () => {
-    const [image] = useImage(
-      "http://127.0.0.1:5000/geo-model/compute/section/outcrop-image"
-    );
-    return (
-      <Image
-        image={image}
-        width={canvasSize.width}
-        height={canvasSize.height}
-      />
-    );
-  };
-
   const mouseMove = (e: any) => {
     if (selectedSurface.name) {
       if (surfaceNames.includes(selectedSurface.name)) {
@@ -215,91 +189,55 @@ export default function StageComponent() {
             active: true,
             locstr: `${x}${y}${z}`,
           };
-          console.log(newSurfacePoint)
-          dispatch(addSurfacePoint(newSurfacePoint))
+          console.log(newSurfacePoint);
+          dispatch(addSurfacePoint(newSurfacePoint));
           // create a new surfacePoint at this postion
         }
       }
     }
   };
 
-  // background change on condition
-  if (showIE) {
-    return (
-      <Stage
-        width={canvasSize.width}
-        height={canvasSize.height}
-        scaleY={-1}
-        y={canvasSize.height}
-      >
-        <Layer>
-          <Entropy />
-        </Layer>
-        <LayerPoints
-          surfacePoints={surfacePoints}
-          surfaces={surfaces}
-          section={section}
-          extent={extent}
-          canvasSize={canvasSize}
-          updatePointCoordinates={updatePointCoordinates}
+  return (
+    <Stage
+      width={canvasSize.width}
+      height={canvasSize.height}
+      scaleY={-1}
+      y={canvasSize.height}
+      onMouseDown={(e) => setIsDown(true)}
+      onMouseUp={(e) => setIsDown(false)}
+      // onMouseMove={(e) => isDown && mouseMove(e)}
+      onClick={(e) => handleMouseClick(e)}
+    >
+      <Layer>
+        <Rect
+          width={canvasSize.width}
+          height={canvasSize.height}
+          fill="#333333"
         />
-        <LayerOrientations
-          orientations={orientations}
-          surfaces={surfaces}
-          section={section}
-          extent={extent}
-          canvasSize={canvasSize}
-          updateOrientationCoordinates={updateOrientationCoordinates}
-        />
-      </Stage>
-    );
-  } else {
-    return (
-      <Stage
-        width={canvasSize.width}
-        height={canvasSize.height}
-        scaleY={-1}
-        y={canvasSize.height}
-        onMouseDown={(e) => setIsDown(true)}
-        onMouseUp={(e) => setIsDown(false)}
-        // onMouseMove={(e) => isDown && mouseMove(e)}
-        onClick={(e) => handleMouseClick(e)}
-      >
-        <Layer>
-          <Rect
-            width={canvasSize.width}
-            height={canvasSize.height}
-            fill="#333333"
-          />
-        </Layer>
-        <Layer>
-          <Outcrop />
-        </Layer>
-        <LayerSectionTops
-          sectionTops={sectionTops}
-          section={section}
-          extent={extent}
-          canvasSize={canvasSize}
-          surfaces={surfaces}
-        />
-        <LayerPoints
-          surfacePoints={surfacePoints}
-          surfaces={surfaces}
-          section={section}
-          extent={extent}
-          canvasSize={canvasSize}
-          updatePointCoordinates={updatePointCoordinates}
-        />
-        <LayerOrientations
-          orientations={orientations}
-          surfaces={surfaces}
-          section={section}
-          extent={extent}
-          canvasSize={canvasSize}
-          updateOrientationCoordinates={updateOrientationCoordinates}
-        />
-
-      </Stage>
-    );
-  }
+      </Layer>
+      <LayerSectionTops
+        sectionTops={sectionTops}
+        section={section}
+        extent={extent}
+        canvasSize={canvasSize}
+        surfaces={surfaces}
+      />
+      <LayerPoints
+        surfacePoints={surfacePoints}
+        surfaces={surfaces}
+        section={section}
+        extent={extent}
+        canvasSize={canvasSize}
+        updatePointCoordinates={updatePointCoordinates}
+      />
+      <LayerOrientations
+        orientations={orientations}
+        surfaces={surfaces}
+        section={section}
+        extent={extent}
+        canvasSize={canvasSize}
+        updateOrientationCoordinates={updateOrientationCoordinates}
+      />
+    </Stage>
+  );
 }
