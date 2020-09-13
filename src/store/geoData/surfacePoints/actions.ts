@@ -8,6 +8,9 @@ import {
   PUT_SURFACEPOINT_FAILED,
   DELETE_SURFACEPOINT,
   DELETE_SURFACEPOINT_FAILED,
+  ADD_SURFACEPOINT_TO_LINE,
+  CLEAR_LINE,
+  PARA_LINE,
 } from "./types";
 
 export function getSurfacePoints() {
@@ -74,5 +77,24 @@ export function deleteSurfacePointFailed(surfacePoint: SurfacePoint) {
   return {
     type: DELETE_SURFACEPOINT_FAILED,
     payload: surfacePoint,
+  };
+}
+
+export function addSurfacePointToLine(surfacePoint: SurfacePoint) {
+  return {
+    type: ADD_SURFACEPOINT_TO_LINE,
+    payload: surfacePoint,
+  };
+}
+
+export function clearLine() {
+  return {
+    type: CLEAR_LINE,
+  };
+}
+
+export function paraLine() {
+  return {
+    type: PARA_LINE,
   };
 }

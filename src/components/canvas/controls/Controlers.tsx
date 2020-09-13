@@ -97,23 +97,23 @@ export default function Controlers() {
   // the same for p1 and p2. Hence they need to be set to thier extent values
   // on switch and the other axis values get a default of the middle of the
   // section; Dispatches new section and requests new polygons;
-  const handleSwitchToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAxisIsX(!axisIsX);
-    const oldSection = section;
-    const newSection: Section = !axisIsX
-      ? {
-          p1: [middleSection, extent.y_min],
-          p2: [middleSection, extent.y_max],
-          resolution: section.resolution,
-        }
-      : {
-          p1: [extent.x_min, middleSection],
-          p2: [extent.x_max, middleSection],
-          resolution: section.resolution,
-        };
-    dispatch(updateSection(newSection, oldSection));
-    dispatch(getSectionTops());
-  };
+  // const handleSwitchToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setAxisIsX(!axisIsX);
+  //   const oldSection = section;
+  //   const newSection: Section = !axisIsX
+  //     ? {
+  //         p1: [middleSection, extent.y_min],
+  //         p2: [middleSection, extent.y_max],
+  //         resolution: section.resolution,
+  //       }
+  //     : {
+  //         p1: [extent.x_min, middleSection],
+  //         p2: [extent.x_max, middleSection],
+  //         resolution: section.resolution,
+  //       };
+  //   dispatch(updateSection(newSection, oldSection));
+  //   dispatch(getSectionTops());
+  // };
 
   return (
     <AppBar position="static" className={classes.appBar}>
@@ -151,7 +151,7 @@ export default function Controlers() {
                 />
               )}
             </Grid>
-            {/* Axis selector*/}
+            {/* Axis selector*
             <Grid item>
               <FormControlLabel
                 value="top"
@@ -168,7 +168,7 @@ export default function Controlers() {
                 labelPlacement="top"
               />
             </Grid>
-            {/* Error selector */}
+            * Error selector */}
             <Grid item>
               <Error />
             </Grid>

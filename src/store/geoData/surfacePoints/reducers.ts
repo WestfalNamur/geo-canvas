@@ -8,10 +8,14 @@ import {
   PUT_SURFACEPOINT_FAILED,
   DELETE_SURFACEPOINT,
   DELETE_SURFACEPOINT_FAILED,
+  ADD_SURFACEPOINT_TO_LINE,
+  CLEAR_LINE,
+  PARA_LINE,
 } from "./types";
 
 const initialState: SurfacePointsState = {
   surfacePoints: [],
+  linePoints: [],
 };
 
 export function surfacePointsReducer(
@@ -21,14 +25,17 @@ export function surfacePointsReducer(
   switch (action.type) {
     case ADD_SURFACEPOINTS_FROM_SERVER:
       return {
+        ...state,
         surfacePoints: action.payload,
       };
     case ADD_SURFACEPOINT:
       return {
+        ...state,
         surfacePoints: [...state.surfacePoints, action.payload],
       };
     case ADD_SURFACEPOINT_FAILED:
       return {
+        ...state,
         surfacePoints: state.surfacePoints.filter(
           (surfacePoint) => surfacePoint.id !== action.payload.id
         ),
@@ -38,6 +45,7 @@ export function surfacePointsReducer(
         (surfacePoint) => surfacePoint.id !== action.payload.oldSurfacePoint.id
       );
       return {
+        ...state,
         surfacePoints: [
           ...filteredSurfacePointsPut,
           action.payload.newSurfacePoint,
@@ -48,6 +56,7 @@ export function surfacePointsReducer(
         (surfacePoint) => surfacePoint.id !== action.payload.newSurfacePoint.id
       );
       return {
+        ...state,
         surfacePoints: [
           ...filteredSurfacePointsPutFailed,
           action.payload.oldSurfacePoint,
@@ -55,13 +64,29 @@ export function surfacePointsReducer(
       };
     case DELETE_SURFACEPOINT:
       return {
+        ...state,
         surfacePoints: state.surfacePoints.filter(
           (surfacePoint) => surfacePoint.id !== action.payload.id
         ),
       };
     case DELETE_SURFACEPOINT_FAILED:
       return {
+        ...state,
         surfacePoints: [...state.surfacePoints, action.payload],
+      };
+    case ADD_SURFACEPOINT_TO_LINE:
+      return {
+        ...state,
+        linePoints: [...state.linePoints, action.payload],
+      };
+    case CLEAR_LINE:
+      return {
+        ...state,
+        linePoints: [],
+      };
+    case PARA_LINE:
+      return {
+        ...state,
       };
     default:
       return state;
