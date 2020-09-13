@@ -24,6 +24,7 @@ import { addSurfacePoint } from "../../../store/geoData/surfacePoints/actions";
  * on github:
  * Todo: Bridge context barrier following github issue:
  * https://github.com/konvajs/react-konva/issues/188#issuecomment-478302062
+ * So everything is a bit... messy here...
  */
 
 export default function StageComponent() {
@@ -145,10 +146,13 @@ export default function StageComponent() {
   };
 
   const mouseMove = (e: any) => {
+    // Function to drawn a line;
+    // 1st gather all points while mouse is down
+    // Then take every 10th and put them as new surfacepoint;
     if (selectedSurface.name) {
       if (surfaceNames.includes(selectedSurface.name)) {
-        if (selectedDrawingOption.option === "Point") {
-          console.log(e);
+        if (selectedDrawingOption.option === "Line") {
+          console.log("DRAW A LINE")
         }
       }
     }
@@ -168,10 +172,12 @@ export default function StageComponent() {
           const z = (mouseY / canvasSize.height) * extent.z_max;
           let x = 0;
           let y = 0;
-          if (!axisIsX) {
+          if (axisIsX) {
+            console.log('X axis')
             y = section.p1[1];
             x = (e.evt.clientX / canvasSize.width) * extent.x_max;
           } else {
+            console.log('Y axis')
             y = (e.evt.clientX / canvasSize.width) * extent.y_max;
             x = section.p1[0];
           }
@@ -188,7 +194,7 @@ export default function StageComponent() {
             active: true,
             locstr: `${x}${y}${z}`,
           };
-          console.log(newSurfacePoint);
+          console.log(newSurfacePoint)
           dispatch(addSurfacePoint(newSurfacePoint));
           // create a new surfacePoint at this postion
         }
@@ -204,7 +210,7 @@ export default function StageComponent() {
       y={canvasSize.height}
       onMouseDown={(e) => setIsDown(true)}
       onMouseUp={(e) => setIsDown(false)}
-      // onMouseMove={(e) => isDown && mouseMove(e)}
+      onMouseMove={(e) => isDown && mouseMove(e)}
       onClick={(e) => handleMouseClick(e)}
     >
       <Layer>
