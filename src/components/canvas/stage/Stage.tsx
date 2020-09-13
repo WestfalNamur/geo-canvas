@@ -152,7 +152,33 @@ export default function StageComponent() {
     if (selectedSurface.name) {
       if (surfaceNames.includes(selectedSurface.name)) {
         if (selectedDrawingOption.option === "Line") {
-          console.log("DRAW A LINE")
+          const mouseY: number =
+            canvasSize.height + APP_BAR_HEIGHT - e.evt.clientY;
+          // scale the postion to model coordinates
+          const z = (mouseY / canvasSize.height) * extent.z_max;
+          let x = 0;
+          let y = 0;
+          if (axisIsX) {
+            y = section.p1[1];
+            x = (e.evt.clientX / canvasSize.width) * extent.x_max;
+          } else {
+            y = (e.evt.clientX / canvasSize.width) * extent.y_max;
+            x = section.p1[0];
+          }
+          const new_id: string = uuidv4();
+          const newSurfacePoint: SurfacePoint = {
+            id: new_id,
+            x: x,
+            y: y,
+            z: z,
+            surface: selectedSurface.name,
+            probdist: "normal",
+            param1: 10,
+            param2: 1,
+            active: true,
+            locstr: `${x}${y}${z}`,
+          };
+          console.log(newSurfacePoint);
         }
       }
     }
@@ -173,11 +199,9 @@ export default function StageComponent() {
           let x = 0;
           let y = 0;
           if (axisIsX) {
-            console.log('X axis')
             y = section.p1[1];
             x = (e.evt.clientX / canvasSize.width) * extent.x_max;
           } else {
-            console.log('Y axis')
             y = (e.evt.clientX / canvasSize.width) * extent.y_max;
             x = section.p1[0];
           }
@@ -194,7 +218,6 @@ export default function StageComponent() {
             active: true,
             locstr: `${x}${y}${z}`,
           };
-          console.log(newSurfacePoint)
           dispatch(addSurfacePoint(newSurfacePoint));
           // create a new surfacePoint at this postion
         }
