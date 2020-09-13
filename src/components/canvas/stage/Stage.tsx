@@ -76,6 +76,10 @@ export default function StageComponent() {
     state.meta.selections.alongAxisX;
   const alongAxisX = useSelector(alongAxisIsXState);
 
+  const linePointsState = (state: RootState) =>
+    state.geoData.surfacePoints.linePoints;
+  const linePoints = useSelector(linePointsState);
+
   const surfaceNames: string[] = surfaces.map((s) => s.name);
 
   // local variabel: boolean selected axis is x-axis;
@@ -250,11 +254,27 @@ export default function StageComponent() {
     }
   };
 
+  // sleep function
+  function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   const handleMouseUp = () => {
     setIsDown(false);
     if (selectedSurface.name) {
       if (surfaceNames.includes(selectedSurface.name)) {
         if (selectedDrawingOption.option === "Line") {
+          // take 10 points or less
+          const len: number = linePoints.length;
+          const stp: number = Math.round(len / 10)
+          linePoints.forEach(async (p, i) => {
+            // to avoide over extending flask
+            await sleep(500);
+            console.log(i);
+            if (i % stp == 0) {
+              dispatch(addSurfacePoint(p));
+            }
+          });
           dispatch(paraLine());
         }
       }
