@@ -58,7 +58,7 @@ export default function Controlers() {
   const section = useSelector(sectionState);
 
   // local variabel: boolean selected axis is x-axis;
-  const [axisIsX, setAxisIsX] = useState<boolean>(true);
+  const [axisIsX, setAxisIsX] = useState<boolean>(false);
   // local variabel: function of selected axis and its extent;
   const stepSize: number = axisIsX
     ? (extent.x_max - extent.x_min) / 10
@@ -93,7 +93,6 @@ export default function Controlers() {
     dispatch(updateSection(newSection, oldSection));
     dispatch(getSectionTops());
   };
-
   // handles axis switch; Before switch the values of the selected axis are
   // the same for p1 and p2. Hence they need to be set to thier extent values
   // on switch and the other axis values get a default of the middle of the
