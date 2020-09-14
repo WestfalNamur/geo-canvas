@@ -266,16 +266,16 @@ export default function StageComponent() {
         if (selectedDrawingOption.option === "Line") {
           // take 10 points or less
           const len: number = linePoints.length;
-          const stp: number = Math.round(len / 10)
+          const stp: number = Math.round(len / 10);
           linePoints.forEach(async (p, i) => {
             // to avoide over extending flask
             await sleep(500);
-            console.log(i);
-            if (i % stp == 0) {
+            if (i % stp === 0) {
               dispatch(addSurfacePoint(p));
             }
           });
           dispatch(paraLine());
+          dispatch(getSectionTops());
         }
       }
     }

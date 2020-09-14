@@ -36,3 +36,18 @@ export async function getSectionTopsApi() {
   });
   return sectionTops;
 }
+
+export async function getSectionTopsMultiApi() {
+  const request_config: AxiosRequestConfig = {
+    method: "get",
+    baseURL,
+    url: "/geo-model/compute/section/multi-contours",
+  };
+  const response = await axios.request<ResponseObject>(request_config);
+  const data = response.data.data;
+  const sectTopsKeys = Object.keys(data);
+  const sectionTops: SectionTop[] = sectTopsKeys.map((key) => {
+    return { blockSurface: key, xyzValues: data[key] };
+  });
+  return sectionTops;
+}
