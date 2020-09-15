@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Konva from "konva";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
-import { Stage, Layer, Rect } from "react-konva";
+import { Stage, Layer, Rect, Image } from "react-konva";
 import LayerPoints from "./LayerPoints";
 import LayerSectionTops from "./LayerSectionTops";
 import LayerOrientations from "./LayerOrientations";
@@ -79,6 +79,9 @@ export default function StageComponent() {
   const linePointsState = (state: RootState) =>
     state.geoData.surfacePoints.linePoints;
   const linePoints = useSelector(linePointsState);
+
+  const imgState = (state: RootState) => state.canvas.canvasSize.img;
+  const img = useSelector(imgState);
 
   const surfaceNames: string[] = surfaces.map((s) => s.name);
 
@@ -279,6 +282,19 @@ export default function StageComponent() {
     }
   };
 
+  const Outcrop = () => {
+    //@ts-ignore
+    const image = new Image();
+    image.src = URL.createObjectURL(img);
+    return (
+      <Image
+        image={image}
+        width={canvasSize.width}
+        height={canvasSize.height}
+      />
+    );
+  };
+
   return (
     <Stage
       width={canvasSize.width}
@@ -297,6 +313,9 @@ export default function StageComponent() {
           fill="#333333"
         />
       </Layer>
+      <Layer>
+          <Outcrop />
+        </Layer>
       <LayerSectionTops
         sectionTops={sectionTops}
         section={section}

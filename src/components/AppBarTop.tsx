@@ -45,6 +45,13 @@ function AppBarTop() {
         >
           <Tab label="Canvas" className={classes.tab} />
         </NavLink>
+        <NavLink
+          to="/dropzone"
+          activeClassName={classes.linkActive}
+          className={classes.link}
+        >
+          <Tab label="Dropzone" className={classes.tab} />
+        </NavLink>
       </Toolbar>
     </AppBar>
   );

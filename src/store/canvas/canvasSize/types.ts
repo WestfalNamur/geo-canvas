@@ -1,4 +1,5 @@
 export const UPDATE_CANVAS_SIZE = "UPDATE_CANVAS_SIZE";
+export const LOAD_IMG = "LOAD_IMG";
 
 export interface CanvasSize {
   width: number;
@@ -7,6 +8,7 @@ export interface CanvasSize {
 
 export interface CanvasSizeState {
   canvasSize: CanvasSize;
+  img: any;
 }
 
 export interface UpdateCanvasSizeAction {
@@ -14,4 +16,9 @@ export interface UpdateCanvasSizeAction {
   payload: CanvasSize;
 }
 
-export type CanvasSizeActionTypes = UpdateCanvasSizeAction;
+export interface LoadImgActionType {
+  type: typeof LOAD_IMG;
+  payload: any;
+}
+
+export type CanvasSizeActionTypes = UpdateCanvasSizeAction | LoadImgActionType;
