@@ -48,7 +48,7 @@ export default function LayerSectionTops({
     // check if mutli real by blocksurface name
     let name: String = blockSurface;
     //@ts-ignore 
-    if (blockSurface.split('_')[0] == "real") {
+    if (blockSurface.split('_')[0] === "real") {
       //@ts-ignore 
       name = blockSurface.split('_')[2];
     }

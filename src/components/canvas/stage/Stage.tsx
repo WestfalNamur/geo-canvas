@@ -82,27 +82,28 @@ export default function StageComponent() {
 
   const surfaceNames: string[] = surfaces.map((s) => s.name);
 
-  // local variabel: boolean selected axis is x-axis;
-  const [axisIsX, setAxisIsX] = useState<boolean>(true);
+  // if (section.p1[0] === section.p2[0] && !alongAxisX) {
+  //   console.log('======================================')
+  //   dispatch(toggleAlongAxisX());
+  // }
   // local variabel: function of selected axis and its extent;
-  const stepSize: number = alongAxisX
-    ? (extent.x_max - extent.x_min) / 10
-    : (extent.y_max - extent.y_min) / 10;
+  // const stepSize: number = alongAxisX
+  //   ? (extent.x_max - extent.x_min) / 10
+  //   : (extent.y_max - extent.y_min) / 10;
   // local variabel: header for slider as function of selected axis;
-  const positionOnAxis: string = alongAxisX
-    ? `Position on x-axis: ${section.p1[0]}`
-    : `Position on y-axis: ${section.p1[1]}`;
+  // const positionOnAxis: string = alongAxisX
+  //   ? `Position on x-axis: ${section.p1[0]}`
+  //   : `Position on y-axis: ${section.p1[1]}`;
   // local variabel: middle of the slected axis to provide a value when
   // switching axis;
-  const middleSection: number = alongAxisX
-    ? (extent.x_max - extent.x_min) / 2
-    : (extent.y_max - extent.y_min) / 2;
+  // const middleSection: number = alongAxisX
+  //   ? (extent.x_max - extent.x_min) / 2
+  //   : (extent.y_max - extent.y_min) / 2;
 
   const updatePointCoordinates = (e: Konva.KonvaEventObject<DragEvent>) => {
     // destructure
     const { id, x, y } = e.target.attrs;
     // get meta data
-    const alongAxisX: boolean = section.p1[0] === section.p2[0] ? true : false;
     // get old surfacePoint data
     const oldSurfacePointData = surfacePoints.filter(
       (surfacePoint) => surfacePoint.id === id
@@ -126,9 +127,6 @@ export default function StageComponent() {
     // request new top
     dispatch(getSectionTops());
   };
-
-  const showIEState = (state: RootState) => state.meta.selections.showIE.showIe;
-  const showIE = useSelector(showIEState);
 
   const updateOrientationCoordinates = (
     e: Konva.KonvaEventObject<DragEvent>
