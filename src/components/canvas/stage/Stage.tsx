@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Konva from "konva";
+import useImage from "use-image";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../store";
 import { Stage, Layer, Rect, Image } from "react-konva";
@@ -80,8 +81,8 @@ export default function StageComponent() {
     state.geoData.surfacePoints.linePoints;
   const linePoints = useSelector(linePointsState);
 
-  const imgState = (state: RootState) => state.canvas.canvasSize.img;
-  const img = useSelector(imgState);
+  // const imgState = (state: RootState) => state.canvas.canvasSize.img;
+  // const img = useSelector(imgState);
 
   const surfaceNames: string[] = surfaces.map((s) => s.name);
 
@@ -282,17 +283,44 @@ export default function StageComponent() {
     }
   };
 
+  //  const Outcrop = () => {
+  //    const image = useImage(img);
+  //    console.log(image);
+  //    return (
+  //      <Image
+  //        image={image}
+  //        width={canvasSize.width}
+  //        height={canvasSize.height}
+  //      />
+  //    );
+  //  };
+
+  // const imageObj = new Image();
+  // imageObj.src = img;
+  // const image = useImage(img)
+  // console.log(imageObj);
+
   const Outcrop = () => {
-    //@ts-ignore
-    const image = new Image();
-    image.src = URL.createObjectURL(img);
-    return (
-      <Image
-        image={image}
-        width={canvasSize.width}
-        height={canvasSize.height}
-      />
+    const [image] = useImage(
+      "http://127.0.0.1:5000/geo-model/compute/section/outcrop-image"
     );
+    if (image) {
+      return (
+        <Image
+          image={image}
+          width={canvasSize.width}
+          height={canvasSize.height}
+        />
+      );
+    } else {
+      return (
+        <Rect
+          width={canvasSize.width}
+          height={canvasSize.height}
+          fill="#333333"
+        />
+      );
+    }
   };
 
   return (
@@ -307,15 +335,8 @@ export default function StageComponent() {
       onClick={(e) => handleMouseClick(e)}
     >
       <Layer>
-        <Rect
-          width={canvasSize.width}
-          height={canvasSize.height}
-          fill="#333333"
-        />
+        <Outcrop />
       </Layer>
-      <Layer>
-          <Outcrop />
-        </Layer>
       <LayerSectionTops
         sectionTops={sectionTops}
         section={section}
