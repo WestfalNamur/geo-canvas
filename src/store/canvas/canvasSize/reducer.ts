@@ -1,6 +1,7 @@
 import {
   CanvasSizeState,
   UPDATE_CANVAS_SIZE,
+  LOAD_IMG,
   CanvasSizeActionTypes,
 } from "./types";
 
@@ -9,6 +10,7 @@ const initialState: CanvasSizeState = {
     height: 100,
     width: 120,
   },
+  img: false,
 };
 
 export function canvasSizeReducer(
@@ -18,8 +20,14 @@ export function canvasSizeReducer(
   switch (action.type) {
     case UPDATE_CANVAS_SIZE:
       return {
+        ...state,
         canvasSize: action.payload,
       };
+    case LOAD_IMG:
+      return {
+        ...state,
+        img: action.payload
+      }
     default:
       return state;
   }

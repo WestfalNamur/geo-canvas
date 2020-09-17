@@ -1,8 +1,19 @@
-import { SectionTop, GET_SECTION_TOPS, SET_SECTION_TOPS } from "./types";
+import {
+  SectionTop,
+  GET_SECTION_TOPS,
+  GET_SECTION_TOPS_MULTI,
+  SET_SECTION_TOPS,
+} from "./types";
 
 export function getSectionTops() {
   return {
     type: GET_SECTION_TOPS,
+  };
+}
+
+export function getSectionTopsMulti() {
+  return {
+    type: GET_SECTION_TOPS_MULTI,
   };
 }
 

@@ -6,6 +6,9 @@ export const PUT_SURFACEPOINT = "PUT_SURFACEPOINT";
 export const PUT_SURFACEPOINT_FAILED = "PUT_SURFACEPOINT_FAILED";
 export const DELETE_SURFACEPOINT = "DELETE_SURFACEPOINT";
 export const DELETE_SURFACEPOINT_FAILED = "DELETE_SURFACEPOINT_FAILED";
+export const ADD_SURFACEPOINT_TO_LINE = "ADD_SURFACEPOINT_TO_LINE";
+export const CLEAR_LINE = "CLEAR_LINE";
+export const PARA_LINE = "PARA_LINE";
 
 export interface SurfacePoint {
   id: string;
@@ -22,6 +25,7 @@ export interface SurfacePoint {
 
 export interface SurfacePointsState {
   surfacePoints: SurfacePoint[];
+  linePoints: SurfacePoint[];
 }
 
 export interface GetSurfacePointsActionType {
@@ -69,6 +73,19 @@ export interface DeleteSurfacePointFailedActionType {
   payload: SurfacePoint;
 }
 
+export interface AddSurfacePointToLineActionType {
+  type: typeof ADD_SURFACEPOINT_TO_LINE;
+  payload: SurfacePoint;
+}
+
+export interface ClearLineActionType {
+  type: typeof CLEAR_LINE;
+}
+
+export interface ParaLineActionType {
+  type: typeof PARA_LINE;
+}
+
 export type SurfacePointActionTypes =
   | GetSurfacePointsActionType
   | AddSurfacePointsFromServerActionType
@@ -77,4 +94,7 @@ export type SurfacePointActionTypes =
   | PutSurfacePointActionType
   | PutSurfacePointFailedActionType
   | DeleteSurfacePointActionType
-  | DeleteSurfacePointFailedActionType;
+  | DeleteSurfacePointFailedActionType
+  | AddSurfacePointToLineActionType
+  | ClearLineActionType
+  | ParaLineActionType;

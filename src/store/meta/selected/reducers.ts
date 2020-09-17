@@ -6,6 +6,7 @@ import {
   UPDATE_SELECTED_ORIENTAION,
   UPDATE_SELECTED_DRAWING_OPTION,
   TOGGLE_SHOW_IE,
+  TOGGLE_ALONG_AXIS_X,
 } from "./types";
 
 const initialState: SelectionsState = {
@@ -19,11 +20,12 @@ const initialState: SelectionsState = {
     id: null,
   },
   selectedDrawingOption: {
-    option: null,
+    option: "None",
   },
   showIE: {
     showIe: false,
   },
+  alongAxisX: false,
 };
 
 export function selectionsReducers(
@@ -55,6 +57,11 @@ export function selectionsReducers(
       return {
         ...state,
         showIE: { showIe: !state.showIE.showIe },
+      };
+    case TOGGLE_ALONG_AXIS_X:
+      return {
+        ...state,
+        alongAxisX: !state.alongAxisX,
       };
     default:
       return state;

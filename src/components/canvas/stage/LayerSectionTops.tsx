@@ -45,8 +45,14 @@ export default function LayerSectionTops({
         }
       }
     });
+    // check if mutli real by blocksurface name
+    let name: String = blockSurface;
+    //@ts-ignore 
+    if (blockSurface.split('_')[0] === "real") {
+      //@ts-ignore 
+      name = blockSurface.split('_')[2];
+    }
     // get color of surface
-    const name: String = blockSurface;
     const suface = surfaces.filter((s) => s.name === name);
     const surfacePos = suface[0] ? suface[0].order_surface : 0;
     const color = COLOR_LIST[surfacePos];

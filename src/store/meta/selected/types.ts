@@ -3,6 +3,7 @@ export const UPDATE_SELECTED_SURFACE = "UPDATE_SELECTED_SURFACE";
 export const UPDATE_SELECTED_ORIENTAION = "UPDATE_SELECTED_ORIENTAION";
 export const UPDATE_SELECTED_DRAWING_OPTION = "UPDATE_SELECTED_DRAWING_OPTION";
 export const TOGGLE_SHOW_IE = "TOGGLE_SHOW_IE";
+export const TOGGLE_ALONG_AXIS_X = "TOGGLE_ALONG_AXIS_X";
 
 export interface SelectedSurfacePoint {
   id: number | null;
@@ -30,6 +31,7 @@ export interface SelectionsState {
   selecledOrientaion: SelectedOrientation;
   selectedDrawingOption: SelectedDrawingOption;
   showIE: ShowIE;
+  alongAxisX: boolean;
 }
 
 export interface UpdateSelectedSurfacePointActionType {
@@ -56,9 +58,14 @@ export interface ShowIEActionType {
   type: typeof TOGGLE_SHOW_IE;
 }
 
+export interface ToggleAlongAxisXActiontype {
+  type: typeof TOGGLE_ALONG_AXIS_X;
+}
+
 export type SelectionsActionTypes =
   | UpdateSelectedSurfacePointActionType
   | UpdateSelectedSurfaceActionType
   | UpdateOrientationActionType
   | UpdateSelectedDrawingOptionActionType
-  | ShowIEActionType;
+  | ShowIEActionType
+  | ToggleAlongAxisXActiontype;

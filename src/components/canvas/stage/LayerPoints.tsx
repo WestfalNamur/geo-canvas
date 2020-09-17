@@ -37,9 +37,9 @@ export default function LayerPolygons({
   // find out which axis is selcted
   const axisIsX: boolean = section.p1[0] === section.p2[0] ? true : false;
   // calcualte projection distance depending on selected axis
-  const projection_distance: number = axisIsX
-    ? (extent.x_max - extent.x_min) / 1
-    : (extent.y_max - extent.y_min) / 1;
+  const projection_distance: number = !axisIsX
+    ? (extent.x_max - extent.x_min) / 5
+    : (extent.y_max - extent.y_min) / 5;
   // filter surfacePoints that are in projection distance
   const filteredSurfacePoints: SurfacePoint[] = surfacePoints.filter(
     (surfacePoint) => {
@@ -66,7 +66,7 @@ export default function LayerPolygons({
     const surfacePos = suface[0] ? suface[0].order_surface : 0;
     const color = COLOR_LIST[surfacePos];
     // calcualte circle position
-    if (axisIsX) {
+    if (!axisIsX) {
       const circlePoint: CirclePoint = {
         x: (surfacePoint.x / extent.x_max) * canvasSize.width,
         z: (surfacePoint.z / extent.z_max) * canvasSize.height,

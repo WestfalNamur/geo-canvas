@@ -29,8 +29,6 @@ export default function DrawingOption() {
     choosenOption = selectedDrawingOption.option;
   }
 
-  console.log(selectedDrawingOption.option);
-
   // handle change
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     try {
@@ -67,7 +65,7 @@ export default function DrawingOption() {
         onChange={handleChange}
         variant="outlined"
       >
-        <MenuItem key={"None"} value={""}>
+        <MenuItem key={"None"} value={"None"}>
           {"None"}
         </MenuItem>
       </Select>

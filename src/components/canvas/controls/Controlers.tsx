@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Error from "./Error";
 import SurfaceSelector from "./SurfaceSelector";
 import DrawingOption from "./DrawingOption";
@@ -19,6 +19,7 @@ import { RootState } from "../../../store";
 import { updateSection } from "../../../store/meta/section/actions";
 import { Section } from "../../../store/meta/section/types";
 import { getSectionTops } from "../../../store/solutions/sectionTops/actions";
+import { toggleAlongAxisX } from "../../../store/meta/selected/actions";
 
 const useStyles = makeStyles({
   root: {
@@ -56,22 +57,18 @@ export default function Controlers() {
   const extent = useSelector(extentState);
   const sectionState = (state: RootState) => state.meta.section.section;
   const section = useSelector(sectionState);
+  const alongAxisXState = (state: RootState) =>
+    state.meta.selections.alongAxisX;
+  const alongAxisX = useSelector(alongAxisXState);
 
-  // local variabel: boolean selected axis is x-axis;
-  const [axisIsX, setAxisIsX] = useState<boolean>(true);
   // local variabel: function of selected axis and its extent;
-  const stepSize: number = axisIsX
+  const stepSize: number = alongAxisX
     ? (extent.x_max - extent.x_min) / 10
     : (extent.y_max - extent.y_min) / 10;
   // local variabel: header for slider as function of selected axis;
-  const positionOnAxis: string = axisIsX
+  const positionOnAxis: string = alongAxisX
     ? `Position on x-axis: ${section.p1[0]}`
     : `Position on y-axis: ${section.p1[1]}`;
-  // local variabel: middle of the slected axis to provide a value when
-  // switching axis;
-  const middleSection: number = axisIsX
-    ? (extent.x_max - extent.x_min) / 2
-    : (extent.y_max - extent.y_min) / 2;
 
   // functions: handles changes of the slider by dispatching the updated
   // section and requesting a new polygon set; Slices/sections are along axis
@@ -79,41 +76,51 @@ export default function Controlers() {
   const handleSliderChange = (event: any, newValue: number | number[]) => {
     const slice: number = typeof newValue === "number" ? newValue : newValue[0];
     const oldSection = section;
-    const newSection: Section = axisIsX
-      ? {
-          p1: [slice, section.p1[1]], // [x0, y0]
-          p2: [slice, section.p2[1]], // [x1, y1]
-          resolution: section.resolution,
-        }
-      : {
-          p1: [section.p1[0], slice], // [x0, y0]
-          p2: [section.p2[0], slice], // [x1, y1]
-          resolution: section.resolution,
-        };
-    dispatch(updateSection(newSection, oldSection));
-    dispatch(getSectionTops());
+    if (alongAxisX) {
+      const newSection: Section = {
+        p1: [slice, extent.y_min],
+        p2: [slice, extent.y_max],
+        resolution: section.resolution,
+      };
+      dispatch(updateSection(newSection, oldSection));
+      dispatch(getSectionTops());
+    } else {
+      const newSection: Section = {
+        p1: [extent.x_min, slice],
+        p2: [extent.x_max, slice],
+        resolution: section.resolution,
+      };
+      dispatch(updateSection(newSection, oldSection));
+      dispatch(getSectionTops());
+    }
   };
-
   // handles axis switch; Before switch the values of the selected axis are
   // the same for p1 and p2. Hence they need to be set to thier extent values
   // on switch and the other axis values get a default of the middle of the
   // section; Dispatches new section and requests new polygons;
   const handleSwitchToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAxisIsX(!axisIsX);
-    const oldSection = section;
-    const newSection: Section = !axisIsX
-      ? {
-          p1: [middleSection, extent.y_min],
-          p2: [middleSection, extent.y_max],
-          resolution: section.resolution,
-        }
-      : {
-          p1: [extent.x_min, middleSection],
-          p2: [extent.x_max, middleSection],
-          resolution: section.resolution,
-        };
-    dispatch(updateSection(newSection, oldSection));
-    dispatch(getSectionTops());
+    dispatch(toggleAlongAxisX());
+    if (alongAxisX) {
+      const middle: number = (extent.x_max - extent.x_min) / 2;
+      const oldSection: Section = section;
+      const newSection: Section = {
+        p1: [middle, extent.y_min],
+        p2: [middle, extent.y_max],
+        resolution: section.resolution,
+      };
+      dispatch(updateSection(newSection, oldSection));
+      dispatch(getSectionTops());
+    } else {
+      const middle: number = (extent.y_max - extent.y_min) / 2;
+      const oldSection: Section = section;
+      const newSection: Section = {
+        p1: [extent.x_min, middle],
+        p2: [extent.x_max, middle],
+        resolution: section.resolution,
+      };
+      dispatch(updateSection(newSection, oldSection));
+      dispatch(getSectionTops());
+    }
   };
 
   return (
@@ -126,7 +133,7 @@ export default function Controlers() {
               <Typography id="continuous-slider" gutterBottom>
                 {positionOnAxis}
               </Typography>
-              {axisIsX ? (
+              {alongAxisX ? (
                 <Slider
                   value={section.p1[0]}
                   aria-labelledby="discrete-slider-small-steps"
@@ -158,14 +165,14 @@ export default function Controlers() {
                 value="top"
                 control={
                   <Switch
-                    checked={axisIsX}
+                    checked={alongAxisX}
                     onChange={handleSwitchToggle}
                     color="primary"
-                    name="AxisIsX"
+                    name="Along-X"
                     className={classes.axis}
                   />
                 }
-                label={axisIsX ? "Axis: X" : "Axis: Y"}
+                label={alongAxisX ? "Axis: X" : "Axis: Y"}
                 labelPlacement="top"
               />
             </Grid>

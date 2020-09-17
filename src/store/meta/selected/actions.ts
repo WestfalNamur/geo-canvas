@@ -8,6 +8,7 @@ import {
   SelectedDrawingOption,
   UPDATE_SELECTED_DRAWING_OPTION,
   TOGGLE_SHOW_IE,
+  TOGGLE_ALONG_AXIS_X,
 } from "./types";
 
 export function updateSelectedSurfacePoint(
@@ -47,5 +48,11 @@ export function updateSelectedDrawingOption(
 export function toggleShowIE() {
   return {
     type: TOGGLE_SHOW_IE,
+  };
+}
+
+export function toggleAlongAxisX() {
+  return {
+    type: TOGGLE_ALONG_AXIS_X,
   };
 }

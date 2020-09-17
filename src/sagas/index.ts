@@ -25,7 +25,10 @@ import {
 } from "./geoData/Orientations";
 import { watchGetExtent, watchPutExtent } from "./meta/extent";
 import { watchGetSection, watchPutSection } from "./meta/section";
-import { watchGetSectionTopsSaga } from "./solutions/SectionTops";
+import {
+  watchGetSectionTopsSaga,
+  watchGetSectionTopMultisSaga,
+} from "./solutions/SectionTops";
 
 export default function* rootSaga() {
   yield all([
@@ -56,5 +59,6 @@ export default function* rootSaga() {
     watchPutSection(),
 
     watchGetSectionTopsSaga(),
+    watchGetSectionTopMultisSaga(),
   ]);
 }
